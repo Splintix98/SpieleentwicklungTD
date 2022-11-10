@@ -11,6 +11,7 @@ public class MenuController : MonoBehaviour
     GameObject optionsMenu;
     GameObject creditsMenu;
     GameObject helpMenu;
+    GameObject creditAnimation;
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +21,15 @@ public class MenuController : MonoBehaviour
         optionsMenu = GameObject.Find("OptionsMenu");
         creditsMenu = GameObject.Find("CreditsMenu");
         helpMenu = GameObject.Find("HelpMenu");
+        creditAnimation = GameObject.Find("CreditAnimation");
+        
 
         mainMenu.transform.localScale = new Vector3(1, 1, 1);
         levelMenu.transform.localScale = new Vector3(0, 0, 0);
         optionsMenu.transform.localScale = new Vector3(0, 0, 0);
         creditsMenu.transform.localScale = new Vector3(0, 0, 0);
-        helpMenu.transform.localScale = new Vector3(0, 0, 0); 
+        helpMenu.transform.localScale = new Vector3(0, 0, 0);
+        creditAnimation.GetComponent<Animator>().enabled = false;
     }
 
     // Update is called once per frame
@@ -69,6 +73,7 @@ public class MenuController : MonoBehaviour
     {
         creditsMenu.transform.localScale = new Vector3(1, 1, 1);
         mainMenu.transform.localScale = new Vector3(0, 0, 0);
+        creditAnimation.GetComponent<Animator>().enabled = true;
     }
 
     public void LoadHelpOverview()
