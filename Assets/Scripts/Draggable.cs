@@ -10,8 +10,7 @@ public class Draggable : MonoBehaviour
     public Transform buildArea;
     public Transform buildAreaHalf;
     private float oldx, oldz;
-    private bool allowConstruction = false;
-    private Material normalMaterial;
+    private Transform selectedBlock = null;
 
     void Start()
     {
@@ -33,19 +32,21 @@ public class Draggable : MonoBehaviour
 
             if (np.x != oldx || np.z != oldz)
             {
-                Transform block = null;
+                selectedBlock = null;
                 float height = 1;
                 foreach (Transform o in buildArea.GetComponentsInChildren<Transform>())
                 {
-                    if (o.transform.position.x == np.x && o.transform.position.z == np.z) {
-                        if (o.GetComponentsInChildren<Transform>().Length == 1) block = o;
+                    if (o.transform.position.x == np.x && o.transform.position.z == np.z && o.parent == buildArea)
+                    {
+                        if (o.GetComponentsInChildren<Transform>().Length == 1) selectedBlock = o;
+                        Debug.Log(o.GetComponentsInChildren<Transform>().Length + "   ");
                     }
                 }
                 foreach (Transform o in buildAreaHalf.GetComponentsInChildren<Transform>())
                 {
-                    if (o.transform.position.x == np.x && o.transform.position.z == np.z)
+                    if (o.transform.position.x == np.x && o.transform.position.z == np.z && o.parent == buildAreaHalf)
                     {
-                        if (o.GetComponentsInChildren<Transform>().Length == 1) block = o;
+                        if (o.GetComponentsInChildren<Transform>().Length == 1) selectedBlock = o;
                         height = 1.5f;
                     }
                 }
@@ -53,32 +54,38 @@ public class Draggable : MonoBehaviour
                 oldx = np.x;
                 oldz = np.z;
                 np.y = height;
-                if (block != null)
+                if (selectedBlock != null)
                 {
-                    allowConstruction = true;
                     transform.position = new Vector3(np.x, np.y, np.z);
+                }
+            }
 
+
+            if (selectedBlock != null)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    gameObject.transform.parent = selectedBlock;
+                    Destroy(this);
                 }
-                else {
-                    allowConstruction = false;
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    Destroy(gameObject);
+                    Destroy(this);
                 }
+            }
+                
+
 
 
                 
 
 
-            }
+
         }
 
-        if (Input.GetMouseButtonDown(0)) {
-            if (allowConstruction) Destroy(this);
-        }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            Destroy(gameObject);
-            Destroy(this);
-        }
 
 
 
