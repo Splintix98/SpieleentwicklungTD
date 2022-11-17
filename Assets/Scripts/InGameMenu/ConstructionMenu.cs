@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TextCore.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConstructionMenu : MonoBehaviour
 {
@@ -9,14 +11,14 @@ public class ConstructionMenu : MonoBehaviour
     public GameObject constructionMenu;
     public Transform buildArea;
     public Transform buildAreaHalf;
-    public GameObject forestTower;
+    public GameObject towerMenu;
+    public GameObject towerPointer;
+    public bool AllowNewTowerConstruction { get; set; } = true;
 
-    private GameObject newTower;
-
-    // Start is called before the first frame update
+// Start is called before the first frame update
     void Start()
     {
-        
+ 
     }
 
     // Update is called once per frame
@@ -32,12 +34,19 @@ public class ConstructionMenu : MonoBehaviour
         }
 
     }
-        public void createTower1() {
-
-        GameObject newTower = Instantiate(forestTower, new Vector3(0, 0, 0), Quaternion.identity);
-        Draggable sc = newTower.AddComponent<Draggable>();
-        sc.buildArea = buildArea;
-        sc.buildAreaHalf = buildAreaHalf;
+        public void createTower1(GameObject tower) {
+        if (AllowNewTowerConstruction)
+        {
+            GameObject newTower = Instantiate(tower, new Vector3(0, 0, 0), Quaternion.identity);
+            newTower.SetActive(true);
+            Draggable draggable = newTower.AddComponent<Draggable>();
+            draggable.buildArea = buildArea;
+            draggable.buildAreaHalf = buildAreaHalf;
+            draggable.constructionMenu = this;
+            Clickable clickable = newTower.AddComponent<Clickable>();
+            clickable.towerMenu = towerMenu.GetComponent<TowerMenu>();
+            AllowNewTowerConstruction = false;
+        }
 
 
     }

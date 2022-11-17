@@ -11,6 +11,7 @@ public class Draggable : MonoBehaviour
     public Transform buildAreaHalf;
     private float oldx, oldz;
     private Transform selectedBlock = null;
+    public ConstructionMenu constructionMenu;
 
     void Start()
     {
@@ -66,6 +67,9 @@ public class Draggable : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     gameObject.transform.parent = selectedBlock;
+                    Clickable clickable = gameObject.GetComponent<Clickable>();
+                    clickable.AllowInformationDisplay = true;
+                    constructionMenu.AllowNewTowerConstruction = true;
                     Destroy(this);
                 }
 
