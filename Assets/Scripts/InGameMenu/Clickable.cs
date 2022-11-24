@@ -27,10 +27,6 @@ public class Clickable : MonoBehaviour
 
     void OnMouseDown()
     {
-
-        //Vector3 np = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-        //print("X: " + np.x + "  Y: " + np.y + "  Z: " + np.z);
-        //objectmenu.transform.position = new Vector2(np.x, np.y + 65);
         if (AllowInformationDisplay)
         {
             towerMenu.showTowerInformation(gameObject);

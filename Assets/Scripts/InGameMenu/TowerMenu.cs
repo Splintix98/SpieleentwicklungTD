@@ -39,22 +39,19 @@ public class TowerMenu : MonoBehaviour
         towerPointer.SetActive(true);
         selectedTower = tower;
         string name = selectedTower.name;
+        TowerController towerController = selectedTower.GetComponent<TowerController>();
         name = name.Replace("_", " ");
         name = name.Replace("(", " ");
         name = name.Replace(")", " ");
         name = name.Replace("Clone", " ");
+
         towerName.text = "Name: " + name;
+        towerHealth.text = "Health: " + towerController.towerHealth;
+        towerDamage.text = "Damage: " + towerController.towerDamage.ToString();
+        towerRange.text = "Range: " + towerController.towerRange;
 
-        for (int i = 0; i < 1; i++)
-        {
-            
-            towerHealth.text += "<sprite=1>";
-            towerDamage.text += "<sprite=1>";
-            towerRange.text += "<sprite=1>";
-        }
-
-        tomwerUpgradecosts.text = "10" + " <sprite=4>";
-        tomwerDestroycosts.text = "0" + " <sprite=4>";
+        //tomwerUpgradecosts.text = "10" + " <sprite=4>";
+        //tomwerDestroycosts.text = "0" + " <sprite=4>";
     }
 
 

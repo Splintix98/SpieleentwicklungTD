@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class bulletshot : MonoBehaviour
+public class Bulletshot : MonoBehaviour
 {
     public GameObject enemy;
     public Transform tower;
@@ -14,7 +14,7 @@ public class bulletshot : MonoBehaviour
     void Start()
     {
         enemy = GameObject.Find("TurtleShell");
-        tower = GameObject.Find("Tower").transform.GetChild(1).transform.GetChild(0);
+        //tower = GameObject.Find("Tower").transform.GetChild(1).transform.GetChild(0);
     }
 
     // Update is called once per frame

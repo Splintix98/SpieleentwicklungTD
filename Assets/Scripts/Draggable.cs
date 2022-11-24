@@ -70,6 +70,10 @@ public class Draggable : MonoBehaviour
                     Clickable clickable = gameObject.GetComponent<Clickable>();
                     clickable.AllowInformationDisplay = true;
                     constructionMenu.AllowNewTowerConstruction = true;
+
+                    TowerController towerController = gameObject.GetComponent<TowerController>();
+                    towerController.enabled = true;
+
                     Destroy(this);
                 }
 

@@ -1,6 +1,8 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.TextCore.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,12 +15,18 @@ public class ConstructionMenu : MonoBehaviour
     public Transform buildAreaHalf;
     public GameObject towerMenu;
     public GameObject towerPointer;
+
+    public GameObject towerAttributesContainer;
+    public TextMeshProUGUI towerFireRate;
+    public TextMeshProUGUI towerDamage;
+    public TextMeshProUGUI towerRange;
+
     public bool AllowNewTowerConstruction { get; set; } = true;
 
-// Start is called before the first frame update
+    // Start is called before the first frame update
     void Start()
     {
- 
+
     }
 
     // Update is called once per frame
@@ -34,7 +42,8 @@ public class ConstructionMenu : MonoBehaviour
         }
 
     }
-        public void createTower1(GameObject tower) {
+    public void createTower(GameObject tower)
+    {
         if (AllowNewTowerConstruction)
         {
             GameObject newTower = Instantiate(tower, new Vector3(0, 0, 0), Quaternion.identity);
@@ -49,7 +58,23 @@ public class ConstructionMenu : MonoBehaviour
         }
 
 
+
     }
 
 
+
+    public void showTowerAttributes(GameObject tower)
+    {
+        TowerController towerController = tower.GetComponent<TowerController>();
+        towerDamage.text = "Damage: " + towerController.towerDamage;
+        towerFireRate.text = "Fire rate: " + towerController.fireRate ;
+        towerRange.text = "Range: " + towerController.towerRange;
+
+        towerAttributesContainer.SetActive(true);
+    }
+
+    public void hideTowerAttributes()
+    {
+        towerAttributesContainer.SetActive(false);
+    }
 }

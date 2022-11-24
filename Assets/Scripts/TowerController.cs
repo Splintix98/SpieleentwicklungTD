@@ -5,30 +5,40 @@ using UnityEngine;
 
 public class TowerController : MonoBehaviour
 {
+    public float towerHealth = 100;
     public float towerRange;
     public float projectileSpeed;
+    public float towerDamage;
+    public float fireRate;
+    public GameObject tower;
 
     Transform enemy;
     Transform towerRotationPoint;
     LineRenderer towerLineIndicator;
+    private float lastShotCooldown = 0;
+
+    
 
     public static GameObject bulletPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        towerRange = 30;
-        projectileSpeed = 5.0f;
+        //towerRange = 30;
+        //projectileSpeed = 5.0f;
 
         enemy = GameObject.Find("TurtleShell").transform.GetChild(0);
-        towerRotationPoint = GameObject.Find("Tower").transform.GetChild(1).transform.GetChild(0);
-        towerLineIndicator = GameObject.Find("Tower").gameObject.GetComponent<LineRenderer>();
+        //towerRotationPoint = GameObject.Find("Tower").transform.GetChild(1).transform.GetChild(0);
+        //towerLineIndicator = GameObject.Find("Tower").gameObject.GetComponent<LineRenderer>();
+        towerRotationPoint = tower.transform.GetChild(1).transform.GetChild(0);
+        towerLineIndicator = tower.gameObject.GetComponent<LineRenderer>();
         bulletPrefab = Resources.Load("Prefabs/Projectile") as GameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (enemy == null) return;  
         float diffX = enemy.transform.position.x - transform.GetChild(1).transform.position.x;
         float diffZ = enemy.transform.position.z - transform.GetChild(1).transform.position.z;
         float hypothenuse = Mathf.Sqrt((Mathf.Pow(diffZ, 2) + Mathf.Pow(diffX, 2)));
@@ -36,14 +46,20 @@ public class TowerController : MonoBehaviour
         rotateTowerToEnemy(diffX, diffZ, hypothenuse);
         RenderTowerIndicator();
 
-        if (Input.GetButtonDown("Fire1"))
+        if (lastShotCooldown <= 0)
         {
+            lastShotCooldown = fireRate;
             if (hypothenuse < (towerRange / 10))
             {
                 GameObject b = Instantiate(bulletPrefab) as GameObject;
-                b.GetComponent<ProjectileController>().setProjectileSpeed(projectileSpeed);
+                ProjectileController projectileController = b.GetComponent<ProjectileController>();
+                projectileController.setProjectileSpeed(projectileSpeed);
+                projectileController.setprojectileDamage(towerDamage);
                 b.transform.position = towerRotationPoint.transform.GetChild(2).transform.position;
             }
+        }
+        else {
+            lastShotCooldown -= Time.deltaTime;
         }
     }
 
