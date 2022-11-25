@@ -6,33 +6,25 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
     public float towerHealth = 100;
-    public float towerRange;
-    public float projectileSpeed;
-    public float towerDamage;
-    public float fireRate;
-    public GameObject tower;
+    public float towerRange = 3;
+    public float projectileSpeed = 5.0f;
+    private float lastShotCooldown = 0;
+
+    public float towerDamage = 5;
+    public float fireRate = 1;
 
     Transform enemy;
     Transform towerRotationPoint;
     LineRenderer towerLineIndicator;
-    private float lastShotCooldown = 0;
 
-    
-
-    public static GameObject bulletPrefab;
+    public GameObject fireBulletPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        //towerRange = 30;
-        //projectileSpeed = 5.0f;
-
         enemy = GameObject.Find("TurtleShell").transform.GetChild(0);
-        //towerRotationPoint = GameObject.Find("Tower").transform.GetChild(1).transform.GetChild(0);
-        //towerLineIndicator = GameObject.Find("Tower").gameObject.GetComponent<LineRenderer>();
-        towerRotationPoint = tower.transform.GetChild(1).transform.GetChild(0);
-        towerLineIndicator = tower.gameObject.GetComponent<LineRenderer>();
-        bulletPrefab = Resources.Load("Prefabs/Projectile") as GameObject;
+        towerRotationPoint = this.transform.GetChild(1).transform.GetChild(0);
+        towerLineIndicator = this.gameObject.GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -49,9 +41,9 @@ public class TowerController : MonoBehaviour
         if (lastShotCooldown <= 0)
         {
             lastShotCooldown = fireRate;
-            if (hypothenuse < (towerRange / 10))
+            if (hypothenuse < towerRange && fireBulletPrefab != null)
             {
-                GameObject b = Instantiate(bulletPrefab) as GameObject;
+                GameObject b = Instantiate(fireBulletPrefab) as GameObject;
                 ProjectileController projectileController = b.GetComponent<ProjectileController>();
                 projectileController.setProjectileSpeed(projectileSpeed);
                 projectileController.setprojectileDamage(towerDamage);
@@ -65,11 +57,18 @@ public class TowerController : MonoBehaviour
 
     // ---------------------------------------------------------------------------------
 
+    public void setProjectilePreset(GameObject fireBulletPrefab)
+    {
+        this.fireBulletPrefab = fireBulletPrefab;
+    }
+
+    // ---------------------------------------------------------------------------------
+
     public void rotateTowerToEnemy(float diffX, float diffZ, float hypothenuse)
     {
         float rotation;
 
-        if (diffX != 0 && diffZ != 0 && hypothenuse < (towerRange / 10))
+        if (diffX != 0 && diffZ != 0 && hypothenuse < towerRange)
         {
             rotation = Mathf.Asin(diffX / hypothenuse) * 180 / Mathf.PI;
 
@@ -91,14 +90,18 @@ public class TowerController : MonoBehaviour
 
     public void RenderTowerIndicator()
     {
-        towerLineIndicator.positionCount = (50+1);
+        towerLineIndicator.SetWidth(0.05f, 0.05f);
 
-        for (int i = 0; i < (50+1); i++)
+
+        int ringElements = 50;
+        towerLineIndicator.positionCount = (ringElements + 1);
+
+        for (int i = 0; i < (ringElements + 1); i++)
         {
-            float angle = i * (360f / 50);
+            float angle = i * (360f / ringElements);
             float x = Mathf.Sin(Mathf.Deg2Rad * angle) * towerRange;
             float z = Mathf.Cos(Mathf.Deg2Rad * angle) * towerRange;
-            towerLineIndicator.SetPosition(i, new Vector3(x, 0, z));
+            towerLineIndicator.SetPosition(i, new Vector3(transform.GetChild(1).transform.position.x + x, 2, transform.GetChild(1).transform.position.z + z));
         }
     }
 }

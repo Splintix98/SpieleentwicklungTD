@@ -459,17 +459,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4807935125071304128}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecaa4743a291f18498291706bf7ddf56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   towerHealth: 100
-  towerRange: 50
-  projectileSpeed: 3
-  towerDamage: 1
+  towerRange: 3
+  projectileSpeed: 5
+  towerDamage: 5
   fireRate: 1
-  tower: {fileID: 4807935125071304128}
+  fireBulletPrefab: {fileID: 0}
 --- !u!1 &4807935125071321688
 GameObject:
   m_ObjectHideFlags: 0

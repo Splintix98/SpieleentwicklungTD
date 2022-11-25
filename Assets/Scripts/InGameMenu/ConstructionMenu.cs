@@ -42,6 +42,7 @@ public class ConstructionMenu : MonoBehaviour
         }
 
     }
+
     public void createTower(GameObject tower)
     {
         if (AllowNewTowerConstruction)
@@ -55,13 +56,29 @@ public class ConstructionMenu : MonoBehaviour
             Clickable clickable = newTower.AddComponent<Clickable>();
             clickable.towerMenu = towerMenu.GetComponent<TowerMenu>();
             AllowNewTowerConstruction = false;
+
+            if (newTower.name == "Tower_Fire(Clone)")
+            {
+                TowerController towercontroller = newTower.GetComponent<TowerController>();
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile") as GameObject);
+            }
+            if (newTower.name == "Tower_Earth(Clone)")
+            {
+                TowerController towercontroller = newTower.GetComponent<TowerController>();
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile") as GameObject);
+            }
+            if (newTower.name == "Tower_Air(Clone)")
+            {
+                TowerController towercontroller = newTower.GetComponent<TowerController>();
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile") as GameObject);
+            }
+            if (newTower.name == "Tower_Water(Clone)")
+            {
+                TowerController towercontroller = newTower.GetComponent<TowerController>();
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile") as GameObject);
+            }
         }
-
-
-
     }
-
-
 
     public void showTowerAttributes(GameObject tower)
     {
