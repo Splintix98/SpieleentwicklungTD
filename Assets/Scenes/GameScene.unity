@@ -11704,8 +11704,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 1175848195}
+  SpawnPosition: {fileID: 1632541162}
   NumberOfEnemiesToSpawn: 5
-  SpawnDelay: 1
+  SpawnDelay: 2
   EnemyPrefabs:
   - {fileID: 5026040436331729747, guid: 02b1ea06de44fad4cb4b8a4ef9b84469, type: 3}
 --- !u!1001 &1428770206

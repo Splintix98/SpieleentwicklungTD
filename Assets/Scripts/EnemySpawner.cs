@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemySpawner : MonoBehaviour
 {
     public Transform Target;
+    public Transform SpawnPosition;
     public int NumberOfEnemiesToSpawn = 5;
     public float SpawnDelay = 1f;
     public List<Enemy> EnemyPrefabs = new List<Enemy>();
@@ -55,8 +56,14 @@ public class EnemySpawner : MonoBehaviour
 
             int VertexIndex = Random.Range(0, Triangulation.vertices.Length);
 
+            // Vector3 sourcePosition = Triangulation.vertices[VertexIndex];
+            // sourcePosition = new Vector3(0.5f, 0.0f, -3.5f);
+            Vector3 sourcePosition = SpawnPosition.position;
+            // TODO: Gegner spawnen aktuell am Rand des SpawnBlocks, sollen aber auf ihm spawnen
+            // TODO: Gegner gucken aktuell beim spawnen nicht in Richtung des Pfads
+
             NavMeshHit Hit;
-            if (NavMesh.SamplePosition(Triangulation.vertices[VertexIndex], out Hit, 2f, NavMesh.GetAreaFromName("Spawn"))) // -1 for all areas, 1 for walkable
+            if (NavMesh.SamplePosition(sourcePosition, out Hit, 2f, 1)) // -1 for all areas, 1 for walkable
             {
                 enemy.Agent.Warp(Hit.position);
                 enemy.Movement.Target = Target;
