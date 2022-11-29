@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-    public GameObject enemy;
+    public Enemy enemy;
     public Transform tower;
 
     public float projectileSpeed;
@@ -14,7 +14,6 @@ public class ProjectileController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemy = GameObject.Find("TurtleShell");
     }
 
     // Update is called once per frame
@@ -41,6 +40,10 @@ public class ProjectileController : MonoBehaviour
             enemyHealthController.hit(projectileDamage);
         }
         Destroy(this.gameObject);
+    }
+    public void setEnemy(Enemy enemy)
+    {
+        this.enemy = enemy;
     }
 
     public void setProjectileSpeed(float projectileSpeed)

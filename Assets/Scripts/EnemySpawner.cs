@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     private NavMeshTriangulation Triangulation;
     private Dictionary<int, ObjectPool> EnemyObjectPools = new Dictionary<int, ObjectPool>();
 
+    private int enemyID = 0;
+
     private void Awake()
     {
         for (int i = 0; i < EnemyPrefabs.Count; i++)
@@ -25,7 +27,6 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         Triangulation = NavMesh.CalculateTriangulation();
-
         StartCoroutine(SpawnEnemies());
     }
 
@@ -52,7 +53,8 @@ public class EnemySpawner : MonoBehaviour
         {
             Enemy enemy = poolableObject.GetComponent<Enemy>();
 
-
+            enemy.setEnemyID(enemyID);
+            enemyID = enemyID + 1;
 
             int VertexIndex = Random.Range(0, Triangulation.vertices.Length);
 
