@@ -60,22 +60,22 @@ public class ConstructionMenu : MonoBehaviour
             if (newTower.name == "Tower_Fire(Clone)")
             {
                 TowerController towercontroller = newTower.GetComponent<TowerController>();
-                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile") as GameObject);
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile/fireProjectile") as GameObject);
             }
             if (newTower.name == "Tower_Earth(Clone)")
             {
                 TowerController towercontroller = newTower.GetComponent<TowerController>();
-                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile") as GameObject);
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/stoneProjectile/stoneProjectile") as GameObject);
             }
             if (newTower.name == "Tower_Air(Clone)")
             {
                 TowerController towercontroller = newTower.GetComponent<TowerController>();
-                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile") as GameObject);
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/stoneProjectile/stoneProjectile") as GameObject);
             }
             if (newTower.name == "Tower_Water(Clone)")
             {
                 TowerController towercontroller = newTower.GetComponent<TowerController>();
-                towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile") as GameObject);
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/stoneProjectile/stoneProjectile") as GameObject);
             }
         }
     }
