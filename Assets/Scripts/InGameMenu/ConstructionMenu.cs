@@ -21,7 +21,7 @@ public class ConstructionMenu : MonoBehaviour
     public TextMeshProUGUI towerDamage;
     public TextMeshProUGUI towerRange;
 
-    public bool AllowNewTowerConstruction { get; set; } = true;
+    public bool allowNewTowerConstruction { get; set; } = true;
 
     // Start is called before the first frame update
     void Start()
@@ -43,9 +43,9 @@ public class ConstructionMenu : MonoBehaviour
 
     }
 
-    public void createTower(GameObject tower)
+    public void CreateTower(GameObject tower)
     {
-        if (AllowNewTowerConstruction)
+        if (allowNewTowerConstruction)
         {
             GameObject newTower = Instantiate(tower, new Vector3(0, 0, 0), Quaternion.identity);
             newTower.SetActive(true);
@@ -55,7 +55,7 @@ public class ConstructionMenu : MonoBehaviour
             draggable.constructionMenu = this;
             Clickable clickable = newTower.AddComponent<Clickable>();
             clickable.towerMenu = towerMenu.GetComponent<TowerMenu>();
-            AllowNewTowerConstruction = false;
+            allowNewTowerConstruction = false;
 
             if (newTower.name == "Tower_Fire(Clone)")
             {
@@ -71,6 +71,7 @@ public class ConstructionMenu : MonoBehaviour
             {
                 TowerController towercontroller = newTower.GetComponent<TowerController>();
                 towercontroller.setProjectilePreset(Resources.Load("Prefabs/stoneProjectile/stoneProjectile") as GameObject);
+
             }
             if (newTower.name == "Tower_Water(Clone)")
             {
@@ -80,7 +81,7 @@ public class ConstructionMenu : MonoBehaviour
         }
     }
 
-    public void showTowerAttributes(GameObject tower)
+    public void ShowTowerAttributes(GameObject tower)
     {
         TowerController towerController = tower.GetComponent<TowerController>();
         towerDamage.text = "Damage: " + towerController.towerDamage;
@@ -90,7 +91,7 @@ public class ConstructionMenu : MonoBehaviour
         towerAttributesContainer.SetActive(true);
     }
 
-    public void hideTowerAttributes()
+    public void HideTowerAttributes()
     {
         towerAttributesContainer.SetActive(false);
     }

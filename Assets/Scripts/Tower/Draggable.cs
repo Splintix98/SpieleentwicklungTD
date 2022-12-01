@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using Plane = UnityEngine.Plane;
+using Vector3 = UnityEngine.Vector3;
 
 public class Draggable : MonoBehaviour
 {
@@ -10,12 +13,13 @@ public class Draggable : MonoBehaviour
     public Transform buildArea;
     public Transform buildAreaHalf;
     private float oldx, oldz;
-    private Transform selectedBlock = null;
+    private Transform currentTowerBlock = null;
     public ConstructionMenu constructionMenu;
+    TowerController towerController;
 
     void Start()
     {
-
+        towerController = gameObject.GetComponent<TowerController>();
     }
 
 
@@ -24,7 +28,6 @@ public class Draggable : MonoBehaviour
 
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
-
         if (plane.Raycast(ray, out float distance)) {
             Vector3 np = ray.GetPoint(distance);
             np.x = Mathf.RoundToInt(np.x + 0.5f) - 0.5f;
@@ -33,21 +36,26 @@ public class Draggable : MonoBehaviour
 
             if (np.x != oldx || np.z != oldz)
             {
-                selectedBlock = null;
                 float height = 1;
+                Transform selectedBlock = null;
                 foreach (Transform o in buildArea.GetComponentsInChildren<Transform>())
                 {
                     if (o.transform.position.x == np.x && o.transform.position.z == np.z && o.parent == buildArea)
                     {
-                        if (o.GetComponentsInChildren<Transform>().Length == 1) selectedBlock = o;
-                        Debug.Log(o.GetComponentsInChildren<Transform>().Length + "   ");
+                        if (o.GetComponentsInChildren<Transform>().Length == 1)
+                        {
+                            selectedBlock = o;
+                        }
                     }
                 }
                 foreach (Transform o in buildAreaHalf.GetComponentsInChildren<Transform>())
                 {
                     if (o.transform.position.x == np.x && o.transform.position.z == np.z && o.parent == buildAreaHalf)
                     {
-                        if (o.GetComponentsInChildren<Transform>().Length == 1) selectedBlock = o;
+                        if (o.GetComponentsInChildren<Transform>().Length == 1)
+                        {
+                            selectedBlock = o;
+                        }
                         height = 1.5f;
                     }
                 }
@@ -57,28 +65,30 @@ public class Draggable : MonoBehaviour
                 np.y = height;
                 if (selectedBlock != null)
                 {
-                    transform.position = new Vector3(np.x, np.y, np.z);
+                    currentTowerBlock = selectedBlock;
+                    gameObject.transform.position = new Vector3(np.x, np.y, np.z);
+                    towerController.EnableLineRender = true;
                 }
             }
 
 
-            if (selectedBlock != null)
+            if (currentTowerBlock != null)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    gameObject.transform.parent = selectedBlock;
+                    gameObject.transform.parent = currentTowerBlock;
                     Clickable clickable = gameObject.GetComponent<Clickable>();
-                    clickable.AllowInformationDisplay = true;
-                    constructionMenu.AllowNewTowerConstruction = true;
-
-                    TowerController towerController = gameObject.GetComponent<TowerController>();
-                    towerController.enabled = true;
+                    clickable.allowInformationDisplay = true;
+                    constructionMenu.allowNewTowerConstruction = true;
+                    towerController.EnableLineRender = false;
+                    towerController.EnableShoot = true;
 
                     Destroy(this);
                 }
 
                 if (Input.GetMouseButtonDown(1))
                 {
+                    constructionMenu.allowNewTowerConstruction = true;
                     Destroy(gameObject);
                     Destroy(this);
                 }

@@ -11,7 +11,7 @@ using Vector3 = UnityEngine.Vector3;
 public class Clickable : MonoBehaviour
 {
     //private Plane plane = new Plane(Vector3.down, 1.0f);
-    public bool AllowInformationDisplay { get; set; } = false;
+    public bool allowInformationDisplay { get; set; } = false;
     public TowerMenu towerMenu;
 
     // Start is called before the first frame update
@@ -27,9 +27,9 @@ public class Clickable : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (AllowInformationDisplay)
+        if (allowInformationDisplay)
         {
-            towerMenu.showTowerInformation(gameObject);
+            towerMenu.ShowTowerInformation(gameObject);
         }
 
     }

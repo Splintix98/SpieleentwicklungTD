@@ -9,7 +9,7 @@ public class TowerController : MonoBehaviour
     public float towerRange;
     public float projectileSpeed;
     private float lastShotCooldown;
-    public float towerDamage;
+    public int towerDamage;
     public float fireRate;
 
     // -1   = last enemy
@@ -19,6 +19,14 @@ public class TowerController : MonoBehaviour
 
     Transform towerRotationPoint;
     LineRenderer towerLineIndicator;
+    public bool EnableLineRender
+    {
+        get { return towerLineIndicator.enabled; }
+        set { towerLineIndicator.enabled = value; }
+    }
+
+    public bool EnableShoot { get; set; }
+
 
     public GameObject bulletPrefab;
 
@@ -33,7 +41,9 @@ public class TowerController : MonoBehaviour
         fireRate = 1;
         towerModi = 0;
 
+        
         towerLineIndicator = this.gameObject.GetComponent<LineRenderer>();
+        towerLineIndicator.enabled = false;
     }
 
     // Update is called once per frame
@@ -41,6 +51,7 @@ public class TowerController : MonoBehaviour
     {
         towerRotationPoint = this.transform.GetChild(1).transform.GetChild(0);
         RenderTowerIndicator();
+        if (!EnableShoot) return;
         Enemy enemy = findEnemy(towerModi);
 
         if (enemy == null) return;
@@ -175,5 +186,9 @@ public class TowerController : MonoBehaviour
     {
         this.bulletPrefab = bulletPrefab;
     }
+
+
+    
+
 
 }

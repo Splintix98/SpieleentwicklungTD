@@ -28,19 +28,19 @@ public class GamePausedMenu : MonoBehaviour
 
 
 
-    public void leaveLevel() {
+    public void LeaveLevel() {
         SceneManager.LoadScene("MenuScene");
         pauseMenu.SetActive(false);
     }
 
-    public void restartLevel()
+    public void RestartLevel()
     {
         SceneManager.LoadScene("GameScene");
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
     }
 
-    public void continueLevel()
+    public void ContinueLevel()
     {
         Time.timeScale = 1;
         pauseMenu.SetActive(false);

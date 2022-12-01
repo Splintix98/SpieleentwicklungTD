@@ -24,13 +24,13 @@ public class GameStatsMenu: MonoBehaviour
     }
 
 
-    public void show() {
+    public void Show() {
         gameStatsMenu.SetActive(true);
         killedEnemiesText.text = "Killed enemies: " + 100;
     }
 
 
-    public void gotoMainMenu()
+    public void GotoMainMenu()
     {
         SceneManager.LoadScene("MenuScene");
         gameStatsMenu.SetActive(false);

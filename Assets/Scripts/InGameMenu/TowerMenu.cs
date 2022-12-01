@@ -25,12 +25,19 @@ public class TowerMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetMouseButtonDown(1))
+        {
+            CloseMenu();
+        }
     }
 
 
 
-    public void showTowerInformation(GameObject tower) {
+    public void ShowTowerInformation(GameObject tower) {
+        if (selectedTower != null) {
+            TowerController oldTowerController = selectedTower.GetComponent<TowerController>();
+            oldTowerController.EnableLineRender = false;
+        }
         towerPointer.transform.position = new Vector3(tower.transform.position.x, tower.transform.position.y + 1.5f, tower.transform.position.z);
         towerPointer.transform.rotation = Camera.main.transform.rotation;
         towerPointer.transform.Rotate(0, 0, 180f);
@@ -38,8 +45,10 @@ public class TowerMenu : MonoBehaviour
         gameObject.SetActive(true);
         towerPointer.SetActive(true);
         selectedTower = tower;
+        
         string name = selectedTower.name;
         TowerController towerController = selectedTower.GetComponent<TowerController>();
+        towerController.EnableLineRender = true;
         name = name.Replace("_", " ");
         name = name.Replace("(", " ");
         name = name.Replace(")", " ");
@@ -55,7 +64,7 @@ public class TowerMenu : MonoBehaviour
     }
 
 
-    public void destroyTower()
+    public void DestroyTower()
     {
         towerPointer.SetActive(false);
         gameObject.SetActive(false);
@@ -67,11 +76,14 @@ public class TowerMenu : MonoBehaviour
     }
 
 
-    public void closeMenu() {
+    public void CloseMenu() {
         towerPointer.SetActive(false);
         gameObject.SetActive(false);
         constructionMenu.SetActive(true);
+        TowerController towerController = selectedTower.GetComponent<TowerController>();
+        towerController.EnableLineRender = false;
         selectedTower = null;
+
     }
 
 

@@ -7,7 +7,7 @@ public class Enemy : PoolableObject
 {
     public EnemyMovement Movement;
     public NavMeshAgent Agent;
-    public int Health;
+    private int Health;
 
     public int enemyID;
 
@@ -32,4 +32,17 @@ public class Enemy : PoolableObject
     {
         return this.enemyID;
     }
+
+
+
+    public void Hit(int damage)
+    {
+        Health -= damage;
+        if (Health < 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
 }

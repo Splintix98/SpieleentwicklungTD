@@ -9,7 +9,7 @@ public class ProjectileController : MonoBehaviour
     public Transform tower;
 
     public float projectileSpeed;
-    public float projectileDamage;
+    public int projectileDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -35,9 +35,9 @@ public class ProjectileController : MonoBehaviour
         GameObject otherObject = collision.gameObject;
         if (!otherObject.name.Contains("tower"))
         {
-            EnemyHealthController enemyHealthController = otherObject.GetComponent<EnemyHealthController>();
+            Enemy enemyHealthController = otherObject.GetComponent<Enemy>();
             if (enemyHealthController == null) return;
-            enemyHealthController.hit(projectileDamage);
+            enemyHealthController.Hit(projectileDamage);
         }
         Destroy(this.gameObject);
     }
@@ -51,7 +51,7 @@ public class ProjectileController : MonoBehaviour
         this.projectileSpeed = projectileSpeed;
     }
 
-    public void setprojectileDamage(float projectileDamage)
+    public void setprojectileDamage(int projectileDamage)
     {
         this.projectileDamage = projectileDamage;
     }
