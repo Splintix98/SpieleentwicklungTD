@@ -1710,7 +1710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &211498633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11953,7 +11953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba9246bc1497d241a91021341f20b72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 1175848195}
+  Target: {fileID: 105168005}
   SpawnPosition: {fileID: 1632541162}
   NumberOfEnemiesToSpawn: 10
   SpawnDelay: 2
@@ -17620,6 +17620,10 @@ PrefabInstance:
     - target: {fileID: 3779229556837765218, guid: 07fbb65db0daf4b4987177f6d2b9eb8f, type: 3}
       propertyPath: m_Name
       value: jewel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779229556837765218, guid: 07fbb65db0daf4b4987177f6d2b9eb8f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07fbb65db0daf4b4987177f6d2b9eb8f, type: 3}
