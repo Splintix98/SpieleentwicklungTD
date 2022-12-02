@@ -11,7 +11,6 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     public Transform Target;
-    public float MovementSpeed = 1;
     private NavMeshAgent Agent;
 
     // https://youtu.be/5uO0dXYbL-s?list=PLllNmP7eq6TSkwDN8OO0E8S6CWybSE_xC&t=443
@@ -20,7 +19,6 @@ public class EnemyMovement : MonoBehaviour
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
-        Agent.speed = MovementSpeed;
     }
 
     private void Update()

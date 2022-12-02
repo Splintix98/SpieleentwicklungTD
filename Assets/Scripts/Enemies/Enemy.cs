@@ -21,40 +21,20 @@ public class Enemy : PoolableObject
 
     private void Update()
     {
-        print("Agent: " + Agent.transform.position);
-        print("Block: " + DestroyBlock.position);
-        float xDistance = Math.Abs(Agent.transform.position.x - DestroyBlock.position.x);
-        float zDistance = Math.Abs(Agent.transform.position.z - DestroyBlock.position.z);
-        print("Distances: (" + xDistance + ", " + zDistance + ")");
-
-        if ((xDistance + zDistance) < 0.2)
-        {
-            print("GameObject Destroyed");
-            gameObject.SetActive(false);
-        }
-        
-        /*
-        print(Agent.transform.position);
-        //DestroyBlock.
-        NavMeshHit navMeshHit;
-        if (NavMesh.SamplePosition(Agent.transform.position, out navMeshHit, 0.1f, NavMesh.GetAreaFromName("Walkable")))
-        {
-            print(navMeshHit.mask);
-            // Destroy(gameObject);
-            //or gameObject.SetActive(false);
-        }
-        */
+        checkForDespawn();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void checkForDespawn()
     {
-        print("Collision detected");
-        GameObject otherObject = collision.gameObject;
-        if (!otherObject.name.Contains("foresttower") || otherObject.tag == "ForestTower")
+        float xDistance = Math.Abs(Agent.transform.position.x - DestroyBlock.position.x);
+        float zDistance = Math.Abs(Agent.transform.position.z - DestroyBlock.position.z);
+        
+        if ((xDistance + zDistance) < 0.2)
         {
-            // or Destroy(gameObject);
             gameObject.SetActive(false);
-            return;
+            // or: Destroy(gameObject);
+
+            PlayerStats.Instance.TakeDamage((float)0.25);
         }
     }
 
