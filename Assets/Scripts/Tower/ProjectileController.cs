@@ -41,6 +41,7 @@ public class ProjectileController : MonoBehaviour
         }
         Destroy(this.gameObject);
     }
+
     public void setEnemy(Enemy enemy)
     {
         this.enemy = enemy;

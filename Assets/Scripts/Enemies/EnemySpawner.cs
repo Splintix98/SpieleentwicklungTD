@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public Transform Target;
     public Transform SpawnPosition;
+    public Transform DestroyBlock;
     public int NumberOfEnemiesToSpawn = 5;
     public float SpawnDelay = 1f;
     public List<Enemy> EnemyPrefabs = new List<Enemy>();
@@ -70,6 +71,7 @@ public class EnemySpawner : MonoBehaviour
                 enemy.Agent.Warp(Hit.position);
                 enemy.Movement.Target = Target;
                 enemy.Agent.enabled = true;
+                enemy.DestroyBlock = DestroyBlock;
             }
         }
         else
