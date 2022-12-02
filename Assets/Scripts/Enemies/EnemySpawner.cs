@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform DestroyBlock;
     public int NumberOfEnemiesToSpawn = 5;
     public float SpawnDelay = 1f;
+    public float MovementSpeed = 1f;
     public List<Enemy> EnemyPrefabs = new List<Enemy>();
 
     private NavMeshTriangulation Triangulation;
@@ -69,8 +70,23 @@ public class EnemySpawner : MonoBehaviour
             if (NavMesh.SamplePosition(sourcePosition, out Hit, 2f, 1)) // -1 for all areas, 1 for walkable
             {
                 enemy.Agent.Warp(Hit.position);
+                
+                // attempt to let the agent look in the right direction when spawned
+                /*
+                var turnTorwardNavSteeringTarget = enemy.Agent.steeringTarget;
+                Vector3 direction = (turnTorwardNavSteeringTarget - enemy.transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * 5);
+                */
+
                 enemy.Movement.Target = Target;
                 enemy.Agent.enabled = true;
+
+                // MovementSpeed increase makes agent navigate worse (runs into walls, cannot turn fast enough)
+                // --> other parameters have to be adjusted as well
+                enemy.Agent.speed = MovementSpeed;
+                enemy.Agent.angularSpeed = MovementSpeed * 120;
+                enemy.Agent.acceleration = MovementSpeed * 8;
                 enemy.DestroyBlock = DestroyBlock;
             }
         }
