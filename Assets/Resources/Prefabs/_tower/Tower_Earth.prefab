@@ -460,9 +460,10 @@ MonoBehaviour:
   towerHealth: 100
   towerRange: 3
   projectileSpeed: 5
-  towerDamage: 5
+  towerDamage: 50
   fireRate: 1
-  fireBulletPrefab: {fileID: 0}
+  constructionCosts: 5
+  towerModi: 0
 --- !u!1 &4175755405113841035
 GameObject:
   m_ObjectHideFlags: 0

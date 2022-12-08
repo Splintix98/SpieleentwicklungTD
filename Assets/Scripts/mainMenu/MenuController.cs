@@ -49,16 +49,19 @@ public class MenuController : MonoBehaviour
     public void LoadLevelOne()
     {
         SceneManager.LoadScene(1);
+        Time.timeScale = 1;
     }
 
     public void LoadLevelTwo()
     {
         SceneManager.LoadScene(1);
+        Time.timeScale = 1;
     }
 
     public void LoadLevelThree()
     {
         SceneManager.LoadScene(1);
+        Time.timeScale = 1;
     }
 
     // ------------------------------------------------------

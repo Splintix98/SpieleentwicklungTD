@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
@@ -13,10 +11,15 @@ public class Enemy : PoolableObject
 
     public int enemyID;
 
+    [SerializeField]
+    private float lootForPlayer = 1;
+
+
+
     public void Start()
     {
         Health = 100;
-        print("enemy start");
+        //print("enemy start");
     }
 
     private void Update()
@@ -32,8 +35,7 @@ public class Enemy : PoolableObject
         if ((xDistance + zDistance) < 0.2)
         {
             gameObject.SetActive(false);
-            // or: Destroy(gameObject);
-
+            //or: Destroy(gameObject);
             PlayerStats.Instance.TakeDamage((float)0.25);
         }
     }
@@ -58,9 +60,12 @@ public class Enemy : PoolableObject
     public void Hit(int damage)
     {
         Health -= damage;
-        if (Health < 0)
+        if (Health < 0 && gameObject.activeSelf)
         {
+            PlayerStats.Instance.CollectLoot(lootForPlayer);
+            gameObject.SetActive(false);
             Destroy(gameObject);
+            Destroy(this);
         }
     }
 

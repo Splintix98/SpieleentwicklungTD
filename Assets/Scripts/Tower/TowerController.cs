@@ -1,3 +1,4 @@
+using Mono.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,9 +9,10 @@ public class TowerController : MonoBehaviour
     public float towerHealth;
     public float towerRange;
     public float projectileSpeed;
-    private float lastShotCooldown;
     public int towerDamage;
     public float fireRate;
+    [SerializeField]
+    private int constructionCosts;
 
     // -1   = last enemy
     // 0    = nearest
@@ -19,6 +21,9 @@ public class TowerController : MonoBehaviour
 
     Transform towerRotationPoint;
     LineRenderer towerLineIndicator;
+
+    public int ConstructionCosts { get { return constructionCosts; } }
+
     public bool EnableLineRender
     {
         get { return towerLineIndicator.enabled; }
@@ -28,17 +33,19 @@ public class TowerController : MonoBehaviour
     public bool EnableShoot { get; set; }
 
 
-    public GameObject bulletPrefab;
+    private GameObject bulletPrefab;
+
+    private float lastShotCooldown;
 
     // Start is called before the first frame update
     void Start()
     {
         towerHealth = 100;
-        towerRange = 3;
+        //towerRange = 3;
         projectileSpeed = 5.0f;
         lastShotCooldown = 0;
-        towerDamage = 5;
-        fireRate = 1;
+        //towerDamage = 5;
+        //fireRate = 1;
         towerModi = 0;
 
         
@@ -63,7 +70,7 @@ public class TowerController : MonoBehaviour
 
         if (lastShotCooldown <= 0)
         {
-            lastShotCooldown = fireRate;
+            lastShotCooldown = 1 / fireRate;
             if (hypothenuse < towerRange && bulletPrefab != null)
             {
                 GameObject b = Instantiate(bulletPrefab) as GameObject;

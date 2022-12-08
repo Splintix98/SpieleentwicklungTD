@@ -9,6 +9,9 @@ public class PlayerStats : MonoBehaviour
     public delegate void OnHealthChangedDelegate();
     public OnHealthChangedDelegate onHealthChangedCallback;
 
+    public delegate void UpdateGUIDelegate();
+    public UpdateGUIDelegate updateGUICallback;
+
     #region Sigleton
     private static PlayerStats instance;
     public static PlayerStats Instance
@@ -28,10 +31,36 @@ public class PlayerStats : MonoBehaviour
     private float maxHealth;
     [SerializeField]
     private float maxTotalHealth;
+    [SerializeField]
+    private float coins;
+    [SerializeField]
+    private float killedEnemies;
+    private float allCollectedCoins;
 
     public float Health { get { return health; } }
     public float MaxHealth { get { return maxHealth; } }
     public float MaxTotalHealth { get { return maxTotalHealth; } }
+
+    public float Coins { get { return coins; } }
+    public float KilledEnemies { get { return killedEnemies; } }
+
+    public float AllCollectedCoins { get { return allCollectedCoins; } }
+
+
+
+
+    public void CollectLoot(float loot) { 
+        coins += loot;
+        allCollectedCoins += loot;
+        killedEnemies++;
+        updateGUICallback();
+    }
+
+    public void SpendCoins(float costs)
+    {
+        coins -= costs;
+        updateGUICallback();
+    }
 
     public void Heal(float health)
     {
@@ -43,6 +72,9 @@ public class PlayerStats : MonoBehaviour
     {
         health -= dmg;
         ClampHealth();
+        if (health <= 0) {
+            FinalStatsMenu.Instance.Show("Game over");
+        }
     }
 
     public void AddHealth()

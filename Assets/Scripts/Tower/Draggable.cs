@@ -78,17 +78,17 @@ public class Draggable : MonoBehaviour
                 {
                     gameObject.transform.parent = currentTowerBlock;
                     Clickable clickable = gameObject.GetComponent<Clickable>();
-                    clickable.allowInformationDisplay = true;
-                    constructionMenu.allowNewTowerConstruction = true;
+                    clickable.AllowInformationDisplay = true;
+                    constructionMenu.AllowNewTowerConstruction = true;
                     towerController.EnableLineRender = false;
                     towerController.EnableShoot = true;
-
+                    PlayerStats.Instance.SpendCoins(towerController.ConstructionCosts);
                     Destroy(this);
                 }
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    constructionMenu.allowNewTowerConstruction = true;
+                    constructionMenu.AllowNewTowerConstruction = true;
                     Destroy(gameObject);
                     Destroy(this);
                 }
