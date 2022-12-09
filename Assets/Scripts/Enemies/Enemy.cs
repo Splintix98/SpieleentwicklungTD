@@ -7,8 +7,8 @@ public class Enemy : PoolableObject
     public EnemyMovement Movement;
     public NavMeshAgent Agent;
     public Transform DestroyBlock;
-    private int Health;
 
+    private int Health;
     public int enemyID;
 
     [SerializeField]
@@ -39,7 +39,7 @@ public class Enemy : PoolableObject
     {
         float xDistance = Math.Abs(Agent.transform.position.x - DestroyBlock.position.x);
         float zDistance = Math.Abs(Agent.transform.position.z - DestroyBlock.position.z);
-        
+
         if ((xDistance + zDistance) < 0.2)
         {
             gameObject.SetActive(false);
@@ -63,6 +63,11 @@ public class Enemy : PoolableObject
     public int getEnemyID()
     {
         return this.enemyID;
+    }
+
+    public int getHealth()
+    {
+        return Health;
     }
 
     public void Hit(int damage)

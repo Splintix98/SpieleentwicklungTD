@@ -57,11 +57,11 @@ public class ConstructButton : MonoBehaviour
             }
             if (newTower.name == "Tower_Air(Clone)")
             {
-                towercontroller.setProjectilePreset(Resources.Load("Prefabs/stoneProjectile/stoneProjectile") as GameObject);
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/airProjectile/airProjectile") as GameObject);
             }
             if (newTower.name == "Tower_Water(Clone)")
             {
-                towercontroller.setProjectilePreset(Resources.Load("Prefabs/stoneProjectile/stoneProjectile") as GameObject);
+                towercontroller.setProjectilePreset(Resources.Load("Prefabs/waterProjectile/waterProjectile") as GameObject);
             }
 
         }

@@ -15,7 +15,7 @@ public class TowerMenu : MonoBehaviour
 
     public TextMeshProUGUI tomwerUpgradecosts;
 
-
+    public TextMeshProUGUI infoTextForTowerFocus;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +62,61 @@ public class TowerMenu : MonoBehaviour
 
     }
 
+    public void setTowerFocusNext()
+    {
+        Debug.Log(selectedTower);
+        switch (selectedTower.GetComponent<TowerController>().getTowerModi())
+        {
+            case -1:
+                selectedTower.GetComponent<TowerController>().setTowerModi(0);
+                infoTextForTowerFocus.text = "nearest\nEnemy";
+                break;
+
+            case 0:
+                selectedTower.GetComponent<TowerController>().setTowerModi(1);
+                infoTextForTowerFocus.text = "first\nEnemy";
+                break;
+
+            case 1:
+                selectedTower.GetComponent<TowerController>().setTowerModi(99);
+                infoTextForTowerFocus.text = "strongest\nEnemy";
+                break;
+
+            case 99:
+                selectedTower.GetComponent<TowerController>().setTowerModi(-1);
+                infoTextForTowerFocus.text = "last\nEnemy";
+                break;
+        }
+
+
+    }
+
+    public void setTowerFocusLast()
+    {
+        switch (selectedTower.GetComponent<TowerController>().getTowerModi())
+        {
+            case -1:
+                selectedTower.GetComponent<TowerController>().setTowerModi(99);
+                infoTextForTowerFocus.text = "strongest\nEnemy";
+                break;
+
+            case 0:
+                selectedTower.GetComponent<TowerController>().setTowerModi(-1);
+                infoTextForTowerFocus.text = "last\nEnemy";
+                break;
+
+            case 1:
+                selectedTower.GetComponent<TowerController>().setTowerModi(0);
+                infoTextForTowerFocus.text = "nearest\nEnemy";
+                break;
+
+            case 99:
+                selectedTower.GetComponent<TowerController>().setTowerModi(1);
+                infoTextForTowerFocus.text = "first\nEnemy";
+                break;
+        }
+    }
+
 
     public void DestroyTower()
     {
@@ -69,7 +124,6 @@ public class TowerMenu : MonoBehaviour
         towerMenu.SetActive(false);
         constructionMenu.SetActive(true);
 
-        Destroy(selectedTower);
         Destroy(selectedTower);
         selectedTower = null;
     }

@@ -32,26 +32,44 @@ public class ProjectileController : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        // check collision from projectile and enemy
         GameObject otherObject = collision.gameObject;
-        if (!otherObject.name.Contains("tower"))
+        // ignore tower collision (projectil spawn there) and check for focused Enemy
+        if (otherObject.CompareTag("Enemy"))
         {
-            Enemy enemyHealthController = otherObject.GetComponent<Enemy>();
-            if (enemyHealthController == null) return;
-            enemyHealthController.Hit(projectileDamage);
+            if (enemy.getEnemyID() == otherObject.GetComponent<Enemy>().getEnemyID())
+            {
+                // hit enemy if exist
+                Enemy enemyHealthController = otherObject.GetComponent<Enemy>();
+                if (enemyHealthController == null)
+                {
+                    return;
+                    //Destroy(gameObject);
+                    //Destroy(this);
+                }
+                enemyHealthController.Hit(projectileDamage);
+                Destroy(this.gameObject);
+            }
         }
-        Destroy(this.gameObject);
+        if (!enemy.isActiveAndEnabled)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
+    // set Enemy by tower
     public void setEnemy(Enemy enemy)
     {
         this.enemy = enemy;
     }
 
+    // set projectile speed by tower
     public void setProjectileSpeed(float projectileSpeed)
     {
         this.projectileSpeed = projectileSpeed;
     }
 
+    // set projectile damage by tower
     public void setprojectileDamage(int projectileDamage)
     {
         this.projectileDamage = projectileDamage;
