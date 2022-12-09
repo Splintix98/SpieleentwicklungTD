@@ -13,7 +13,7 @@ public class TopStatsBar : MonoBehaviour
     void Start()
     {
         PlayerStats.Instance.updateGUICallback += UpdateGUI;
-        textMeshProMoney.text = PlayerStats.Instance.Coins.ToString() + "  <sprite=1>";
+        textMeshProMoney.text = PlayerStats.Instance.Coins.ToString(); // + "  <sprite=1>";
         textMeshProKilledEnemies.text = PlayerStats.Instance.KilledEnemies.ToString();
     }
 
@@ -23,7 +23,7 @@ public class TopStatsBar : MonoBehaviour
     }
 
     public void UpdateGUI() {
-        textMeshProMoney.text = PlayerStats.Instance.Coins.ToString()+ "  <sprite=1>";
+        textMeshProMoney.text = PlayerStats.Instance.Coins.ToString(); // + "  <sprite=1>";
         textMeshProKilledEnemies.text = PlayerStats.Instance.KilledEnemies.ToString();
     }
 
