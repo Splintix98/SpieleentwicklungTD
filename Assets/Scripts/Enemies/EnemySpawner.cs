@@ -10,25 +10,26 @@ public class EnemySpawner : MonoBehaviour
     public Transform DestroyBlock;
     public int NumberOfEnemiesToSpawn = 5;
     public float SpawnDelay = 1f;
-    private float MovementSpeed = 1f;
     public List<Enemy> EnemyPrefabs = new List<Enemy>();
 
-    private NavMeshTriangulation Triangulation;
+    // enemies are pregenerated on gamestart so that the performance in game is better
     private Dictionary<int, ObjectPool> EnemyObjectPools = new Dictionary<int, ObjectPool>();
 
+    // counter to give each enemy a unique ID
     private int enemyID = 0;
 
     private void Awake()
     {
+        // fill the pool with the according amount of enemies
         for (int i = 0; i < EnemyPrefabs.Count; i++)
         {
+            // TODO: throws warning that it couldn't generate agent because it is not close enough to the NavMesh
             EnemyObjectPools.Add(i, ObjectPool.CreateInstance(EnemyPrefabs[i], NumberOfEnemiesToSpawn/EnemyPrefabs.Count));
         }
     }
 
     private void Start()
     {
-        Triangulation = NavMesh.CalculateTriangulation();
         StartCoroutine(SpawnEnemies());
     }
 
@@ -40,18 +41,19 @@ public class EnemySpawner : MonoBehaviour
 
         while (spawnedEnemies < NumberOfEnemiesToSpawn)
         {
-            // makes sure, that enemies from all pools are spawned
-            int SpawnIndex = spawnedEnemies % EnemyPrefabs.Count;
+            // cycles through the pools so that enemies from all pools are spawned
+            int PoolIndex = spawnedEnemies % EnemyPrefabs.Count;
             
-            SpawnEnemy(SpawnIndex);
+            SpawnEnemy(PoolIndex);
             spawnedEnemies++;
             yield return Wait;
         }
     }
 
-    private void SpawnEnemy(int SpawnIndex)
+    // spawns an enemy from the given pool
+    private void SpawnEnemy(int PoolIndex)
     {
-        PoolableObject poolableObject = EnemyObjectPools[SpawnIndex].GetObject();
+        PoolableObject poolableObject = EnemyObjectPools[PoolIndex].GetObject();
 
         if (poolableObject != null)
         {
@@ -60,40 +62,29 @@ public class EnemySpawner : MonoBehaviour
             enemy.setEnemyID(enemyID);
             enemyID = enemyID + 1;
 
-            Vector3 spawnPosition = SpawnPosition.position;
-
             // TODO: Gegner spawnen aktuell am Rand des SpawnBlocks, sollen aber auf ihm spawnen
-            // TODO: Gegner gucken aktuell beim spawnen nicht in Richtung des Pfads
+            Vector3 spawnPosition = SpawnPosition.position;
 
             NavMeshHit Hit;
             if (NavMesh.SamplePosition(spawnPosition, out Hit, 5f, 1)) // -1 for all areas, 1 for walkable
             {
-                // enemy.transform.position = Hit.position;
                 enemy.Agent.Warp(Hit.position);
-                enemy.transform.Rotate(0, -90F, 0);
-                
-                // attempt to let the agent look in the right direction when spawned
-                /*
-                var turnTorwardNavSteeringTarget = enemy.Agent.steeringTarget;
-                Vector3 direction = (turnTorwardNavSteeringTarget - enemy.transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, lookRotation, Time.deltaTime * 5);
-                */
+                enemy.transform.Rotate(0, -90F, 0); // TODO: make rotation independent from map --> not a fixed value
 
                 enemy.Movement.Target = Target;
                 enemy.Agent.enabled = true;
 
-                // MovementSpeed increase makes agent navigate worse (runs into walls, cannot turn fast enough)
+                // increase of agents speed makes agent navigate worse (runs into walls, cannot turn fast enough)
                 // --> other parameters have to be adjusted as well
-                MovementSpeed = enemy.Agent.speed;
-                enemy.Agent.angularSpeed = MovementSpeed * 120;
-                enemy.Agent.acceleration = MovementSpeed * 8;
+                // 120 and 8 are the standard values for a speed of 1
+                enemy.Agent.angularSpeed = enemy.Agent.speed * 120;
+                enemy.Agent.acceleration = enemy.Agent.speed * 8;
                 enemy.DestroyBlock = DestroyBlock;
             }
         }
         else
         {
-            Debug.LogError($"Unable to fetch enemy of type {SpawnIndex} from object pool. Out of objects?");
+            Debug.LogError($"Unable to fetch enemy of type {PoolIndex} from object pool. Out of objects?");
         }
     }
 }
