@@ -19,7 +19,6 @@ public class Enemy : PoolableObject
     public void Start()
     {
         Health = 100;
-        //print("enemy start");
     }
 
     private void Update()
@@ -29,6 +28,7 @@ public class Enemy : PoolableObject
 
     private void OnCollisionEnter(Collision collision)
     {
+        print(collision.gameObject);
         if (collision.gameObject.CompareTag("Enemy"))
             Physics.IgnoreCollision(collision.collider, gameObject.GetComponent<Collider>());
     }

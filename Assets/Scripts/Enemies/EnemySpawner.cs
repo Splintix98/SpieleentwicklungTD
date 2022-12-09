@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < EnemyPrefabs.Count; i++)
         {
-            EnemyObjectPools.Add(i, ObjectPool.CreateInstance(EnemyPrefabs[i], NumberOfEnemiesToSpawn));
+            EnemyObjectPools.Add(i, ObjectPool.CreateInstance(EnemyPrefabs[i], NumberOfEnemiesToSpawn/EnemyPrefabs.Count));
         }
     }
 
@@ -40,7 +40,9 @@ public class EnemySpawner : MonoBehaviour
 
         while (spawnedEnemies < NumberOfEnemiesToSpawn)
         {
+            // makes sure, that enemies from all pools are spawned
             int SpawnIndex = spawnedEnemies % EnemyPrefabs.Count;
+            
             SpawnEnemy(SpawnIndex);
             spawnedEnemies++;
             yield return Wait;
@@ -58,18 +60,17 @@ public class EnemySpawner : MonoBehaviour
             enemy.setEnemyID(enemyID);
             enemyID = enemyID + 1;
 
-            int VertexIndex = Random.Range(0, Triangulation.vertices.Length);
+            Vector3 spawnPosition = SpawnPosition.position;
 
-            // Vector3 sourcePosition = Triangulation.vertices[VertexIndex];
-            // sourcePosition = new Vector3(0.5f, 0.0f, -3.5f);
-            Vector3 sourcePosition = SpawnPosition.position;
             // TODO: Gegner spawnen aktuell am Rand des SpawnBlocks, sollen aber auf ihm spawnen
             // TODO: Gegner gucken aktuell beim spawnen nicht in Richtung des Pfads
 
             NavMeshHit Hit;
-            if (NavMesh.SamplePosition(sourcePosition, out Hit, 2f, 1)) // -1 for all areas, 1 for walkable
+            if (NavMesh.SamplePosition(spawnPosition, out Hit, 5f, 1)) // -1 for all areas, 1 for walkable
             {
+                // enemy.transform.position = Hit.position;
                 enemy.Agent.Warp(Hit.position);
+                enemy.transform.Rotate(0, -90F, 0);
                 
                 // attempt to let the agent look in the right direction when spawned
                 /*
