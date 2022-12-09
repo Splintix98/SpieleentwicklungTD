@@ -27,6 +27,12 @@ public class Enemy : PoolableObject
         checkForDespawn();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+            Physics.IgnoreCollision(collision.collider, gameObject.GetComponent<Collider>());
+    }
+
     private void checkForDespawn()
     {
         float xDistance = Math.Abs(Agent.transform.position.x - DestroyBlock.position.x);
