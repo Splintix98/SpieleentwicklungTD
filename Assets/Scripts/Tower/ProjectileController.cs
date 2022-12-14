@@ -9,7 +9,7 @@ public class ProjectileController : MonoBehaviour
     public Transform tower;
 
     public float projectileSpeed;
-    public int projectileDamage;
+    public float projectileDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -70,7 +70,7 @@ public class ProjectileController : MonoBehaviour
     }
 
     // set projectile damage by tower
-    public void setprojectileDamage(int projectileDamage)
+    public void setprojectileDamage(float projectileDamage)
     {
         this.projectileDamage = projectileDamage;
     }

@@ -8,7 +8,7 @@ public class Enemy : PoolableObject
     public NavMeshAgent Agent;
     public Transform DestroyBlock;
 
-    private int Health;
+    private float Health;
     public int enemyID;
 
     [SerializeField]
@@ -65,12 +65,12 @@ public class Enemy : PoolableObject
         return this.enemyID;
     }
 
-    public int getHealth()
+    public float getHealth()
     {
         return Health;
     }
 
-    public void Hit(int damage)
+    public void Hit(float damage)
     {
         Health -= damage;
         if (Health < 0 && gameObject.activeSelf)

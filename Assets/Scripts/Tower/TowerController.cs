@@ -10,7 +10,7 @@ public class TowerController : MonoBehaviour
     public float towerHealth;
     public float towerRange;
     public float projectileSpeed;
-    public int towerDamage;
+    public float towerDamage;
     public float fireRate;
     [SerializeField]
     private int constructionCosts;
@@ -173,7 +173,6 @@ public class TowerController : MonoBehaviour
                     break;
             }
         }
-        Debug.Log(focusedEnemy.getEnemyID());
         // return enemy to tower
         return focusedEnemy;
     }
@@ -293,7 +292,7 @@ public class TowerController : MonoBehaviour
         return this.towerDamage;
     }
 
-    public void setTowerDamage(int towerDamage)
+    public void setTowerDamage(float towerDamage)
     {
         this.towerDamage = towerDamage;
     }
