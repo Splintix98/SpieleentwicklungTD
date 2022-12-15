@@ -139,6 +139,7 @@ MonoBehaviour:
   Movement: {fileID: 4457564502626213401}
   Agent: {fileID: 3253752557822913103}
   DestroyBlock: {fileID: 0}
+  Name: Turtle
   enemyID: 0
   lootForPlayer: 1
 --- !u!114 &4457564502626213401

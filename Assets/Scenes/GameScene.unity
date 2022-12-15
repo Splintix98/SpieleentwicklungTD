@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028381, g: 0.22571406, b: 0.30692294, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028337, g: 0.22571321, b: 0.30692178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15283,7 +15283,7 @@ MonoBehaviour:
   Target: {fileID: 105168005}
   SpawnPosition: {fileID: 1632541162}
   DestroyBlock: {fileID: 1247021717}
-  NumberOfEnemiesToSpawn: 20
+  NumberOfEnemiesToSpawn: 200
   SpawnDelay: 0.5
   EnemyPrefabs:
   - {fileID: 5026040436331729747, guid: 02b1ea06de44fad4cb4b8a4ef9b84469, type: 3}

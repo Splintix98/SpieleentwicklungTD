@@ -723,6 +723,7 @@ MonoBehaviour:
   Movement: {fileID: -8271678663000931743}
   Agent: {fileID: 4780261984417105620}
   DestroyBlock: {fileID: 0}
+  Name: Skeleton
   enemyID: 1
   lootForPlayer: 2
 --- !u!114 &-8271678663000931743

@@ -2,23 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Waves : MonoBehaviour
+public class Waves
 {
 
-    // TODO: maybe build own datatype for waves so that theres additional options like delays between waves and so on?
+    private List<Enemy> enemyPrefabs = new List<Enemy>();
 
-    public List<List<int>> wave_1 = new List<List<int>>();
+    public List<WaveElement> wave_1 = new List<WaveElement>();
+    public List<WaveElement> wave_2 = new List<WaveElement>();
 
-    private void Start()
+    private void initializeWave_1()
     {
-        // refers to list of EnemyPrefabs passed to the EnemyManager-Gameobject and handled in the EnemySpawner-Script
-        //      if Element 0 of that EnemyPrefabs-List is a turtle, than first 10 turtles are being spawned
+        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 15, spawnDelay: 500));
+        wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 3000));
+        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 5, spawnDelay: 250));
+        wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 15000));
+    }
 
-        // { EnemyPrefabs-Index, Amount to spawn, Milliseconds between spawns }
-        wave_1.Add(new List<int>() { 0, 10, 1000 });
-        wave_1.Add(new List<int>() { 1, 15, 500 });
-        wave_1.Add(new List<int>() { 0, 10, 1000 });
-        wave_1.Add(new List<int>() { 0, 10, 500 });
-        wave_1.Add(new List<int>() { 1, 10, 300 });
+    private void initializeWave_2()
+    {
+        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 10, spawnDelay: 500));
+        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 3000));
+        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 10, spawnDelay: 250));
+        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 15000));
+    }
+
+    public Waves(List<Enemy> enemyPrefabs)
+    {
+        this.enemyPrefabs = enemyPrefabs;
+    }
+
+    public List<List<WaveElement>> map_0()
+    {
+        initializeWave_1();
+        initializeWave_2();
+
+        List<List<WaveElement>> waves_return = new List<List<WaveElement>>();
+        waves_return.Add(wave_1);
+        waves_return.Add(wave_2);
+        return waves_return;
     }
 }

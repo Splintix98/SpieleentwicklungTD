@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     public int NumberOfEnemiesToSpawn = 5;
     public float SpawnDelay = 1f;
     public List<Enemy> EnemyPrefabs = new List<Enemy>();
+    private List<List<WaveElement>> Waves;
 
     // enemies are pregenerated on gamestart so that the performance in game is better
     private Dictionary<int, ObjectPool> EnemyObjectPools = new Dictionary<int, ObjectPool>();
@@ -20,32 +21,66 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
+        Waves WavesBuilder = new Waves(EnemyPrefabs);
+        Waves = WavesBuilder.map_0();
+
+        if (Waves == null)
+        {
+            throw new System.Exception("Waves is null.");
+        }
+
+        List<int> enemyAmounts = getEnemyAmounts(Waves);
+
         // fill the pool with the according amount of enemies
         for (int i = 0; i < EnemyPrefabs.Count; i++)
         {
             // TODO: throws warning that it couldn't generate agent because it is not close enough to the NavMesh
-            EnemyObjectPools.Add(i, ObjectPool.CreateInstance(EnemyPrefabs[i], NumberOfEnemiesToSpawn/EnemyPrefabs.Count));
+            //      maybe because Awake happens before the NavMesh Generation/Intialization?
+            EnemyObjectPools.Add(i, ObjectPool.CreateInstance(EnemyPrefabs[i], enemyAmounts[i]));
         }
     }
 
     private void Start()
     {
-        StartCoroutine(SpawnEnemies());
+        StartCoroutine(ProcessWaves(Waves));
     }
 
-    private IEnumerator SpawnEnemies()
+    private IEnumerator ProcessWaves(List<List<WaveElement>> waves)
     {
-        WaitForSeconds Wait = new WaitForSeconds(SpawnDelay);
+        WaitForSeconds Wait;
 
-        int spawnedEnemies = 0;
-
-        while (spawnedEnemies < NumberOfEnemiesToSpawn)
+        if (waves == null)
         {
-            // cycles through the pools so that enemies from all pools are spawned
-            int PoolIndex = spawnedEnemies % EnemyPrefabs.Count;
-            
-            SpawnEnemy(PoolIndex);
-            spawnedEnemies++;
+            throw new System.Exception("waves is null.");
+        }
+
+        
+        foreach (var wave in waves)
+        {
+            foreach (var waveElem in wave)
+            {
+                // either type is delay --> simply wait for specified seconds
+                if (waveElem.waveElementType == WaveElementType.Delay)
+                {
+                    Wait = new WaitForSeconds(waveElem.delay / 1000);
+                    yield return Wait;
+                }
+                // or type is spawn enemy --> spawn the required enemy
+                else if (waveElem.waveElementType == WaveElementType.EnemySpawn)
+                {
+                    Wait = new WaitForSeconds(waveElem.spawnDelay / 1000);
+
+                    for (int i = 0; i < waveElem.enemyCount; i++)
+                    {
+                        SpawnEnemy(getIndexOfEnemyPool(waveElem.enemyPrefab));                            
+
+                        yield return Wait;
+                    }
+                }
+            }
+
+            // TODO: Wait until all enemies have despawned either because killed or went into tower
+            Wait = new WaitForSeconds(15);
             yield return Wait;
         }
     }
@@ -86,5 +121,48 @@ public class EnemySpawner : MonoBehaviour
         {
             Debug.LogError($"Unable to fetch enemy of type {PoolIndex} from object pool. Out of objects?");
         }
+    }
+
+    // returns how many of each enemy can spawn at most so that the pools can be created
+    private List<int> getEnemyAmounts(List<List<WaveElement>> waves)
+    {
+        // for each different Enemy in EnemyPrefabs it holds the maximum amount the enemy will spawn in a wave
+        // amount per wave because in a wave multiple batches of the same enemy can be active at once
+        //      between waves there won't survive any enemies
+        List<int> enemyAmounts = new List<int>();
+
+        foreach (var enemyType in EnemyPrefabs)
+        {
+            int waveAmounts = 0;
+            foreach (var wave in waves)
+            {
+                foreach(var waveElem in wave)
+                {
+                    if (waveElem.waveElementType == WaveElementType.EnemySpawn && waveElem.enemyPrefab.Name == enemyType.Name)
+                    {
+                        waveAmounts += waveElem.enemyCount;
+                    }
+                }
+            }
+            enemyAmounts.Add(waveAmounts);
+        }
+
+        return enemyAmounts;
+    }
+
+    // returns the index of the pool that holds the enemies of the given type
+    private int getIndexOfEnemyPool(Enemy enemy)
+    {
+        // find the pool to spawn enemies from
+        int poolIndex = 0;
+        for (int j = 0; j < EnemyPrefabs.Count; j++)
+        {
+            if (EnemyPrefabs[j].Name == enemy.Name)
+            {
+                return j;
+            }
+        }
+
+        return poolIndex;
     }
 }

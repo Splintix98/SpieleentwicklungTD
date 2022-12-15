@@ -8,6 +8,7 @@ public class Enemy : PoolableObject
     public NavMeshAgent Agent;
     public Transform DestroyBlock;
 
+    public String Name;
     private float Health;
     public int enemyID;
 
@@ -29,11 +30,13 @@ public class Enemy : PoolableObject
     // this function is supposed to disable collision between agents but it doesn't work
     // on NavMeshAgents there is currently only the option to select Quality "None" for Obstacle Avoidance if you want them
     //      to not collide with each other. However that also results in no other collisions being registered anymore.
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
             Physics.IgnoreCollision(collision.collider, gameObject.GetComponent<Collider>());
     }
+    */
 
     private void checkForDespawn()
     {
