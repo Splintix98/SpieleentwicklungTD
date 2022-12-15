@@ -1,7 +1,9 @@
+using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 public class TowerMenu : MonoBehaviour
 {
@@ -16,20 +18,31 @@ public class TowerMenu : MonoBehaviour
     public TextMeshProUGUI towerDamage;
     public TextMeshProUGUI towerRange;
 
-    public TextMeshProUGUI upgrade_1_label;
-    public TextMeshProUGUI upgrade_2_label;
-    public TextMeshProUGUI upgrade_3_label;
+    public TextMeshProUGUI upgrade_1_label_text;
+    public TextMeshProUGUI upgrade_2_label_text;
+    public TextMeshProUGUI upgrade_3_label_text;
+
     public TextMeshProUGUI upgrade_1_costs_label;
     public TextMeshProUGUI upgrade_2_costs_label;
     public TextMeshProUGUI upgrade_3_costs_label;
 
-    public Object[] banner_upgrade_path_1;
-    public Object[] banner_upgrade_path_2;
-    public Object[] banner_upgrade_path_3;
+    public TextMeshProUGUI playermoney;
+
+    public Object[] progressbar_upgrade_path_1;
+    public Object[] progressbar_upgrade_path_2;
+    public Object[] progressbar_upgrade_path_3;
 
     private int level_upgrade_1;
     private int level_upgrade_2;
     private int level_upgrade_3;
+
+    int upgrade_1_costs;
+    int upgrade_2_costs;
+    int upgrade_3_costs;
+
+    bool allowUpdate_1_moneycheck;
+    bool allowUpdate_2_moneycheck;
+    bool allowUpdate_3_moneycheck;
 
     public TextMeshProUGUI infoTextForTowerFocus;
 
@@ -43,6 +56,19 @@ public class TowerMenu : MonoBehaviour
         level_upgrade_1 = 0;
         level_upgrade_2 = 0;
         level_upgrade_3 = 0;
+
+        upgrade_1_costs = 1;
+        upgrade_2_costs = 1;
+        upgrade_3_costs = 1;
+
+        // rename different "upgrade" labels.
+        upgrade_1_label_text.text = "Towerrange";
+        upgrade_2_label_text.text = "Damage";
+        upgrade_3_label_text.text = "Attackspeed";
+
+        upgrade_1_costs_label.text = "1   <sprite=1>";
+        upgrade_2_costs_label.text = "1   <sprite=1>";
+        upgrade_3_costs_label.text = "1   <sprite=1>";
     }
 
     // Update is called once per frame
@@ -51,6 +77,42 @@ public class TowerMenu : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && selectedTower)
         {
             CloseMenu();
+        }
+
+
+        // check if player has enough money for upgradePath 1
+        if (upgrade_1_costs <= PlayerStats.Instance.Coins && !String.Equals(upgrade_1_costs_label.text, "max level"))
+        {
+            allowUpdate_1_moneycheck = true;
+            upgrade_1_costs_label.color = new Color(255, 255, 255, 1);
+        } else
+        {
+            allowUpdate_1_moneycheck = false;
+            upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
+        }
+
+        // check if player has enough money for upgradePath 2
+        if (upgrade_2_costs <= PlayerStats.Instance.Coins && !String.Equals(upgrade_2_costs_label.text,"max level"))
+        {
+            allowUpdate_2_moneycheck = true;
+            upgrade_2_costs_label.color = new Color(255, 255, 255, 1);
+        }
+        else
+        {
+            allowUpdate_2_moneycheck = false;
+            upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
+        }
+
+        // check if player has enough money for upgradePath 3
+        if (upgrade_3_costs <= PlayerStats.Instance.Coins && !String.Equals(upgrade_3_costs_label.text, "max level"))
+        {
+            allowUpdate_3_moneycheck = true;
+            upgrade_3_costs_label.color = new Color(255, 255, 255, 1);
+        }
+        else
+        {
+            allowUpdate_3_moneycheck = false;
+            upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
         }
     }
 
@@ -148,76 +210,80 @@ public class TowerMenu : MonoBehaviour
     {
         towerMenu.SetActive(false);
         upgradeMenu.SetActive(true);
-
-        // rename different "upgrade" labels.
-        upgrade_1_label.text = "more\nTowerrange";
-        upgrade_2_label.text = "more\nProjectile-\ndamage";
-        upgrade_3_label.text = "more\nAttackspeed";
-
-        upgrade_1_costs_label.text = "costs: 1";
-        upgrade_2_costs_label.text = "costs: 1";
-        upgrade_3_costs_label.text = "costs: 1";
     }
 
     // ---- Upgrade path 1 ---------------------------
 
     public void do_upgrade_1()
     {
-        if (level_upgrade_1 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0))
+        if (level_upgrade_1 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_1_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_1_costs);
             selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
-            upgrade_1_costs_label.text = "costs: 1";
             level_upgrade_1 += 1;
-            banner_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_1_costs += 1;
+            upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>";
+            progressbar_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
             if (level_upgrade_2 > 0)
             {
                 level_upgrade_3 = -1;
                 upgrade_3_costs_label.text = "max level";
-                banner_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-                banner_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
+                progressbar_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             }
             if (level_upgrade_3 > 0)
             {
                 level_upgrade_2 = -1;
                 upgrade_2_costs_label.text = "max level";
-                banner_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-                banner_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
+                progressbar_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             }
         }
-        else if (level_upgrade_1 == 1)
+        else if (level_upgrade_1 == 1 && allowUpdate_1_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_1_costs);
             selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
-            upgrade_1_costs_label.text = "costs: 2";
             level_upgrade_1 += 1;
-            banner_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_1_costs += 1;
+            upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>";
+            progressbar_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
-            if (level_upgrade_2 >= 2 || level_upgrade_3 >= 2)
+            if (level_upgrade_2 > 2 || level_upgrade_3 > 2)
             {
                 upgrade_1_costs_label.text = "max level";
+                upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
+                level_upgrade_1 = -1;
             }
         }
-        else if (level_upgrade_1 == 2 && level_upgrade_2 <= 2 && level_upgrade_3 <= 2)
+        else if (level_upgrade_1 == 2 && level_upgrade_2 <= 2 && level_upgrade_3 <= 2 && allowUpdate_1_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_1_costs);
             selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
-            upgrade_1_costs_label.text = "costs: 3";
             level_upgrade_1 += 1;
-            banner_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_1_costs += 1;
+            upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>";
+            progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
-            banner_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
         }
-        else if (level_upgrade_1 == 3)
+        else if (level_upgrade_1 == 3 && allowUpdate_1_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_1_costs);
             selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
             upgrade_1_costs_label.text = "max level";
+            upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
             level_upgrade_1 += 1;
-            banner_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
-        } else
-        {
-            upgrade_1_costs_label.text = "max level";
+            progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
         }
     }
 
@@ -225,62 +291,74 @@ public class TowerMenu : MonoBehaviour
 
     public void do_upgrade_2()
     {
-        if (level_upgrade_2 == 0 && (level_upgrade_1 == 0 || level_upgrade_3 == 0))
+        if (level_upgrade_2 == 0 && (level_upgrade_1 == 0 || level_upgrade_3 == 0) && allowUpdate_2_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_2_costs);
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
-            upgrade_2_costs_label.text = "costs: 1";
             level_upgrade_2 += 1;
-            banner_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_2_costs += 1;
+            upgrade_2_costs_label.text = upgrade_2_costs + "   <sprite=1>";
+            progressbar_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
             if (level_upgrade_1 > 0)
             {
                 level_upgrade_3 = -1;
                 upgrade_3_costs_label.text = "max level";
-                banner_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-                banner_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
+                progressbar_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             }
             if (level_upgrade_3 > 0)
             {
                 level_upgrade_1 = -1;
                 upgrade_1_costs_label.text = "max level";
-                banner_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-                banner_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
+                progressbar_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             }
         }
-        else if (level_upgrade_2 == 1)
+        else if (level_upgrade_2 == 1 && allowUpdate_2_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_2_costs);
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
-            upgrade_2_costs_label.text = "costs: 2";
             level_upgrade_2 += 1;
-            banner_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_2_costs += 1;
+            upgrade_2_costs_label.text = upgrade_2_costs + "   <sprite=1>";
+            progressbar_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
-            if (level_upgrade_1 >= 2 || level_upgrade_3 >= 2)
+            if (level_upgrade_1 > 2 || level_upgrade_3 > 2)
             {
                 upgrade_2_costs_label.text = "max level";
+                upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
+                level_upgrade_2 = -1;
             }
         }
-        else if (level_upgrade_2 == 2 && level_upgrade_1 <= 2 && level_upgrade_3 <= 2)
+        else if (level_upgrade_2 == 2 && level_upgrade_1 <= 2 && level_upgrade_3 <= 2 && allowUpdate_2_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_2_costs);
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
-            upgrade_2_costs_label.text = "costs: 3";
             level_upgrade_2 += 1;
-            banner_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_2_costs += 1;
+            upgrade_2_costs_label.text = upgrade_2_costs + "   <sprite=1>";
+            progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
-            banner_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
         }
-        else if (level_upgrade_2 == 3)
+        else if (level_upgrade_2 == 3 && allowUpdate_2_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_2_costs);
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
             upgrade_2_costs_label.text = "max level";
+            upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
             level_upgrade_2 += 1;
-            banner_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
-        }
-        else
-        {
-            upgrade_1_costs_label.text = "max level";
+            progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
         }
     }
 
@@ -288,62 +366,74 @@ public class TowerMenu : MonoBehaviour
 
     public void do_upgrade_3()
     {
-        if (level_upgrade_3 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0))
+        if (level_upgrade_3 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_3_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_3_costs);
             selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
-            upgrade_3_costs_label.text = "costs: 1";
             level_upgrade_3 += 1;
-            banner_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_3_costs += 1;
+            upgrade_3_costs_label.text = upgrade_3_costs + "   <sprite=1>";
+            progressbar_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
             if (level_upgrade_1 > 0)
             {
                 level_upgrade_2 = -1;
                 upgrade_2_costs_label.text = "max level";
-                banner_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-                banner_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
+                progressbar_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             }
             if (level_upgrade_2 > 0)
             {
                 level_upgrade_1 = -1;
                 upgrade_1_costs_label.text = "max level";
-                banner_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-                banner_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
+                progressbar_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             }
         }
-        else if (level_upgrade_3 == 1)
+        else if (level_upgrade_3 == 1 && allowUpdate_3_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_3_costs);
             selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
-            upgrade_3_costs_label.text = "costs: 2";
             level_upgrade_3 += 1;
-            banner_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_3_costs += 1;
+            upgrade_3_costs_label.text = upgrade_3_costs + "   <sprite=1>";
+            progressbar_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
-            if (level_upgrade_1 >= 2 || level_upgrade_2 >= 2)
+            if (level_upgrade_1 > 2 || level_upgrade_2 > 2)
             {
                 upgrade_3_costs_label.text = "max level";
+                upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
+                level_upgrade_3 = -1;
             }
         }
-        else if (level_upgrade_3 == 2 && level_upgrade_2 <= 1 && level_upgrade_3 <= 2)
+        else if (level_upgrade_3 == 2 && level_upgrade_1 <= 2 && level_upgrade_2 <= 2 && allowUpdate_3_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_3_costs);
             selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
-            upgrade_3_costs_label.text = "costs: 3";
             level_upgrade_3 += 1;
-            banner_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            upgrade_3_costs += 1;
+            upgrade_3_costs_label.text = upgrade_3_costs + "   <sprite=1>";
+            progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
-            banner_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-            banner_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
         }
-        else if (level_upgrade_3 == 3)
+        else if (level_upgrade_3 == 3 && allowUpdate_3_moneycheck)
         {
+            PlayerStats.Instance.SpendCoins(upgrade_3_costs);
             selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
             upgrade_3_costs_label.text = "max level";
+            upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
             level_upgrade_3 += 1;
-            banner_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
-        }
-        else
-        {
-            upgrade_3_costs_label.text = "max level";
+            progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
         }
     }
 
