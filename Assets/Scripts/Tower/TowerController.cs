@@ -47,7 +47,7 @@ public class TowerController : MonoBehaviour
         towerRange = 5;
         projectileSpeed = 5.0f;
         lastShotCooldown = 0;
-        towerDamage = 1;
+        towerDamage = 20.0f;
         fireRate = 1f;
         towerModi = 1;
 
