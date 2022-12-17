@@ -9,13 +9,13 @@ public class Enemy : PoolableObject
     public Transform DestroyBlock;
 
     public String Name;
-    private float Health;
+    public float Health;
     public int enemyID;
 
     [SerializeField]
     private float lootForPlayer = 1;
 
-
+    public GameObject healthBar;
 
     public void Start()
     {
@@ -51,11 +51,19 @@ public class Enemy : PoolableObject
         }
     }
 
+    void OnMouseDown()
+    {
+        EnemyMenu.Instance.ShowEnemyInformation(gameObject, healthBar);
+    }
+
     public override void OnDisable()
     {
         base.OnDisable();
-
         Agent.enabled = false;
+        if (gameObject == EnemyMenu.Instance.SelectedEnemy)
+        {
+            EnemyMenu.Instance.CloseMenu();
+        }
     }
 
     public void setEnemyID(int id)
@@ -76,12 +84,22 @@ public class Enemy : PoolableObject
     public void Hit(float damage)
     {
         Health -= damage;
-        if (Health < 0 && gameObject.activeSelf)
+        Debug.Log(Health);
+        if (Health <= 0 && gameObject.activeSelf)
         {
+            if (gameObject == EnemyMenu.Instance.SelectedEnemy)
+            {
+                EnemyMenu.Instance.CloseMenu();
+            }
             PlayerStats.Instance.CollectLoot(lootForPlayer);
             gameObject.SetActive(false);
             Destroy(gameObject);
             Destroy(this);
+        }
+        else
+        {
+            EnemyHealthBar enemyHealthBar = healthBar.GetComponent<EnemyHealthBar>();
+            enemyHealthBar.updateEnemyHealthBar(Health);
         }
     }
 

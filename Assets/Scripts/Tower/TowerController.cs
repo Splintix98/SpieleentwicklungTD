@@ -27,7 +27,7 @@ public class TowerController : MonoBehaviour
     LineRenderer towerLineIndicator;
 
     public int ConstructionCosts { get { return constructionCosts; } }
-
+    public bool AllowInformationDisplay { get; set; } = false;
     public bool EnableLineRender
     {
         get { return towerLineIndicator.enabled; }
@@ -44,11 +44,11 @@ public class TowerController : MonoBehaviour
     {
         // init variables
         towerHealth = 100;
-        towerRange = 5;
+        //towerRange = 5;
         projectileSpeed = 5.0f;
         lastShotCooldown = 0;
-        towerDamage = 20.0f;
-        fireRate = 1f;
+        //towerDamage = 20.0f;
+        //fireRate = 1f;
         towerModi = 1;
 
         // disable linerenderer on start
@@ -232,6 +232,18 @@ public class TowerController : MonoBehaviour
     }
 
     // ---------------------------------------------------------------------------------
+
+
+    void OnMouseDown()
+    {
+        if (AllowInformationDisplay)
+        {
+            TowerMenu.Instance.ShowTowerInformation(gameObject);
+        }
+
+    }
+
+
 
     // set prefab for projectile
     public void setProjectilePreset(GameObject bulletPrefab)

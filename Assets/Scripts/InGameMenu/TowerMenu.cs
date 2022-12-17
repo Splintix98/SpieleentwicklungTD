@@ -2,15 +2,33 @@ using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 public class TowerMenu : MonoBehaviour
 {
+
+
+    #region Sigleton
+    private static TowerMenu instance;
+    public static TowerMenu Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType<TowerMenu>();
+            return instance;
+        }
+    }
+    #endregion
+
+
+
     public GameObject towerPointer;
     public GameObject constructionMenu;
     public GameObject upgradeMenu;
-    private GameObject selectedTower;
+    public GameObject selectedTower;
     public GameObject towerMenu;
 
     public TextMeshProUGUI towerName;
@@ -77,6 +95,23 @@ public class TowerMenu : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && selectedTower)
         {
             CloseMenu();
+            return;
+        }
+        if (Input.GetMouseButtonDown(0) && selectedTower && !EventSystem.current.IsPointerOverGameObject())
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject != selectedTower)
+                {
+                    CloseMenu();
+                }
+            }
+            else
+            {
+                CloseMenu();
+            }
         }
 
 
@@ -143,7 +178,6 @@ public class TowerMenu : MonoBehaviour
         towerHealth.text = "Health: " + towerController.towerHealth;
         towerDamage.text = "Damage: " + towerController.towerDamage.ToString();
         towerRange.text = "Range: " + towerController.towerRange;
-
     }
 
     // -------------------------------------------------
@@ -441,10 +475,17 @@ public class TowerMenu : MonoBehaviour
 
     public void DestroyTower()
     {
+        /*
         towerPointer.SetActive(false);
         towerMenu.SetActive(false);
         constructionMenu.SetActive(true);
 
+        Destroy(selectedTower);
+        selectedTower = null;
+        */
+        towerPointer.SetActive(false);
+        towerMenu.SetActive(false);
+        constructionMenu.SetActive(true);
         Destroy(selectedTower);
         selectedTower = null;
     }

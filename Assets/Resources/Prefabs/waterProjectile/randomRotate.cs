@@ -18,8 +18,6 @@ public class randomRotate : MonoBehaviour
         // reset cooldown
         int Axis = Random.Range(0, 2);
         int Rotation = Random.Range(0, 10);
-        Debug.Log(this.transform.rotation.x);
-
         if (Axis == 0)
         {
             this.transform.Rotate(new Vector4(Time.deltaTime / 5, Rotation, this.transform.rotation.y, this.transform.rotation.z));
