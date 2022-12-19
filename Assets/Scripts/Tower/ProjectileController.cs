@@ -19,7 +19,7 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemy && enemy.enabled)
+        if (enemy.isActiveAndEnabled)
         {
             transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, projectileSpeed * Time.deltaTime);
         }
@@ -50,10 +50,12 @@ public class ProjectileController : MonoBehaviour
                 enemyHealthController.Hit(projectileDamage);
                 Destroy(this.gameObject);
             }
-        }
-        if (!enemy.isActiveAndEnabled)
+        } 
+        else
         {
-            Destroy(this.gameObject);
+            //Physics.IgnoreCollision(otherObject.collider, collider);
+            
+            Physics.IgnoreCollision(otherObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
     }
 

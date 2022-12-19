@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -27,9 +28,11 @@ public class TowerMenu : MonoBehaviour
 
     public GameObject towerPointer;
     public GameObject constructionMenu;
-    public GameObject upgradeMenu;
+    public GameObject towerMainMenu;
+    public GameObject towerOptionsMenu;
+    public GameObject towerUpgradeMenu;
     public GameObject selectedTower;
-    public GameObject towerMenu;
+
 
     public TextMeshProUGUI towerName;
     public TextMeshProUGUI towerHealth;
@@ -68,8 +71,9 @@ public class TowerMenu : MonoBehaviour
     void Start()
     {
         constructionMenu.SetActive(true);
-        towerMenu.SetActive(false);
-        upgradeMenu.SetActive(false);
+        towerOptionsMenu.SetActive(true);
+        towerUpgradeMenu.SetActive(false);
+        towerMainMenu.SetActive(false);
 
         level_upgrade_1 = 0;
         level_upgrade_2 = 0;
@@ -162,7 +166,9 @@ public class TowerMenu : MonoBehaviour
         towerPointer.transform.rotation = Camera.main.transform.rotation;
         towerPointer.transform.Rotate(0, 0, 180f);
         constructionMenu.SetActive(false);
-        towerMenu.SetActive(true);
+        towerOptionsMenu.SetActive(true);
+        towerUpgradeMenu.SetActive(false);
+        towerMainMenu.SetActive(true);
         towerPointer.SetActive(true);
         selectedTower = tower;
         
@@ -242,8 +248,8 @@ public class TowerMenu : MonoBehaviour
 
     public void ShowUpgradeMenu()
     {
-        towerMenu.SetActive(false);
-        upgradeMenu.SetActive(true);
+        towerOptionsMenu.SetActive(false);
+        towerUpgradeMenu.SetActive(true);
     }
 
     // ---- Upgrade path 1 ---------------------------
@@ -484,7 +490,8 @@ public class TowerMenu : MonoBehaviour
         selectedTower = null;
         */
         towerPointer.SetActive(false);
-        towerMenu.SetActive(false);
+        towerMainMenu.SetActive(false);
+
         constructionMenu.SetActive(true);
         Destroy(selectedTower);
         selectedTower = null;
@@ -494,8 +501,9 @@ public class TowerMenu : MonoBehaviour
     public void CloseMenu() {
         TowerController towerController = selectedTower.GetComponent<TowerController>();
         towerPointer.SetActive(false);
-        towerMenu.SetActive(false);
-        upgradeMenu.SetActive(false);
+        towerOptionsMenu.SetActive(false);
+        towerOptionsMenu.SetActive(true);
+        towerMainMenu.SetActive(false);
         constructionMenu.SetActive(true);
         towerController.EnableLineRender = false;
         selectedTower = null;
