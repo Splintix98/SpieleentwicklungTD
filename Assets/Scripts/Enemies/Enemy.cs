@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : PoolableObject
 {
@@ -12,6 +13,14 @@ public class Enemy : PoolableObject
     public float Health;
     public int enemyID;
 
+    // effects on Enemy
+    Boolean enemyIsBurning;
+    Boolean enemyIsSlowed;
+    float burningTickTimer;
+    float burningDamage;
+    float slownessStrength;
+    bool blockInfinitySlow;
+
     [SerializeField]
     private float lootForPlayer = 1;
 
@@ -20,11 +29,33 @@ public class Enemy : PoolableObject
     public void Start()
     {
         Health = 100;
+
+        // inizilize enemy effects
+        enemyIsBurning = false;
+        enemyIsSlowed = false;
+        blockInfinitySlow = false;
+        burningTickTimer = 0.2f;
     }
 
     private void Update()
     {
         checkForDespawn();
+
+        if (enemyIsBurning)
+        {
+            if (burningTickTimer < 0)
+            {
+                Hit(burningDamage);
+                burningTickTimer = 0.2f;
+            }
+            burningTickTimer -= Time.deltaTime;
+        }
+
+        if (enemyIsSlowed && !blockInfinitySlow)
+        {
+            this.GetComponent<NavMeshAgent>().speed = this.GetComponent<NavMeshAgent>().speed * slownessStrength;
+            blockInfinitySlow = true;
+        }
     }
 
     // this function is supposed to disable collision between agents but it doesn't work
@@ -43,7 +74,7 @@ public class Enemy : PoolableObject
         float xDistance = Math.Abs(Agent.transform.position.x - DestroyBlock.position.x);
         float zDistance = Math.Abs(Agent.transform.position.z - DestroyBlock.position.z);
 
-        if ((xDistance + zDistance) < 0.2)
+        if ((xDistance + zDistance) < 0.5)
         {
             gameObject.SetActive(false);
             //or: Destroy(gameObject);
@@ -66,6 +97,8 @@ public class Enemy : PoolableObject
         }
     }
 
+    // -------------------------------------------------------------
+
     public void setEnemyID(int id)
     {
         this.enemyID = id;
@@ -81,10 +114,42 @@ public class Enemy : PoolableObject
         return Health;
     }
 
+    // effects on Enemy (burn) ------------------------
+    public void setEnemyIsBurning(bool enemyIsBurning)
+    {
+        this.enemyIsBurning = enemyIsBurning;
+    }
+    public bool getEnemyIsBurning()
+    {
+        return this.enemyIsBurning;
+    }
+    public void SetBurningDamage(float damage)
+    {
+        this.burningDamage = damage;
+    }
+
+    // effects on Enemy (slow) -------------------------
+    public void setEnemyIsSlowed(bool enemyIsSlowed)
+    {
+        this.enemyIsSlowed = enemyIsSlowed;
+        blockInfinitySlow = false;
+    }
+
+    public bool getEnemyIsSlowed()
+    {
+        return this.enemyIsSlowed;
+    }
+
+    public void setSlownessStrength(float slownessStrength)
+    {
+        this.slownessStrength = slownessStrength;
+    }
+
+    // -------------------------------------------------------------
+
     public void Hit(float damage)
     {
         Health -= damage;
-        Debug.Log(Health);
         if (Health <= 0 && gameObject.activeSelf)
         {
             if (gameObject == EnemyMenu.Instance.SelectedEnemy)

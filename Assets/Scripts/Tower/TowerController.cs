@@ -15,6 +15,11 @@ public class TowerController : MonoBehaviour
     [SerializeField]
     private int constructionCosts;
 
+    // effects for projectiles (fire)
+    private float burningDamage;
+    // effects for projectiles (water/ice)
+    private float slownessStrength;
+
     // variable for tower "focus" state
     // -1   = last enemy
     // 0    = nearest
@@ -43,13 +48,18 @@ public class TowerController : MonoBehaviour
     void Start()
     {
         // init variables
+        towerRange = 5;
+        towerDamage = 20.0f;
+        fireRate = 1f;
         towerHealth = 100;
-        //towerRange = 5;
         projectileSpeed = 5.0f;
         lastShotCooldown = 0;
-        //towerDamage = 20.0f;
-        //fireRate = 1f;
         towerModi = 1;
+
+        // effects for projectiles (fire)
+        burningDamage = 1;
+        // effects for projectiles (water/ice)
+        slownessStrength = 0.8f;
 
         // disable linerenderer on start
         towerLineIndicator = this.gameObject.GetComponent<LineRenderer>();
@@ -92,6 +102,9 @@ public class TowerController : MonoBehaviour
                 projectileController.setEnemy(enemy);
                 projectileController.setProjectileSpeed(projectileSpeed);
                 projectileController.setprojectileDamage(towerDamage);
+                projectileController.setProjectileType(this.name);
+                projectileController.setBurningDamage(burningDamage);
+                projectileController.setSlownessStrength(slownessStrength);
                 b.transform.position = towerRotationPoint.transform.GetChild(2).transform.position;
             }
         }
@@ -319,6 +332,30 @@ public class TowerController : MonoBehaviour
     public void setTowerModi(int towerModi)
     {
         this.towerModi = towerModi;
+    }
+
+    //-----
+
+    public float getBurningDamage()
+    {
+        return this.burningDamage;
+    }
+
+    public void setBurningDamage(float burningDamage)
+    {
+        this.burningDamage = burningDamage;
+    }
+
+    //-----
+
+    public float getSlownessStrength()
+    {
+        return this.slownessStrength;
+    }
+
+    public void setSlownessStrength(float slownessStrength)
+    {
+        this.slownessStrength = slownessStrength;
     }
 
 }
