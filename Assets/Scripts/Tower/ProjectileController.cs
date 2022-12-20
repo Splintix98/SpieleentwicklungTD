@@ -14,17 +14,18 @@ public class ProjectileController : MonoBehaviour
 
     // projectileTyp = "Tower_Fire(Clone)", "Tower_Earth(Clone)", "Tower_Air(Clone)", "Tower_Water(Clone)"  -> (for effects)
     private string projectileType;
-    private float burningDuration;
-    private float slowedDuration;
+
+    private bool projectileCollidated;
 
     private float burningDamage;
     private float slownessStrength;
+    private float clusterDamagePercent;
+    private float rangeClusterDamage;
 
     // Start is called before the first frame update
     void Start()
     {
-            burningDuration = 2.0f;
-            slowedDuration = 2.0f;
+            projectileCollidated = false;
     }
 
     // Update is called once per frame
@@ -35,32 +36,32 @@ public class ProjectileController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, projectileSpeed * Time.deltaTime);
             enemy.SetBurningDamage(burningDamage);
             enemy.setSlownessStrength(slownessStrength);
+
+            // timer fire
+            if (enemy.getBurnTimer() >= 0.0f && enemy.getEnemyIsBurning())
+            {
+                enemy.setBurnTimer(enemy.getBurnTimer() - Time.deltaTime);
+            }
+            else if (enemy.getBurnTimer() < 0.0f && projectileCollidated)
+            {
+                Destroy(gameObject);
+                Destroy(this);
+            } 
+          
+
+            // timer slow
+            if (enemy.getSlowTimer() >= 0.0f && enemy.getEnemyIsSlowed())
+            {
+                enemy.setSlowTimer(enemy.getSlowTimer() - Time.deltaTime);
+            }
+            else if (enemy.getSlowTimer() < 0.0f && projectileCollidated)
+            {
+                Destroy(gameObject);
+                Destroy(this);
+            }
         }
         else
         {
-            Destroy(gameObject);
-            Destroy(this);
-        }
-
-        // timer fire
-        if (burningDuration > 0 && enemy.isActiveAndEnabled && enemy.getEnemyIsBurning())
-        {
-            burningDuration -= Time.deltaTime;
-        } else if (burningDuration < 0 && enemy.isActiveAndEnabled && enemy.getEnemyIsBurning())
-        {
-            enemy.setEnemyIsBurning(false);
-            Destroy(gameObject);
-            Destroy(this);
-        }
-
-        // timer slow
-        if (slowedDuration > 0 && enemy.isActiveAndEnabled && enemy.getEnemyIsSlowed())
-        {
-            slowedDuration -= Time.deltaTime;
-        }
-        else if (slowedDuration < 0 && enemy.isActiveAndEnabled && enemy.getEnemyIsSlowed())
-        {
-            enemy.setEnemyIsSlowed(false);
             Destroy(gameObject);
             Destroy(this);
         }
@@ -83,6 +84,7 @@ public class ProjectileController : MonoBehaviour
                     //Destroy(gameObject);
                     //Destroy(this);
                 }
+                enemyHealthController.Hit(projectileDamage);
 
                 if (projectileType == "Tower_Fire(Clone)")
                 {
@@ -91,21 +93,66 @@ public class ProjectileController : MonoBehaviour
                     this.gameObject.transform.GetChild(3).gameObject.SetActive(false);
                     this.gameObject.transform.GetChild(4).gameObject.SetActive(false);
 
+                    if (enemy.getEnemyIsSlowed())
+                    {
+                        enemy.setEnemyIsSlowed(false);
+                    }
+
+                    enemy.setBurnTimer(2.0f);
+
+                    if (enemy.getEnemyIsBurning())
+                    {
+                        Destroy(gameObject);
+                        Destroy(this);
+                    }
+
                     enemy.setEnemyIsBurning(true);
-                    burningDuration = 2.0f;
 
                 }
                 else if (projectileType == "Tower_Water(Clone)")
                 {
                     this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    enemy.setEnemyIsSlowed(true);
-                    slowedDuration = 2.0f;
 
-                } else
+                    if (enemy.getEnemyIsBurning())
+                    {
+                        enemy.setEnemyIsBurning(false);
+                    }
+
+                    enemy.setSlowTimer(2.0f);
+
+                    if (enemy.getEnemyIsSlowed())
+                    {
+                        enemy.setEnemyIsSlowed(false);
+                    }
+
+                    enemy.setEnemyIsSlowed(true);
+
+                }
+                else if (projectileType == "Tower_Earth(Clone)")
+                {
+                    Enemy[] allAktiveEnemys = FindObjectsOfType(typeof(Enemy)) as Enemy[];
+
+                    foreach (Enemy enemy in allAktiveEnemys)
+                    {
+                        // get distance of each
+                        float diffX = this.enemy.transform.position.x - enemy.transform.position.x;
+                        float diffZ = this.enemy.transform.position.z - enemy.transform.position.z;
+                        float hypothenuse = Mathf.Sqrt((Mathf.Pow(diffZ, 2) + Mathf.Pow(diffX, 2)));
+
+                        // skip enemys who are not in towerrange
+                        if (hypothenuse < rangeClusterDamage && this.enemy.getEnemyID() != enemy.getEnemyID())
+                        {
+                            enemy.Hit(projectileDamage * clusterDamagePercent);
+                        }
+                    }
+                    Destroy(this.gameObject);
+                }
+                else if (projectileType == "Tower_Air(Clone)")
                 {
                     Destroy(this.gameObject);
                 }
-                enemyHealthController.Hit(projectileDamage);
+
+                projectileCollidated = true;
             }
         } 
         else
@@ -145,5 +192,15 @@ public class ProjectileController : MonoBehaviour
     public void setSlownessStrength(float slownessStrength)
     {
         this.slownessStrength = slownessStrength;
+    }
+
+    public void setRangeClusterDamage(float range)
+    {
+        this.rangeClusterDamage = range;
+    }
+
+    public void setClusterDamagePercent(float clusterDamagePercent)
+    {
+        this.clusterDamagePercent = clusterDamagePercent;
     }
 }

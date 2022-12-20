@@ -83,11 +83,6 @@ public class TowerMenu : MonoBehaviour
         upgrade_2_costs = 1;
         upgrade_3_costs = 1;
 
-        // rename different "upgrade" labels.
-        upgrade_1_label_text.text = "Towerrange";
-        upgrade_2_label_text.text = "Damage";
-        upgrade_3_label_text.text = "Attackspeed";
-
         upgrade_1_costs_label.text = "1   <sprite=1>";
         upgrade_2_costs_label.text = "1   <sprite=1>";
         upgrade_3_costs_label.text = "1   <sprite=1>";
@@ -248,6 +243,33 @@ public class TowerMenu : MonoBehaviour
 
     public void ShowUpgradeMenu()
     {
+        Debug.Log(selectedTower.name);
+        // rename different "upgrade" labels.
+        if (selectedTower.name == "Tower_Fire(Clone)")
+        {
+            upgrade_1_label_text.text = "Towerrange";
+            upgrade_2_label_text.text = "Damage";
+            upgrade_3_label_text.text = "burndamage";
+        }
+        if (selectedTower.name == "Tower_Water(Clone)")
+        {
+            upgrade_1_label_text.text = "Towerrange";
+            upgrade_2_label_text.text = "Damage";
+            upgrade_3_label_text.text = "slowness";
+        }
+        if (selectedTower.name == "Tower_Earth(Clone)")
+        {
+            upgrade_1_label_text.text = "Clusterdamage";
+            upgrade_2_label_text.text = "Damage";
+            upgrade_3_label_text.text = "Clusterrange";
+        }
+        if (selectedTower.name == "Tower_Air(Clone)")
+        {
+            upgrade_1_label_text.text = "Towerrange";
+            upgrade_2_label_text.text = "Damage";
+            upgrade_3_label_text.text = "Attackspeed";
+        }
+
         towerOptionsMenu.SetActive(false);
         towerUpgradeMenu.SetActive(true);
     }
@@ -259,7 +281,14 @@ public class TowerMenu : MonoBehaviour
         if (level_upgrade_1 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_1_moneycheck)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
-            selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
+            if (selectedTower.name == "Tower_Earth(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setClusterDamagePercent(selectedTower.GetComponent<TowerController>().getClusterDamagePercent() + 0.2f);
+            }
+            else
+            {
+                selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
+            }
             level_upgrade_1 += 1;
             upgrade_1_costs += 1;
             upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>";
@@ -289,7 +318,14 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_1 == 1 && allowUpdate_1_moneycheck)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
-            selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
+            if (selectedTower.name == "Tower_Earth(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setClusterDamagePercent(selectedTower.GetComponent<TowerController>().getClusterDamagePercent() + 0.2f);
+            }
+            else
+            {
+                selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
+            }
             level_upgrade_1 += 1;
             upgrade_1_costs += 1;
             upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>";
@@ -305,7 +341,14 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_1 == 2 && level_upgrade_2 <= 2 && level_upgrade_3 <= 2 && allowUpdate_1_moneycheck)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
-            selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
+            if (selectedTower.name == "Tower_Earth(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setClusterDamagePercent(selectedTower.GetComponent<TowerController>().getClusterDamagePercent() + 0.2f);
+            }
+            else
+            {
+                selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
+            }
             level_upgrade_1 += 1;
             upgrade_1_costs += 1;
             upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>";
@@ -319,7 +362,14 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_1 == 3 && allowUpdate_1_moneycheck)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
-            selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
+            if (selectedTower.name == "Tower_Earth(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setClusterDamagePercent(selectedTower.GetComponent<TowerController>().getClusterDamagePercent() + 0.2f);
+            }
+            else
+            {
+                selectedTower.GetComponent<TowerController>().setTowerRange(selectedTower.GetComponent<TowerController>().getTowerRange() * 1.05f);
+            }
             upgrade_1_costs_label.text = "max level";
             upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
             level_upgrade_1 += 1;
@@ -406,10 +456,26 @@ public class TowerMenu : MonoBehaviour
 
     public void do_upgrade_3()
     {
+
         if (level_upgrade_3 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_3_moneycheck)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
-            selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+            if (selectedTower.name == "Tower_Fire(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setBurningDamage(selectedTower.GetComponent<TowerController>().getBurningDamage() + 1.0f);
+            }
+            if (selectedTower.name == "Tower_Water(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() + 0.1f);
+            }
+            if (selectedTower.name == "Tower_Earth(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.5f);
+            }
+            if (selectedTower.name == "Tower_Air(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+            }
             level_upgrade_3 += 1;
             upgrade_3_costs += 1;
             upgrade_3_costs_label.text = upgrade_3_costs + "   <sprite=1>";
@@ -439,7 +505,22 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_3 == 1 && allowUpdate_3_moneycheck)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
-            selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+            if (selectedTower.name == "Tower_Fire(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setBurningDamage(selectedTower.GetComponent<TowerController>().getBurningDamage() + 1.0f);
+            }
+            if (selectedTower.name == "Tower_Water(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() + 0.1f);
+            }
+            if (selectedTower.name == "Tower_Earth(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.5f);
+            }
+            if (selectedTower.name == "Tower_Air(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+            }
             level_upgrade_3 += 1;
             upgrade_3_costs += 1;
             upgrade_3_costs_label.text = upgrade_3_costs + "   <sprite=1>";
@@ -455,7 +536,22 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_3 == 2 && level_upgrade_1 <= 2 && level_upgrade_2 <= 2 && allowUpdate_3_moneycheck)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
-            selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+            if (selectedTower.name == "Tower_Fire(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setBurningDamage(selectedTower.GetComponent<TowerController>().getBurningDamage() + 1.0f);
+            }
+            if (selectedTower.name == "Tower_Water(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() + 0.1f);
+            }
+            if (selectedTower.name == "Tower_Earth(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.5f);
+            }
+            if (selectedTower.name == "Tower_Air(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+            }
             level_upgrade_3 += 1;
             upgrade_3_costs += 1;
             upgrade_3_costs_label.text = upgrade_3_costs + "   <sprite=1>";
@@ -469,7 +565,22 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_3 == 3 && allowUpdate_3_moneycheck)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
-            selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+            if (selectedTower.name == "Tower_Fire(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setBurningDamage(selectedTower.GetComponent<TowerController>().getBurningDamage() + 1.0f);
+            }
+            if (selectedTower.name == "Tower_Water(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() + 0.1f);
+            }
+            if (selectedTower.name == "Tower_Earth(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.5f);
+            }
+            if (selectedTower.name == "Tower_Air(Clone)")
+            {
+                selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+            }
             upgrade_3_costs_label.text = "max level";
             upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
             level_upgrade_3 += 1;

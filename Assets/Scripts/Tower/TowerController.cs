@@ -19,6 +19,9 @@ public class TowerController : MonoBehaviour
     private float burningDamage;
     // effects for projectiles (water/ice)
     private float slownessStrength;
+    // effects for projectiles (earth)
+    private float rangeCluster;
+    private float clusterDamagePercent;
 
     // variable for tower "focus" state
     // -1   = last enemy
@@ -48,7 +51,7 @@ public class TowerController : MonoBehaviour
     void Start()
     {
         // init variables
-        towerRange = 5;
+        towerRange = 4;
         towerDamage = 20.0f;
         fireRate = 1f;
         towerHealth = 100;
@@ -59,7 +62,10 @@ public class TowerController : MonoBehaviour
         // effects for projectiles (fire)
         burningDamage = 1;
         // effects for projectiles (water/ice)
-        slownessStrength = 0.8f;
+        slownessStrength = 5.0f;
+        // effects for projectiles (earth)
+        rangeCluster = 0.0f;
+        clusterDamagePercent = 0.0f;
 
         // disable linerenderer on start
         towerLineIndicator = this.gameObject.GetComponent<LineRenderer>();
@@ -105,6 +111,8 @@ public class TowerController : MonoBehaviour
                 projectileController.setProjectileType(this.name);
                 projectileController.setBurningDamage(burningDamage);
                 projectileController.setSlownessStrength(slownessStrength);
+                projectileController.setRangeClusterDamage(rangeCluster);
+                projectileController.setClusterDamagePercent(clusterDamagePercent);
                 b.transform.position = towerRotationPoint.transform.GetChild(2).transform.position;
             }
         }
@@ -358,4 +366,27 @@ public class TowerController : MonoBehaviour
         this.slownessStrength = slownessStrength;
     }
 
+    //-----
+
+    public float getRangeCluster()
+    {
+        return this.rangeCluster;
+    }
+
+    public void setRangeCluster(float rangeCluster)
+    {
+        this.rangeCluster = rangeCluster;
+    }
+
+    //-----
+
+    public float getClusterDamagePercent()
+    {
+        return this.clusterDamagePercent;
+    }
+
+    public void setClusterDamagePercent(float clusterDamagePercent)
+    {
+        this.clusterDamagePercent = clusterDamagePercent;
+    }
 }

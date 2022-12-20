@@ -16,10 +16,14 @@ public class Enemy : PoolableObject
     // effects on Enemy
     Boolean enemyIsBurning;
     Boolean enemyIsSlowed;
+    Boolean inifnitySlowBlocker;
+
+    public float burnTimer;
+    float slowTimer;
+
     float burningTickTimer;
     float burningDamage;
     float slownessStrength;
-    bool blockInfinitySlow;
 
     [SerializeField]
     private float lootForPlayer = 1;
@@ -33,13 +37,23 @@ public class Enemy : PoolableObject
         // inizilize enemy effects
         enemyIsBurning = false;
         enemyIsSlowed = false;
-        blockInfinitySlow = false;
+        inifnitySlowBlocker = false;
         burningTickTimer = 0.2f;
     }
 
     private void Update()
     {
         checkForDespawn();
+
+        if (this.getBurnTimer() < 0.0f)
+        {
+            this.setEnemyIsBurning(false);
+        }
+
+        if (this.getSlowTimer() < 0.0f)
+        {
+            this.setEnemyIsSlowed(false);
+        }
 
         if (enemyIsBurning)
         {
@@ -49,12 +63,6 @@ public class Enemy : PoolableObject
                 burningTickTimer = 0.2f;
             }
             burningTickTimer -= Time.deltaTime;
-        }
-
-        if (enemyIsSlowed && !blockInfinitySlow)
-        {
-            this.GetComponent<NavMeshAgent>().speed = this.GetComponent<NavMeshAgent>().speed * slownessStrength;
-            blockInfinitySlow = true;
         }
     }
 
@@ -119,20 +127,43 @@ public class Enemy : PoolableObject
     {
         this.enemyIsBurning = enemyIsBurning;
     }
+
     public bool getEnemyIsBurning()
     {
         return this.enemyIsBurning;
     }
+
     public void SetBurningDamage(float damage)
     {
         this.burningDamage = damage;
     }
 
+    public float getBurnTimer()
+    {
+        return this.burnTimer;
+    }
+
+    public void setBurnTimer(float time)
+    {
+        this.burnTimer = time;
+    }
+
     // effects on Enemy (slow) -------------------------
     public void setEnemyIsSlowed(bool enemyIsSlowed)
     {
+        if (enemyIsSlowed)
+        {
+            this.GetComponent<NavMeshAgent>().speed = this.GetComponent<NavMeshAgent>().speed * slownessStrength;
+            inifnitySlowBlocker = false;
+        } else
+        {
+            if (!inifnitySlowBlocker)
+            {
+                this.GetComponent<NavMeshAgent>().speed = this.GetComponent<NavMeshAgent>().speed / slownessStrength;
+                inifnitySlowBlocker = true;
+            }
+        }
         this.enemyIsSlowed = enemyIsSlowed;
-        blockInfinitySlow = false;
     }
 
     public bool getEnemyIsSlowed()
@@ -143,6 +174,15 @@ public class Enemy : PoolableObject
     public void setSlownessStrength(float slownessStrength)
     {
         this.slownessStrength = slownessStrength;
+    }
+
+    public float getSlowTimer()
+    {
+        return this.slowTimer;
+    }
+    public void setSlowTimer(float time)
+    {
+        this.slowTimer = time;
     }
 
     // -------------------------------------------------------------
