@@ -30,6 +30,24 @@ public class TowerController : MonoBehaviour
     // 99   = strongest (most Health) enemy
     public int towerModi;
 
+    // cost for next upgrades 
+    int next_upgrade_path_1_costs;
+    int next_upgrade_path_2_costs;
+    int next_upgrade_path_3_costs;
+
+    // upgrade lvl counter
+    private int level_upgrade_1;
+    private int level_upgrade_2;
+    private int level_upgrade_3;
+
+    // blocker for path
+    // 1    = half blocked
+    // 0    = no limitation
+    // -1   = full blocked
+    private int upgrade_path_1_blocked;
+    private int upgrade_path_2_blocked;
+    private int upgrade_path_3_blocked;
+
     // TODO: Kommentar
     Transform towerRotationPoint;
     LineRenderer towerLineIndicator;
@@ -70,6 +88,20 @@ public class TowerController : MonoBehaviour
         // disable linerenderer on start
         towerLineIndicator = this.gameObject.GetComponent<LineRenderer>();
         towerLineIndicator.enabled = false;
+
+        // init variables for upgrade state
+        // script "towermenu" will overwrite this to save and load the update state
+        level_upgrade_1 = 0;
+        level_upgrade_2 = 0;
+        level_upgrade_3 = 0;
+
+        next_upgrade_path_1_costs = 1;
+        next_upgrade_path_2_costs = 1;
+        next_upgrade_path_3_costs = 1;
+
+        upgrade_path_1_blocked = 0;
+        upgrade_path_2_blocked = 0;
+        upgrade_path_3_blocked = 0;
     }
 
     // Update is called once per frame
@@ -388,5 +420,101 @@ public class TowerController : MonoBehaviour
     public void setClusterDamagePercent(float clusterDamagePercent)
     {
         this.clusterDamagePercent = clusterDamagePercent;
+    }
+
+    // ----- upgrades (getter, setter) ------
+
+    public int getNext_upgrade_path_1_costs()
+    {
+        return this.next_upgrade_path_1_costs;
+    }
+
+    public int getNext_upgrade_path_2_costs()
+    {
+        return this.next_upgrade_path_2_costs;
+    }
+
+    public int getNext_upgrade_path_3_costs()
+    {
+        return this.next_upgrade_path_3_costs;
+    }
+
+    public void setNext_upgrade_path_1_costs(int next_upgrade_path_1_costs)
+    {
+        this.next_upgrade_path_1_costs = next_upgrade_path_1_costs;
+    }
+
+    public void setNext_upgrade_path_2_costs(int next_upgrade_path_2_costs)
+    {
+        this.next_upgrade_path_2_costs = next_upgrade_path_2_costs;
+    }
+
+    public void setNext_upgrade_path_3_costs(int next_upgrade_path_3_costs)
+    {
+        this.next_upgrade_path_3_costs = next_upgrade_path_3_costs;
+    }
+
+
+    // ----------------
+
+    public int getLevel_upgrade_1()
+    {
+        return this.level_upgrade_1;
+    }
+
+    public int getLevel_upgrade_2()
+    {
+        return this.level_upgrade_2;
+    }
+
+    public int getLevel_upgrade_3()
+    {
+        return this.level_upgrade_3;
+    }
+
+    public void setLevel_upgrade_1(int Level_upgrade)
+    {
+        this.level_upgrade_1 = Level_upgrade;
+    }
+
+    public void setLevel_upgrade_2(int Level_upgrade)
+    {
+        this.level_upgrade_2 = Level_upgrade;
+    }
+
+    public void setLevel_upgrade_3(int Level_upgrade)
+    {
+        this.level_upgrade_3 = Level_upgrade;
+    }
+
+    // ----------------
+    public int getUpgrade_path_1_blocked()
+    {
+        return this.upgrade_path_1_blocked;
+    }
+
+    public int getUpgrade_path_2_blocked()
+    {
+        return this.upgrade_path_2_blocked;
+    }
+
+    public int getUpgrade_path_3_blocked()
+    {
+        return this.upgrade_path_3_blocked;
+    }
+
+    public void setUpgrade_path_1_blocked(int upgrade_path_1_blocked)
+    {
+        this.upgrade_path_1_blocked = upgrade_path_1_blocked;
+    }
+
+    public void setUpgrade_path_2_blocked(int upgrade_path_2_blocked)
+    {
+        this.upgrade_path_2_blocked = upgrade_path_2_blocked;
+    }
+
+    public void setUpgrade_path_3_blocked(int upgrade_path_3_blocked)
+    {
+        this.upgrade_path_3_blocked = upgrade_path_3_blocked;
     }
 }
