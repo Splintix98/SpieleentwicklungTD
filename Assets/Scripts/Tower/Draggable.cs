@@ -28,7 +28,8 @@ public class Draggable : MonoBehaviour
 
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        if (plane.Raycast(ray, out float distance)) {
+        if (plane.Raycast(ray, out float distance))
+        {
             Vector3 np = ray.GetPoint(distance);
             np.x = Mathf.RoundToInt(np.x + 0.5f) - 0.5f;
             np.z = Mathf.RoundToInt(np.z + 0.5f) - 0.5f;
@@ -77,8 +78,7 @@ public class Draggable : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     gameObject.transform.parent = currentTowerBlock;
-                    Clickable clickable = gameObject.GetComponent<Clickable>();
-                    clickable.AllowInformationDisplay = true;
+                    towerController.AllowInformationDisplay = true;
                     constructionMenu.AllowNewTowerConstruction = true;
                     towerController.EnableLineRender = false;
                     towerController.EnableShoot = true;
@@ -96,4 +96,5 @@ public class Draggable : MonoBehaviour
         }
     }
 }
+
 

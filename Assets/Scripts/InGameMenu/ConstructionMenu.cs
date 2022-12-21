@@ -47,6 +47,7 @@ public class ConstructionMenu : MonoBehaviour
         towerFireRate.text = "Fire rate: " + towerController.fireRate ;
         towerRange.text = "Range: " + towerController.towerRange;
         towerAttributesContainer.SetActive(true);
+        EnemyMenu.Instance.CloseMenu();
     }
 
     public void HideTowerAttributes()

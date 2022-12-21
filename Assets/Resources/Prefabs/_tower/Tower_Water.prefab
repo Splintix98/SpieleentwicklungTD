@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: -8791942448884701570}
   m_Layer: 0
   m_Name: Tower_Water
-  m_TagString: Untagged
+  m_TagString: tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -738,6 +738,7 @@ MonoBehaviour:
   fireRate: 1
   constructionCosts: 10
   towerModi: 0
+  bulletPrefab: {fileID: 0}
 --- !u!1 &8296534807968718904
 GameObject:
   m_ObjectHideFlags: 0

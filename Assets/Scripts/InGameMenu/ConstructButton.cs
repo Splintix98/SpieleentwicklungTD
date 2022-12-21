@@ -42,11 +42,10 @@ public class ConstructButton : MonoBehaviour
             draggable.buildArea = constructionMenu.BuildArea;
             draggable.buildAreaHalf = constructionMenu.BuildAreaHalf;
             draggable.constructionMenu = constructionMenu;
-            Clickable clickable = newTower.AddComponent<Clickable>();
-            clickable.towerMenu = towerMenu.GetComponent<TowerMenu>();
             constructionMenu.AllowNewTowerConstruction = false;
             TowerController towercontroller = newTower.GetComponent<TowerController>();
 
+            // set projectile prefab based on towertype
             if (newTower.name == "Tower_Fire(Clone)")
             {
                 towercontroller.setProjectilePreset(Resources.Load("Prefabs/fireProjectile/fireProjectile") as GameObject);

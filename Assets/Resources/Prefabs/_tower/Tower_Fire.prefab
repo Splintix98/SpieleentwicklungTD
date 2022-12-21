@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 8485438254746865048}
   m_Layer: 0
   m_Name: Tower_Fire
-  m_TagString: Untagged
+  m_TagString: tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -568,6 +568,7 @@ MonoBehaviour:
   fireRate: 1
   constructionCosts: 3
   towerModi: 0
+  bulletPrefab: {fileID: 0}
 --- !u!1 &1217901570406665343
 GameObject:
   m_ObjectHideFlags: 0

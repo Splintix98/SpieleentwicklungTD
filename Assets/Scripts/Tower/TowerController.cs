@@ -15,6 +15,14 @@ public class TowerController : MonoBehaviour
     [SerializeField]
     private int constructionCosts;
 
+    // effects for projectiles (fire)
+    private float burningDamage;
+    // effects for projectiles (water/ice)
+    private float slownessStrength;
+    // effects for projectiles (earth)
+    private float rangeCluster;
+    private float clusterDamagePercent;
+
     // variable for tower "focus" state
     // -1   = last enemy
     // 0    = nearest
@@ -27,7 +35,7 @@ public class TowerController : MonoBehaviour
     LineRenderer towerLineIndicator;
 
     public int ConstructionCosts { get { return constructionCosts; } }
-
+    public bool AllowInformationDisplay { get; set; } = false;
     public bool EnableLineRender
     {
         get { return towerLineIndicator.enabled; }
@@ -43,13 +51,21 @@ public class TowerController : MonoBehaviour
     void Start()
     {
         // init variables
+        towerRange = 4;
+        towerDamage = 20.0f;
+        fireRate = 1f;
         towerHealth = 100;
-        towerRange = 5;
         projectileSpeed = 5.0f;
         lastShotCooldown = 0;
-        towerDamage = 1;
-        fireRate = 1f;
         towerModi = 1;
+
+        // effects for projectiles (fire)
+        burningDamage = 1;
+        // effects for projectiles (water/ice)
+        slownessStrength = 5.0f;
+        // effects for projectiles (earth)
+        rangeCluster = 0.0f;
+        clusterDamagePercent = 0.0f;
 
         // disable linerenderer on start
         towerLineIndicator = this.gameObject.GetComponent<LineRenderer>();
@@ -86,12 +102,17 @@ public class TowerController : MonoBehaviour
 
             if (hypothenuse < towerRange && bulletPrefab != null)
             {
-                // create bullet and set position, enemy, speed and damage to bullet
+                // create bullet and set properties
                 GameObject b = Instantiate(bulletPrefab) as GameObject;
                 ProjectileController projectileController = b.GetComponent<ProjectileController>();
                 projectileController.setEnemy(enemy);
                 projectileController.setProjectileSpeed(projectileSpeed);
                 projectileController.setprojectileDamage(towerDamage);
+                projectileController.setProjectileType(this.name);
+                projectileController.setBurningDamage(burningDamage);
+                projectileController.setSlownessStrength(slownessStrength);
+                projectileController.setRangeClusterDamage(rangeCluster);
+                projectileController.setClusterDamagePercent(clusterDamagePercent);
                 b.transform.position = towerRotationPoint.transform.GetChild(2).transform.position;
             }
         }
@@ -233,6 +254,18 @@ public class TowerController : MonoBehaviour
 
     // ---------------------------------------------------------------------------------
 
+
+    void OnMouseDown()
+    {
+        if (AllowInformationDisplay)
+        {
+            TowerMenu.Instance.ShowTowerInformation(gameObject);
+        }
+
+    }
+
+
+
     // set prefab for projectile
     public void setProjectilePreset(GameObject bulletPrefab)
     {
@@ -309,4 +342,51 @@ public class TowerController : MonoBehaviour
         this.towerModi = towerModi;
     }
 
+    //-----
+
+    public float getBurningDamage()
+    {
+        return this.burningDamage;
+    }
+
+    public void setBurningDamage(float burningDamage)
+    {
+        this.burningDamage = burningDamage;
+    }
+
+    //-----
+
+    public float getSlownessStrength()
+    {
+        return this.slownessStrength;
+    }
+
+    public void setSlownessStrength(float slownessStrength)
+    {
+        this.slownessStrength = slownessStrength;
+    }
+
+    //-----
+
+    public float getRangeCluster()
+    {
+        return this.rangeCluster;
+    }
+
+    public void setRangeCluster(float rangeCluster)
+    {
+        this.rangeCluster = rangeCluster;
+    }
+
+    //-----
+
+    public float getClusterDamagePercent()
+    {
+        return this.clusterDamagePercent;
+    }
+
+    public void setClusterDamagePercent(float clusterDamagePercent)
+    {
+        this.clusterDamagePercent = clusterDamagePercent;
+    }
 }
