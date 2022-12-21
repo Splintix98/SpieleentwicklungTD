@@ -102,7 +102,7 @@ public class TowerController : MonoBehaviour
 
             if (hypothenuse < towerRange && bulletPrefab != null)
             {
-                // create bullet and set position, enemy, speed and damage to bullet
+                // create bullet and set properties
                 GameObject b = Instantiate(bulletPrefab) as GameObject;
                 ProjectileController projectileController = b.GetComponent<ProjectileController>();
                 projectileController.setEnemy(enemy);

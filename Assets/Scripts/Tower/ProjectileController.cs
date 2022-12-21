@@ -17,8 +17,11 @@ public class ProjectileController : MonoBehaviour
 
     private bool projectileCollidated;
 
+    // effects for projectiles (fire)
     private float burningDamage;
+    // effects for projectiles (water/ice)
     private float slownessStrength;
+    // effects for projectiles (earth)
     private float clusterDamagePercent;
     private float rangeClusterDamage;
 
@@ -31,6 +34,7 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // check if enemy is avaible
         if (!enemy.IsDestroyed() && enemy.isActiveAndEnabled)
         {
             transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, projectileSpeed * Time.deltaTime);
@@ -42,6 +46,7 @@ public class ProjectileController : MonoBehaviour
             {
                 enemy.setBurnTimer(enemy.getBurnTimer() - Time.deltaTime);
             }
+            // remove projectile if projectile already hit enemy
             else if (enemy.getBurnTimer() < 0.0f && projectileCollidated)
             {
                 Destroy(gameObject);
@@ -54,6 +59,7 @@ public class ProjectileController : MonoBehaviour
             {
                 enemy.setSlowTimer(enemy.getSlowTimer() - Time.deltaTime);
             }
+            // remove projectile if projectile already hit enemy
             else if (enemy.getSlowTimer() < 0.0f && projectileCollidated)
             {
                 Destroy(gameObject);
@@ -86,52 +92,68 @@ public class ProjectileController : MonoBehaviour
                 }
                 enemyHealthController.Hit(projectileDamage);
 
+                // set effect from fire projectile
                 if (projectileType == "Tower_Fire(Clone)")
                 {
+                    // disable all elements from fire projectile, expect fire animation ("burn" animation)
                     this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     this.gameObject.transform.GetChild(2).gameObject.SetActive(false);
                     this.gameObject.transform.GetChild(3).gameObject.SetActive(false);
                     this.gameObject.transform.GetChild(4).gameObject.SetActive(false);
 
+                    // game mechanic: removes slow if burn
                     if (enemy.getEnemyIsSlowed())
                     {
                         enemy.setEnemyIsSlowed(false);
                     }
 
+                    // set / reset burn timer
                     enemy.setBurnTimer(2.0f);
 
+                    // destroy projectile, if enemy is already burning (bugfix to prevent stacking from fireanimation at enemy)
                     if (enemy.getEnemyIsBurning())
                     {
                         Destroy(gameObject);
                         Destroy(this);
                     }
 
+                    // set burn to active
                     enemy.setEnemyIsBurning(true);
 
                 }
+                // set effect from water/ice projectile
                 else if (projectileType == "Tower_Water(Clone)")
                 {
+                    // dsiable projectile with collider
                     this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
+                    // game mechanic: removes burn if slow
                     if (enemy.getEnemyIsBurning())
                     {
                         enemy.setEnemyIsBurning(false);
                     }
 
+                    // set / reset burn timer
                     enemy.setSlowTimer(2.0f);
 
+                    // destroy projectile, if enemy is already slowed (bugfix to prevent stacking from slowprojectiles at enemy)
                     if (enemy.getEnemyIsSlowed())
                     {
-                        enemy.setEnemyIsSlowed(false);
+                        Destroy(gameObject);
+                        Destroy(this);
                     }
 
+                    // set slow to active
                     enemy.setEnemyIsSlowed(true);
 
                 }
+                // set effect from earth projectile
                 else if (projectileType == "Tower_Earth(Clone)")
                 {
+                    // scan for all enemys
                     Enemy[] allAktiveEnemys = FindObjectsOfType(typeof(Enemy)) as Enemy[];
 
+                    // iterate over all
                     foreach (Enemy enemy in allAktiveEnemys)
                     {
                         // get distance of each
@@ -142,11 +164,13 @@ public class ProjectileController : MonoBehaviour
                         // skip enemys who are not in towerrange
                         if (hypothenuse < rangeClusterDamage && this.enemy.getEnemyID() != enemy.getEnemyID())
                         {
+                            // hit enemys in range with damage * factor
                             enemy.Hit(projectileDamage * clusterDamagePercent);
                         }
                     }
                     Destroy(this.gameObject);
                 }
+                // set effect from air projectile
                 else if (projectileType == "Tower_Air(Clone)")
                 {
                     Destroy(this.gameObject);
@@ -156,24 +180,23 @@ public class ProjectileController : MonoBehaviour
             }
         } 
         else
-        {          
+        {
+            // ignore collision of each object, expect enemys
             Physics.IgnoreCollision(otherObject.GetComponent<Collider>(), this.transform.GetChild(0).GetComponent<Collider>());
         }
     }
 
-    // set Enemy by tower
+    // getter & setter -------------------------------------------------------------------------
     public void setEnemy(Enemy enemy)
     {
         this.enemy = enemy;
     }
 
-    // set projectile speed by tower
     public void setProjectileSpeed(float projectileSpeed)
     {
         this.projectileSpeed = projectileSpeed;
     }
 
-    // set projectile damage by tower
     public void setprojectileDamage(float projectileDamage)
     {
         this.projectileDamage = projectileDamage;

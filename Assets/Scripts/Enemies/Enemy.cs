@@ -16,13 +16,18 @@ public class Enemy : PoolableObject
     // effects on Enemy
     Boolean enemyIsBurning;
     Boolean enemyIsSlowed;
+    // blocker that slowness only trigger one times 
     Boolean inifnitySlowBlocker;
 
+    // duration of slow / burn. Set from ProjectileController
     public float burnTimer;
     float slowTimer;
 
+    // time per burn dmg (0.2s)
     float burningTickTimer;
+    // burn damage per tick
     float burningDamage;
+    // slowness strength in percent
     float slownessStrength;
 
     [SerializeField]
@@ -45,6 +50,7 @@ public class Enemy : PoolableObject
     {
         checkForDespawn();
 
+        // stop slow / burn effect after duration
         if (this.getBurnTimer() < 0.0f)
         {
             this.setEnemyIsBurning(false);
@@ -55,6 +61,7 @@ public class Enemy : PoolableObject
             this.setEnemyIsSlowed(false);
         }
 
+        // trigger burn dmg after each tick
         if (enemyIsBurning)
         {
             if (burningTickTimer < 0)
@@ -77,6 +84,7 @@ public class Enemy : PoolableObject
     }
     */
 
+    // despawn enemys at end of map
     private void checkForDespawn()
     {
         float xDistance = Math.Abs(Agent.transform.position.x - DestroyBlock.position.x);
@@ -153,12 +161,15 @@ public class Enemy : PoolableObject
     {
         if (enemyIsSlowed)
         {
+            // set slow
             this.GetComponent<NavMeshAgent>().speed = this.GetComponent<NavMeshAgent>().speed * slownessStrength;
             inifnitySlowBlocker = false;
         } else
         {
+            // called from update, so here the blocker, that slow reset only trigger one time
             if (!inifnitySlowBlocker)
             {
+                // reset slow
                 this.GetComponent<NavMeshAgent>().speed = this.GetComponent<NavMeshAgent>().speed / slownessStrength;
                 inifnitySlowBlocker = true;
             }
@@ -187,6 +198,8 @@ public class Enemy : PoolableObject
 
     // -------------------------------------------------------------
 
+    // hit an enemy with an projectile
+    // decrease health from enemy
     public void Hit(float damage)
     {
         Health -= damage;
