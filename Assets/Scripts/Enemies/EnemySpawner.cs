@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform SpawnPosition;
     public Transform DestroyBlock;
     public int NumberOfEnemiesToSpawn = 5;
-    public float SpawnDelay = 1f;
+    public int WaveTimer;
     public List<Enemy> EnemyPrefabs = new List<Enemy>();
     
     private List<List<WaveElement>> Waves;
@@ -34,6 +35,8 @@ public class EnemySpawner : MonoBehaviour
 
     public float CurrentWave { get { return currentWave; } }
     public float MaxWaves { get { return maxWaves; } }
+    [SerializeField] TextMeshProUGUI textMeshProWaveTimer;
+
 
     // enemies are pregenerated on gamestart so that the performance in game is better
     private Dictionary<int, ObjectPool> EnemyObjectPools = new Dictionary<int, ObjectPool>();
@@ -104,9 +107,27 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
 
-            // TODO: Wait until all enemies have despawned either because killed or went into tower
-            Wait = new WaitForSeconds(15);
-            yield return Wait;
+            // if there are still enemies left, wait until they are all destroyed
+            if (GameObject.FindWithTag("Enemy") != null)
+            {
+                yield return new WaitUntil(() => GameObject.FindWithTag("Enemy") == null);
+            }
+
+            // if the last wave was the last wave --> end game
+            if (currentWave == maxWaves)
+            {
+                break;
+            }
+
+            // after all enemies are destroyed, wait an additional few seconds and start the counter
+            textMeshProWaveTimer.gameObject.SetActive(true);
+            for (int i = WaveTimer; i > 0; i--)
+            {
+                textMeshProWaveTimer.text = "Next Wave: " + i.ToString() + "s";
+                Wait = new WaitForSeconds(1);
+                yield return Wait;
+            }
+            textMeshProWaveTimer.gameObject.SetActive(false);
         }
     }
 

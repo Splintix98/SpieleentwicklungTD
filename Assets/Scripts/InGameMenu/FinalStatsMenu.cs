@@ -34,18 +34,6 @@ public class FinalStatsMenu : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI collectedCoinsTextMesh;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     public void Show(string title) {
         gameStatsMenu.SetActive(true);
