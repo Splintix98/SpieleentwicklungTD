@@ -316,7 +316,7 @@ public class TowerMenu : MonoBehaviour
             // upgrade level variable and progressbar, upgrade costs for next level
             level_upgrade_1 += 1;
             upgrade_1_costs += 1;
-            upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>"
+            upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>";
             progressbar_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
 
             // mechanic: block upgrade path 3, if path 1 and 2 already skilled
