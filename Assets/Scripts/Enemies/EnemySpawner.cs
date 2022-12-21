@@ -5,13 +5,35 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public delegate void UpdateGUIDelegate();
+    public UpdateGUIDelegate updateGUICallback;
+
+    #region Singleton
+    private static EnemySpawner instance;
+    public static EnemySpawner Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType<EnemySpawner>();
+            return instance;
+        }
+    }
+    #endregion
+
     public Transform Target;
     public Transform SpawnPosition;
     public Transform DestroyBlock;
     public int NumberOfEnemiesToSpawn = 5;
     public float SpawnDelay = 1f;
     public List<Enemy> EnemyPrefabs = new List<Enemy>();
+    
     private List<List<WaveElement>> Waves;
+    private int currentWave = 0;
+    private int maxWaves = 0;
+
+    public float CurrentWave { get { return currentWave; } }
+    public float MaxWaves { get { return maxWaves; } }
 
     // enemies are pregenerated on gamestart so that the performance in game is better
     private Dictionary<int, ObjectPool> EnemyObjectPools = new Dictionary<int, ObjectPool>();
@@ -23,6 +45,7 @@ public class EnemySpawner : MonoBehaviour
     {
         Waves WavesBuilder = new Waves(EnemyPrefabs);
         Waves = WavesBuilder.map_0();
+        maxWaves = Waves.Count;
 
         if (Waves == null)
         {
@@ -57,6 +80,8 @@ public class EnemySpawner : MonoBehaviour
         
         foreach (var wave in waves)
         {
+            currentWave += 1;
+            updateGUICallback();
             foreach (var waveElem in wave)
             {
                 // either type is delay --> simply wait for specified seconds
@@ -165,4 +190,5 @@ public class EnemySpawner : MonoBehaviour
 
         return poolIndex;
     }
+    
 }
