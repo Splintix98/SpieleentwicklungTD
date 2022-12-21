@@ -49,19 +49,19 @@ public class TowerMenu : MonoBehaviour
     public TextMeshProUGUI upgrade_1_costs_label;
     public TextMeshProUGUI upgrade_2_costs_label;
     public TextMeshProUGUI upgrade_3_costs_label;
-    int upgrade_1_costs;
-    int upgrade_2_costs;
-    int upgrade_3_costs;
-
-    // array from each upgrade progessbar (4 objects)
-    public Object[] progressbar_upgrade_path_1;
-    public Object[] progressbar_upgrade_path_2;
-    public Object[] progressbar_upgrade_path_3;
+    private int upgrade_1_costs;
+    private int upgrade_2_costs;
+    private int upgrade_3_costs;
 
     // level counter
     private int level_upgrade_1;
     private int level_upgrade_2;
     private int level_upgrade_3;
+
+    // array from each upgrade progessbar (4 objects)
+    public Object[] progressbar_upgrade_path_1;
+    public Object[] progressbar_upgrade_path_2;
+    public Object[] progressbar_upgrade_path_3;
 
     // variable if player has enough money for each upgrade
     bool allowUpdate_1_moneycheck;
@@ -291,6 +291,117 @@ public class TowerMenu : MonoBehaviour
             upgrade_3_label_text.text = "Attackspeed";
         }
 
+        // load cost for each update from tower
+        this.upgrade_1_costs = selectedTower.GetComponent<TowerController>().getNext_upgrade_path_1_costs();
+        this.upgrade_2_costs = selectedTower.GetComponent<TowerController>().getNext_upgrade_path_2_costs();
+        this.upgrade_3_costs = selectedTower.GetComponent<TowerController>().getNext_upgrade_path_3_costs();
+
+        // check for each path, if update is already max
+        if (upgrade_1_costs == -1)
+        {
+            this.upgrade_1_costs_label.text = "max level";
+            upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
+        }
+        else
+        {
+            this.upgrade_1_costs_label.text = upgrade_1_costs + "   <sprite=1>";
+        }
+
+        if (upgrade_2_costs == -1)
+        {
+            this.upgrade_2_costs_label.text = "max level";
+            upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
+        }
+        else
+        {
+            this.upgrade_2_costs_label.text = upgrade_2_costs + "   <sprite=1>";
+        }
+
+        if (upgrade_3_costs == -1)
+        {
+            this.upgrade_3_costs_label.text = "max level";
+            upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
+        }
+        else
+        {
+            this.upgrade_3_costs_label.text = upgrade_3_costs + "   <sprite=1>";
+        }
+
+        // load update lvl for each path from tower
+        this.level_upgrade_1 = selectedTower.GetComponent<TowerController>().getLevel_upgrade_1();
+        this.level_upgrade_2 = selectedTower.GetComponent<TowerController>().getLevel_upgrade_2();
+        this.level_upgrade_3 = selectedTower.GetComponent<TowerController>().getLevel_upgrade_3();
+
+        // reset progressbar (all white)
+        for (int i = 0; i < 4; i++)
+        {
+            progressbar_upgrade_path_1[i].GetComponent<RawImage>().color = new Color(255, 255, 255, 0.5f);
+            progressbar_upgrade_path_2[i].GetComponent<RawImage>().color = new Color(255, 255, 255, 0.5f);
+            progressbar_upgrade_path_3[i].GetComponent<RawImage>().color = new Color(255, 255, 255, 0.5f);
+        }
+
+        // edit progressbar (remove not possible updates): path 1
+        switch (selectedTower.GetComponent<TowerController>().getUpgrade_path_1_blocked())
+        {
+            case -1:
+                progressbar_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                break;
+
+            case 1:
+                progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                break;
+        }
+
+        // edit progressbar (remove not possible updates): path 2
+        switch (selectedTower.GetComponent<TowerController>().getUpgrade_path_2_blocked())
+        {
+            case -1:
+                progressbar_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                break;
+
+            case 1:
+                progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                break;
+        }
+
+        // edit progressbar (remove not possible updates): path 3
+        switch (selectedTower.GetComponent<TowerController>().getUpgrade_path_3_blocked())
+        {
+            case -1:
+                progressbar_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                break;
+
+            case 1:
+                progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                break;
+        }
+
+        // edit progressbar for each path (red markers for update lvl)
+        for (int i = 0; i < level_upgrade_1; i++)
+        {
+            progressbar_upgrade_path_1[i].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+        }
+        for (int i = 0; i < level_upgrade_2; i++)
+        {
+            progressbar_upgrade_path_2[i].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+        }
+        for (int i = 0; i < level_upgrade_3; i++)
+        {
+            progressbar_upgrade_path_3[i].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+        }
+
         // show upgrade menu
         towerOptionsMenu.SetActive(false);
         towerUpgradeMenu.SetActive(true);
@@ -301,7 +412,7 @@ public class TowerMenu : MonoBehaviour
     public void do_upgrade_1()
     {
         // path 1: level 1
-        if (level_upgrade_1 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_1_moneycheck)
+        if (level_upgrade_1 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_1_moneycheck && upgrade_1_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
             // do upgrade for selected tower
@@ -323,29 +434,32 @@ public class TowerMenu : MonoBehaviour
             if (level_upgrade_2 > 0)
             {
                 // turn path 3 to max level and removes progressbar there
-                level_upgrade_3 = -1;
+                upgrade_3_costs = -1;
                 upgrade_3_costs_label.text = "max level";
                 upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
                 progressbar_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_3_blocked(-1);
             }
             // mechanic: block upgrade path 2, if path 1 and 3 already skilled
             if (level_upgrade_3 > 0)
             {
                 // turn path 2 to max level and removes progressbar there
-                level_upgrade_2 = -1;
+                upgrade_2_costs = -1;
                 upgrade_2_costs_label.text = "max level";
                 upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
                 progressbar_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_2_blocked(-1);
             }
+            saveUpgradeStateOnTower();
         }
         // path 1: level 2
-        else if (level_upgrade_1 == 1 && allowUpdate_1_moneycheck)
+        else if (level_upgrade_1 == 1 && allowUpdate_1_moneycheck && upgrade_1_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
             // do upgrade for selected tower
@@ -368,11 +482,13 @@ public class TowerMenu : MonoBehaviour
             {
                 upgrade_1_costs_label.text = "max level";
                 upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
-                level_upgrade_1 = -1;
+                upgrade_1_costs = -1;
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_1_blocked(1);
             }
+            saveUpgradeStateOnTower();
         }
         // path 1: level 3
-        else if (level_upgrade_1 == 2 && level_upgrade_2 <= 2 && level_upgrade_3 <= 2 && allowUpdate_1_moneycheck)
+        else if (level_upgrade_1 == 2 && level_upgrade_2 <= 2 && level_upgrade_3 <= 2 && allowUpdate_1_moneycheck && upgrade_1_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
             // do upgrade for selected tower
@@ -395,9 +511,12 @@ public class TowerMenu : MonoBehaviour
             progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            selectedTower.GetComponent<TowerController>().setUpgrade_path_2_blocked(1);
+            selectedTower.GetComponent<TowerController>().setUpgrade_path_3_blocked(1);
+            saveUpgradeStateOnTower();
         }
         // path 1: level 4
-        else if (level_upgrade_1 == 3 && allowUpdate_1_moneycheck)
+        else if (level_upgrade_1 == 3 && allowUpdate_1_moneycheck && upgrade_1_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
             // do upgrade for selected tower
@@ -413,7 +532,9 @@ public class TowerMenu : MonoBehaviour
             upgrade_1_costs_label.text = "max level";
             upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
             level_upgrade_1 += 1;
+            upgrade_1_costs = -1;
             progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            saveUpgradeStateOnTower();
         }
     }
 
@@ -422,7 +543,7 @@ public class TowerMenu : MonoBehaviour
     public void do_upgrade_2()
     {
         // path 2: level 1
-        if (level_upgrade_2 == 0 && (level_upgrade_1 == 0 || level_upgrade_3 == 0) && allowUpdate_2_moneycheck)
+        if (level_upgrade_2 == 0 && (level_upgrade_1 == 0 || level_upgrade_3 == 0) && allowUpdate_2_moneycheck && upgrade_2_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_2_costs);
             // do upgrade for selected tower
@@ -437,29 +558,32 @@ public class TowerMenu : MonoBehaviour
             if (level_upgrade_1 > 0)
             {
                 // turn path 3 to max level and removes progressbar there
-                level_upgrade_3 = -1;
+                upgrade_3_costs = -1;
                 upgrade_3_costs_label.text = "max level";
                 upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
                 progressbar_upgrade_path_3[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_3[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_3_blocked(-1);
             }
             // mechanic: block upgrade path 1, if path 2 and 3 already skilled
             if (level_upgrade_3 > 0)
             {
                 // turn path 1 to max level and removes progressbar there
-                level_upgrade_1 = -1;
+                upgrade_1_costs = -1;
                 upgrade_1_costs_label.text = "max level";
                 upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
                 progressbar_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_1_blocked(-1);
             }
+            saveUpgradeStateOnTower();
         }
         // path 2: level 2
-        else if (level_upgrade_2 == 1 && allowUpdate_2_moneycheck)
+        else if (level_upgrade_2 == 1 && allowUpdate_2_moneycheck && upgrade_2_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_2_costs);
             // do upgrade for selected tower
@@ -475,11 +599,13 @@ public class TowerMenu : MonoBehaviour
             {
                 upgrade_2_costs_label.text = "max level";
                 upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
-                level_upgrade_2 = -1;
+                upgrade_2_costs = -1;
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_2_blocked(1);
             }
+            saveUpgradeStateOnTower();
         }
         // path 2: level 3
-        else if (level_upgrade_2 == 2 && level_upgrade_1 <= 2 && level_upgrade_3 <= 2 && allowUpdate_2_moneycheck)
+        else if (level_upgrade_2 == 2 && level_upgrade_1 <= 2 && level_upgrade_3 <= 2 && allowUpdate_2_moneycheck && upgrade_2_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_2_costs);
             // do upgrade for selected tower
@@ -495,9 +621,12 @@ public class TowerMenu : MonoBehaviour
             progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             progressbar_upgrade_path_3[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            selectedTower.GetComponent<TowerController>().setUpgrade_path_1_blocked(1);
+            selectedTower.GetComponent<TowerController>().setUpgrade_path_3_blocked(1);
+            saveUpgradeStateOnTower();
         }
         // path 2: level 4
-        else if (level_upgrade_2 == 3 && allowUpdate_2_moneycheck)
+        else if (level_upgrade_2 == 3 && allowUpdate_2_moneycheck && upgrade_2_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_2_costs);
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
@@ -505,7 +634,9 @@ public class TowerMenu : MonoBehaviour
             upgrade_2_costs_label.text = "max level";
             upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
             level_upgrade_2 += 1;
+            upgrade_2_costs = -1;
             progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            saveUpgradeStateOnTower();
         }
     }
 
@@ -514,7 +645,7 @@ public class TowerMenu : MonoBehaviour
     public void do_upgrade_3()
     {
         // path 3: level 1
-        if (level_upgrade_3 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_3_moneycheck)
+        if (level_upgrade_3 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_3_moneycheck && upgrade_3_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
             // do upgrade for selected tower
@@ -544,29 +675,32 @@ public class TowerMenu : MonoBehaviour
             if (level_upgrade_1 > 0)
             {
                 // turn path 2 to max level and removes progressbar there
-                level_upgrade_2 = -1;
+                upgrade_2_costs = -1;
                 upgrade_2_costs_label.text = "max level";
                 upgrade_2_costs_label.color = new Color(255, 0, 0, 0.5f);
                 progressbar_upgrade_path_2[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_2[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_2_blocked(-1);
             }
             // mechanic: block upgrade path 1, if path 2 and 3 already skilled
             if (level_upgrade_2 > 0)
             {
                 // turn path 1 to max level and removes progressbar there
-                level_upgrade_1 = -1;
+                upgrade_1_costs = -1;
                 upgrade_1_costs_label.text = "max level";
                 upgrade_1_costs_label.color = new Color(255, 0, 0, 0.5f);
                 progressbar_upgrade_path_1[0].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_1[1].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_1[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
                 progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_1_blocked(-1);
             }
+            saveUpgradeStateOnTower();
         }
         // path 3: level 2
-        else if (level_upgrade_3 == 1 && allowUpdate_3_moneycheck)
+        else if (level_upgrade_3 == 1 && allowUpdate_3_moneycheck && upgrade_3_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
             // do upgrade for selected tower
@@ -597,11 +731,13 @@ public class TowerMenu : MonoBehaviour
             {
                 upgrade_3_costs_label.text = "max level";
                 upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
-                level_upgrade_3 = -1;
+                upgrade_3_costs = -1;
+                selectedTower.GetComponent<TowerController>().setUpgrade_path_3_blocked(1);
             }
+            saveUpgradeStateOnTower();
         }
         // path 3: level 3
-        else if (level_upgrade_3 == 2 && level_upgrade_1 <= 2 && level_upgrade_2 <= 2 && allowUpdate_3_moneycheck)
+        else if (level_upgrade_3 == 2 && level_upgrade_1 <= 2 && level_upgrade_2 <= 2 && allowUpdate_3_moneycheck && upgrade_3_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
             // do upgrade for selected tower
@@ -632,9 +768,12 @@ public class TowerMenu : MonoBehaviour
             progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             progressbar_upgrade_path_2[2].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
             progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(0, 0, 0, 0);
+            selectedTower.GetComponent<TowerController>().setUpgrade_path_1_blocked(1);
+            selectedTower.GetComponent<TowerController>().setUpgrade_path_2_blocked(1);
+            saveUpgradeStateOnTower();
         }
         // path 3: level 4
-        else if (level_upgrade_3 == 3 && allowUpdate_3_moneycheck)
+        else if (level_upgrade_3 == 3 && allowUpdate_3_moneycheck && upgrade_3_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
             // do upgrade for selected tower
@@ -658,8 +797,22 @@ public class TowerMenu : MonoBehaviour
             upgrade_3_costs_label.text = "max level";
             upgrade_3_costs_label.color = new Color(255, 0, 0, 0.5f);
             level_upgrade_3 += 1;
+            upgrade_3_costs = -1;
             progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
+            saveUpgradeStateOnTower();
         }
+    }
+
+    // ----------------------------------------------
+
+    public void saveUpgradeStateOnTower()
+    {
+        selectedTower.GetComponent<TowerController>().setLevel_upgrade_1(this.level_upgrade_1);
+        selectedTower.GetComponent<TowerController>().setLevel_upgrade_2(this.level_upgrade_2);
+        selectedTower.GetComponent<TowerController>().setLevel_upgrade_3(this.level_upgrade_3);
+        selectedTower.GetComponent<TowerController>().setNext_upgrade_path_1_costs(this.upgrade_1_costs);
+        selectedTower.GetComponent<TowerController>().setNext_upgrade_path_2_costs(this.upgrade_2_costs);
+        selectedTower.GetComponent<TowerController>().setNext_upgrade_path_3_costs(this.upgrade_3_costs);
     }
 
     // ----------------------------------------------

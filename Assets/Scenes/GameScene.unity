@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028338, g: 0.22571321, b: 0.30692178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028381, g: 0.22571406, b: 0.30692294, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1171,8 +1171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ec7ffeec2e52d4497b7ba85aed0abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AllowInformationDisplay>k__BackingField: 0
-  towerMenu: {fileID: 0}
 --- !u!4 &105168005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 31e91474d696aac42a8e41c3cba06388, type: 3}
@@ -2324,6 +2322,7 @@ MonoBehaviour:
   towerOptionsMenu: {fileID: 1616964425}
   towerUpgradeMenu: {fileID: 219972602}
   selectedTower: {fileID: 0}
+  playermoney: {fileID: 533092720}
   towerName: {fileID: 353475615}
   towerHealth: {fileID: 1203074782}
   towerDamage: {fileID: 1197951903}
@@ -2334,7 +2333,6 @@ MonoBehaviour:
   upgrade_1_costs_label: {fileID: 1592381341}
   upgrade_2_costs_label: {fileID: 1287122530}
   upgrade_3_costs_label: {fileID: 1334890072}
-  playermoney: {fileID: 533092720}
   progressbar_upgrade_path_1:
   - {fileID: 1631782816}
   - {fileID: 411655507}
@@ -2439,7 +2437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &219972603
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17410,7 +17408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1616964426
 RectTransform:
   m_ObjectHideFlags: 0
