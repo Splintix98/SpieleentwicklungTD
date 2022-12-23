@@ -12,6 +12,7 @@ public class MenuController : MonoBehaviour
     GameObject creditsMenu;
     GameObject helpMenu;
     GameObject creditAnimation;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,8 @@ public class MenuController : MonoBehaviour
         creditsMenu.transform.localScale = new Vector3(0, 0, 0);
         helpMenu.transform.localScale = new Vector3(0, 0, 0);
         creditAnimation.GetComponent<Animator>().enabled = false;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

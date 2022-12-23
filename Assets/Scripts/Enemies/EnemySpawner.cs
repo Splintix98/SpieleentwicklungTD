@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
     public float CurrentWave { get { return currentWave; } }
     public float MaxWaves { get { return maxWaves; } }
     [SerializeField] TextMeshProUGUI textMeshProWaveTimer;
-
+    [SerializeField] AudioSource nextWaveAudioSource;
 
     // enemies are pregenerated on gamestart so that the performance in game is better
     private Dictionary<int, ObjectPool> EnemyObjectPools = new Dictionary<int, ObjectPool>();
@@ -121,6 +121,7 @@ public class EnemySpawner : MonoBehaviour
 
             // after all enemies are destroyed, wait an additional few seconds and start the counter
             textMeshProWaveTimer.gameObject.SetActive(true);
+            nextWaveAudioSource.Play();
             for (int i = WaveTimer; i > 0; i--)
             {
                 textMeshProWaveTimer.text = "Next Wave: " + i.ToString() + "s";

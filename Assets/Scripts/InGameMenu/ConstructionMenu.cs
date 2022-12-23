@@ -22,6 +22,8 @@ public class ConstructionMenu : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI towerRange;
 
+    [SerializeField]
+    private AudioSource buildTowerAudioSource;
 
     public bool AllowNewTowerConstruction { get; set; } = true;
     public Transform BuildArea { get { return buildArea; } }

@@ -71,6 +71,7 @@ public class TowerMenu : MonoBehaviour
     // tower focus (nearest, strongest, first, last)
     public TextMeshProUGUI infoTextForTowerFocus;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -819,14 +820,6 @@ public class TowerMenu : MonoBehaviour
 
     public void DestroyTower()
     {
-        /*
-        towerPointer.SetActive(false);
-        towerMenu.SetActive(false);
-        constructionMenu.SetActive(true);
-
-        Destroy(selectedTower);
-        selectedTower = null;
-        */
         towerPointer.SetActive(false);
         towerMainMenu.SetActive(false);
 

@@ -16,7 +16,8 @@ public class Draggable : MonoBehaviour
     private Transform currentTowerBlock = null;
     public ConstructionMenu constructionMenu;
     TowerController towerController;
-
+    
+    public AudioSource createTowerAudioSource;
     void Start()
     {
         towerController = gameObject.GetComponent<TowerController>();
@@ -82,6 +83,7 @@ public class Draggable : MonoBehaviour
                     constructionMenu.AllowNewTowerConstruction = true;
                     towerController.EnableLineRender = false;
                     towerController.EnableShoot = true;
+                    createTowerAudioSource.Play();
                     PlayerStats.Instance.SpendCoins(towerController.ConstructionCosts);
                     Destroy(this);
                 }

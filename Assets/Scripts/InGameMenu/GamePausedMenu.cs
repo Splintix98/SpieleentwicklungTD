@@ -6,9 +6,10 @@ public class GamePausedMenu : MonoBehaviour
 
 
     public GameObject pauseMenu;
+    [SerializeField] AudioClip buttonClickAudioSource;
 
 
-    
+
     void Start()
     {
         pauseMenu.SetActive(false);
@@ -27,12 +28,14 @@ public class GamePausedMenu : MonoBehaviour
 
 
     public void LeaveLevel() {
+        AudioSource.PlayClipAtPoint(buttonClickAudioSource, Camera.main.transform.position);
         SceneManager.LoadScene("MenuScene");
         pauseMenu.SetActive(false);
     }
 
     public void RestartLevel()
     {
+        AudioSource.PlayClipAtPoint(buttonClickAudioSource, Camera.main.transform.position);
         SceneManager.LoadScene("GameScene");
         Time.timeScale = 1;
         pauseMenu.SetActive(false);

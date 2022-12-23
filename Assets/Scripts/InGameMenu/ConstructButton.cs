@@ -14,6 +14,9 @@ public class ConstructButton : MonoBehaviour
     [SerializeField]
     private GameObject tower;
 
+    [SerializeField]
+    private AudioSource createTowerAudioSource;
+
     private int costs;
 
     // Start is called before the first frame update
@@ -42,6 +45,7 @@ public class ConstructButton : MonoBehaviour
             draggable.buildArea = constructionMenu.BuildArea;
             draggable.buildAreaHalf = constructionMenu.BuildAreaHalf;
             draggable.constructionMenu = constructionMenu;
+            draggable.createTowerAudioSource = createTowerAudioSource;
             constructionMenu.AllowNewTowerConstruction = false;
             TowerController towercontroller = newTower.GetComponent<TowerController>();
 

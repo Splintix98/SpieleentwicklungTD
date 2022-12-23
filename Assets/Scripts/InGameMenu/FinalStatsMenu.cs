@@ -33,15 +33,19 @@ public class FinalStatsMenu : MonoBehaviour
     private TextMeshProUGUI killedEnemiesTextMesh;
     [SerializeField]
     private TextMeshProUGUI collectedCoinsTextMesh;
-
-
-    public void Show(string title) {
+    public GameObject pauseMenu;
+    [SerializeField] AudioClip buttonClickAudioSource;
+    [SerializeField] AudioSource playerHasLostAudioSource;
+    public void Show(bool won) {
         gameStatsMenu.SetActive(true);
         constructionMenu.SetActive(false);
         InGameStatsMenu.SetActive(false);
         GamePausedMenu.SetActive(false);
         Time.timeScale = 0;
-        titleTextMesh.text = title;
+        titleTextMesh.text = won ? "Victory" : "Game over";
+        if (!won) {
+            playerHasLostAudioSource.Play();
+        }
         killedEnemiesTextMesh.text = "Killed enemies: " + PlayerStats.Instance.KilledEnemies;
         collectedCoinsTextMesh.text = "Collected coins: " + PlayerStats.Instance.AllCollectedCoins;
     }
@@ -49,6 +53,7 @@ public class FinalStatsMenu : MonoBehaviour
 
     public void GotoMainMenu()
     {
+        AudioSource.PlayClipAtPoint(buttonClickAudioSource, Camera.main.transform.position);
         SceneManager.LoadScene("MenuScene");
         gameStatsMenu.SetActive(false);
     }

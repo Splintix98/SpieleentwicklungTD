@@ -1,6 +1,4 @@
-﻿
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -28,6 +26,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float maxTotalHealth;
     [SerializeField] private float coins;
     [SerializeField] private float killedEnemies;
+    [SerializeField] private AudioSource playerDamageAudioSource;
     private float allCollectedCoins;
 
     public float Health { get { return health; } }
@@ -64,9 +63,11 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         health -= dmg;
+        playerDamageAudioSource.Play();
         ClampHealth();
-        if (health <= 0) {
-            FinalStatsMenu.Instance.Show("Game over");
+        if (health <= 0)
+        {
+            FinalStatsMenu.Instance.Show(false);
         }
     }
 

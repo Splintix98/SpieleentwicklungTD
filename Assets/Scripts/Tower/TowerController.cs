@@ -14,6 +14,7 @@ public class TowerController : MonoBehaviour
     public float fireRate;
     [SerializeField]
     private int constructionCosts;
+    
 
     // effects for projectiles (fire)
     private float burningDamage;
@@ -64,6 +65,7 @@ public class TowerController : MonoBehaviour
     public GameObject bulletPrefab;
 
     private float lastShotCooldown;
+    private AudioSource shotSound;
 
     // Start is called before the first frame update
     void Start()
@@ -102,6 +104,8 @@ public class TowerController : MonoBehaviour
         upgrade_path_1_blocked = 0;
         upgrade_path_2_blocked = 0;
         upgrade_path_3_blocked = 0;
+
+        shotSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -146,6 +150,12 @@ public class TowerController : MonoBehaviour
                 projectileController.setRangeClusterDamage(rangeCluster);
                 projectileController.setClusterDamagePercent(clusterDamagePercent);
                 b.transform.position = towerRotationPoint.transform.GetChild(2).transform.position;
+                if (shotSound && SoundManager.AllowNextShotSound())
+                {
+                    shotSound.volume = SoundManager.GetRandomVolume(10, 25);
+                    shotSound.Play();
+                }
+                
             }
         }
         else
