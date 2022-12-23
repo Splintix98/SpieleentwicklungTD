@@ -82,7 +82,7 @@ public class TowerController : MonoBehaviour
         // effects for projectiles (fire)
         burningDamage = 1;
         // effects for projectiles (water/ice)
-        slownessStrength = 5.0f;
+        slownessStrength = 0.8f;
         // effects for projectiles (earth)
         rangeCluster = 0.0f;
         clusterDamagePercent = 0.0f;
