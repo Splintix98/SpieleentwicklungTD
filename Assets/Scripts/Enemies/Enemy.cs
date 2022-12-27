@@ -16,12 +16,15 @@ public class Enemy : PoolableObject
     // effects on Enemy
     Boolean enemyIsBurning;
     Boolean enemyIsSlowed;
+    Boolean enemyGoToSpawn;
+
     // blocker that slowness only trigger one times 
     Boolean inifnitySlowBlocker;
 
     // duration of slow / burn. Set from ProjectileController
     public float burnTimer;
-    float slowTimer;
+    public float slowTimer;
+    public float goToSpawnTimer;
 
     // time per burn dmg (0.2s)
     float burningTickTimer;
@@ -43,6 +46,7 @@ public class Enemy : PoolableObject
         enemyIsBurning = false;
         enemyIsSlowed = false;
         inifnitySlowBlocker = false;
+        enemyGoToSpawn = false;
         burningTickTimer = 0.2f;
     }
 
@@ -59,6 +63,11 @@ public class Enemy : PoolableObject
         if (this.getSlowTimer() < 0.0f)
         {
             this.setEnemyIsSlowed(false);
+        }
+
+        if (this.getGoToSpawnTimer() < 0.0f)
+        {
+            this.setEnemyGoToSpawn(false);
         }
 
         // trigger burn dmg after each tick
@@ -194,6 +203,35 @@ public class Enemy : PoolableObject
     public void setSlowTimer(float time)
     {
         this.slowTimer = time;
+    }
+
+    // effects on Enemy (air) -------------------------
+
+    public float getGoToSpawnTimer()
+    {
+        return this.goToSpawnTimer;
+    }
+
+    public void setGoToSpawnTimer(float goToSpawnTimer)
+    {
+        this.goToSpawnTimer = goToSpawnTimer;
+    }
+
+    public Boolean getEnemyGoToSpawn()
+    {
+        return this.enemyGoToSpawn;
+    }
+
+    public void setEnemyGoToSpawn(Boolean enemyGoToSpawn)
+    {
+        if (enemyGoToSpawn)
+        {
+            //this.GetComponent<EnemyMovement>().setTarget(GameObject.Find("EnemyManager").GetComponent<EnemySpawner>().getSpawn());
+        } else
+        {
+            //this.GetComponent<EnemyMovement>().setTarget(GameObject.Find("EnemyManager").GetComponent<EnemySpawner>().getTarget());
+        }
+        this.enemyGoToSpawn = enemyGoToSpawn;
     }
 
     // -------------------------------------------------------------

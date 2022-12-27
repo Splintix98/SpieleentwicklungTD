@@ -25,4 +25,9 @@ public class EnemyMovement : MonoBehaviour
     {
         Agent.destination = Target.position;
     }
+
+    public void setTarget(Transform target)
+    {
+        this.Target = target;
+    }
 }

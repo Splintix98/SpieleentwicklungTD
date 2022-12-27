@@ -289,7 +289,7 @@ public class TowerMenu : MonoBehaviour
         {
             upgrade_1_label_text.text = "Towerrange";
             upgrade_2_label_text.text = "Damage";
-            upgrade_3_label_text.text = "Attackspeed";
+            upgrade_3_label_text.text = "Effectduration";
         }
 
         // load cost for each update from tower
@@ -656,7 +656,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Water(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() + 0.1f);
+                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() - 0.1f);
             }
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
@@ -664,7 +664,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.5f);
             }
             // upgrade level variable and progressbar, upgrade costs for next level
             level_upgrade_3 += 1;
@@ -711,7 +711,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Water(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() + 0.1f);
+                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() - 0.1f);
             }
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
@@ -719,7 +719,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.5f);
             }
             // upgrade level variable and progressbar, upgrade costs for next level
             level_upgrade_3 += 1;
@@ -748,7 +748,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Water(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() + 0.1f);
+                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() - 0.1f);
             }
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
@@ -756,7 +756,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.5f);
             }
             // upgrade level variable and progressbar, upgrade costs for next level
             level_upgrade_3 += 1;
@@ -784,7 +784,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Water(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() + 0.1f);
+                selectedTower.GetComponent<TowerController>().setSlownessStrength(selectedTower.GetComponent<TowerController>().getSlownessStrength() - 0.1f);
             }
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
@@ -792,7 +792,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setFireRate(selectedTower.GetComponent<TowerController>().getFireRate() * 1.05f);
+                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.5f);
             }
             // upgrade level variable and progressbar, show max level
             upgrade_3_costs_label.text = "max level";

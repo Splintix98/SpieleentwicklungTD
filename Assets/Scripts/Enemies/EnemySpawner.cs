@@ -213,4 +213,15 @@ public class EnemySpawner : MonoBehaviour
         return poolIndex;
     }
     
+    // -----------------------------------------
+
+    public Transform getTarget()
+    {
+        return this.Target;
+    }
+
+    public Transform getSpawn()
+    {
+        return this.SpawnPosition;
+    }
 }

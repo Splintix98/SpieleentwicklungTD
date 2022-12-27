@@ -24,6 +24,10 @@ public class ProjectileController : MonoBehaviour
     // effects for projectiles (earth)
     private float clusterDamagePercent;
     private float rangeClusterDamage;
+    // effects for projectiles (air)
+    private float EnemyReturnDuration;
+    public Transform TargetPosition;
+    public Transform SpawnPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +65,17 @@ public class ProjectileController : MonoBehaviour
             }
             // remove projectile if projectile already hit enemy
             else if (enemy.getSlowTimer() < 0.0f && projectileCollidated)
+            {
+                Destroy(gameObject);
+                Destroy(this);
+            }
+
+            // timer return to spawn
+            if (enemy.getGoToSpawnTimer() >= 0.0f && enemy.getEnemyGoToSpawn())
+            {
+                enemy.setGoToSpawnTimer(enemy.getGoToSpawnTimer() - Time.deltaTime);
+            }
+            else if (enemy.getGoToSpawnTimer() < 0.0f && projectileCollidated)
             {
                 Destroy(gameObject);
                 Destroy(this);
@@ -173,7 +188,13 @@ public class ProjectileController : MonoBehaviour
                 // set effect from air projectile
                 else if (projectileType == "Tower_Air(Clone)")
                 {
-                    Destroy(this.gameObject);
+                    this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    enemy.setGoToSpawnTimer(EnemyReturnDuration);
+                    if (enemy.getEnemyGoToSpawn())
+                    {
+                        Destroy(this.gameObject);
+                    }
+                    enemy.GetComponent<Enemy>().setEnemyGoToSpawn(true);
                 }
 
                 projectileCollidated = true;
@@ -225,5 +246,10 @@ public class ProjectileController : MonoBehaviour
     public void setClusterDamagePercent(float clusterDamagePercent)
     {
         this.clusterDamagePercent = clusterDamagePercent;
+    }
+
+    public void setReturnDuration(float EnemyReturnDuration)
+    {
+        this.EnemyReturnDuration = EnemyReturnDuration;
     }
 }

@@ -23,6 +23,8 @@ public class TowerController : MonoBehaviour
     // effects for projectiles (earth)
     private float rangeCluster;
     private float clusterDamagePercent;
+    // effects for projectiles (air)
+    private float enemyReturnDuration;
 
     // variable for tower "focus" state
     // -1   = last enemy
@@ -86,6 +88,8 @@ public class TowerController : MonoBehaviour
         // effects for projectiles (earth)
         rangeCluster = 0.0f;
         clusterDamagePercent = 0.0f;
+        // effects for projectiles (air)
+        enemyReturnDuration = 0.5f;
 
         // disable linerenderer on start
         towerLineIndicator = this.gameObject.GetComponent<LineRenderer>();
@@ -149,6 +153,7 @@ public class TowerController : MonoBehaviour
                 projectileController.setSlownessStrength(slownessStrength);
                 projectileController.setRangeClusterDamage(rangeCluster);
                 projectileController.setClusterDamagePercent(clusterDamagePercent);
+                projectileController.setReturnDuration(enemyReturnDuration);
                 b.transform.position = towerRotationPoint.transform.GetChild(2).transform.position;
                 if (shotSound && SoundManager.AllowNextShotSound())
                 {
@@ -430,6 +435,17 @@ public class TowerController : MonoBehaviour
     public void setClusterDamagePercent(float clusterDamagePercent)
     {
         this.clusterDamagePercent = clusterDamagePercent;
+    }
+
+    //-----
+    public float getEnemyReturnDuration()
+    {
+        return this.enemyReturnDuration;
+    }
+
+    public void setEnemyReturnDuration(float enemyReturnDuration)
+    {
+        this.enemyReturnDuration = enemyReturnDuration;
     }
 
     // ----- upgrades (getter, setter) ------
