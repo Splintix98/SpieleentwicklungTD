@@ -22,6 +22,8 @@ public class ProjectileController : MonoBehaviour
     // effects for projectiles (water/ice)
     private float slownessStrength;
     // effects for projectiles (earth)
+    public GameObject explosion;
+    private float scalefactorEcplosion;
     private float clusterDamagePercent;
     private float rangeClusterDamage;
     // effects for projectiles (air)
@@ -165,6 +167,8 @@ public class ProjectileController : MonoBehaviour
                 // set effect from earth projectile
                 else if (projectileType == "Tower_Earth(Clone)")
                 {
+                    GameObject exp = Instantiate(explosion, this.transform.position, Quaternion.identity) as GameObject;
+                    exp.transform.localScale = new Vector3(scalefactorEcplosion, scalefactorEcplosion, scalefactorEcplosion);
                     // scan for all enemys
                     Enemy[] allAktiveEnemys = FindObjectsOfType(typeof(Enemy)) as Enemy[];
 
@@ -251,5 +255,10 @@ public class ProjectileController : MonoBehaviour
     public void setReturnDuration(float EnemyReturnDuration)
     {
         this.EnemyReturnDuration = EnemyReturnDuration;
+    }
+
+    public void setScalefactorEcplosion(float scalefactorEcplosion)
+    {
+        this.scalefactorEcplosion = scalefactorEcplosion;
     }
 }

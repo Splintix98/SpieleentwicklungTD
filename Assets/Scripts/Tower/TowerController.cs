@@ -23,6 +23,7 @@ public class TowerController : MonoBehaviour
     // effects for projectiles (earth)
     private float rangeCluster;
     private float clusterDamagePercent;
+    private float scalefactorEcplosion;
     // effects for projectiles (air)
     private float enemyReturnDuration;
 
@@ -86,8 +87,9 @@ public class TowerController : MonoBehaviour
         // effects for projectiles (water/ice)
         slownessStrength = 0.8f;
         // effects for projectiles (earth)
-        rangeCluster = 0.0f;
-        clusterDamagePercent = 0.0f;
+        scalefactorEcplosion = 0.2f;
+        rangeCluster = 0.5f;
+        clusterDamagePercent = 0.1f;
         // effects for projectiles (air)
         enemyReturnDuration = 0.5f;
 
@@ -154,6 +156,7 @@ public class TowerController : MonoBehaviour
                 projectileController.setRangeClusterDamage(rangeCluster);
                 projectileController.setClusterDamagePercent(clusterDamagePercent);
                 projectileController.setReturnDuration(enemyReturnDuration);
+                projectileController.setScalefactorEcplosion(scalefactorEcplosion);
                 b.transform.position = towerRotationPoint.transform.GetChild(2).transform.position;
                 if (shotSound && SoundManager.AllowNextShotSound())
                 {
@@ -447,6 +450,18 @@ public class TowerController : MonoBehaviour
     {
         this.enemyReturnDuration = enemyReturnDuration;
     }
+
+    //-----
+    public float getScalefactorEcplosion()
+    {
+        return this.scalefactorEcplosion;
+    }
+
+    public void setScalefactorEcplosion(float scalefactorEcplosion)
+    {
+        this.scalefactorEcplosion = scalefactorEcplosion;
+    }
+    
 
     // ----- upgrades (getter, setter) ------
 

@@ -660,7 +660,8 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.5f);
+                selectedTower.GetComponent<TowerController>().setScalefactorEcplosion(selectedTower.GetComponent<TowerController>().getScalefactorEcplosion() + 0.15f);
+                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.25f);
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
@@ -715,7 +716,8 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.5f);
+                selectedTower.GetComponent<TowerController>().setScalefactorEcplosion(selectedTower.GetComponent<TowerController>().getScalefactorEcplosion() + 0.15f);
+                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.25f);
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
@@ -752,7 +754,8 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.5f);
+                selectedTower.GetComponent<TowerController>().setScalefactorEcplosion(selectedTower.GetComponent<TowerController>().getScalefactorEcplosion() + 0.15f);
+                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.25f);
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
@@ -788,7 +791,8 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.5f);
+                selectedTower.GetComponent<TowerController>().setScalefactorEcplosion(selectedTower.GetComponent<TowerController>().getScalefactorEcplosion() + 0.15f);
+                selectedTower.GetComponent<TowerController>().setRangeCluster(selectedTower.GetComponent<TowerController>().getRangeCluster() + 0.25f);
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
