@@ -34,6 +34,14 @@ public class TowerMenu : MonoBehaviour
     // money from player
     public TextMeshProUGUI playermoney;
 
+    [SerializeField]
+    private AudioSource upgradeSound;
+    [SerializeField]
+    private AudioSource upgradeDeniedSound;
+    [SerializeField]
+    private AudioSource destroyTowerSound;
+
+
     // tower infos
     public TextMeshProUGUI towerName;
     public TextMeshProUGUI towerHealth;
@@ -416,6 +424,7 @@ public class TowerMenu : MonoBehaviour
         if (level_upgrade_1 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_1_moneycheck && upgrade_1_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
@@ -463,6 +472,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_1 == 1 && allowUpdate_1_moneycheck && upgrade_1_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
@@ -492,6 +502,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_1 == 2 && level_upgrade_2 <= 2 && level_upgrade_3 <= 2 && allowUpdate_1_moneycheck && upgrade_1_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
@@ -520,6 +531,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_1 == 3 && allowUpdate_1_moneycheck && upgrade_1_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_1_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             if (selectedTower.name == "Tower_Earth(Clone)")
             {
@@ -537,6 +549,9 @@ public class TowerMenu : MonoBehaviour
             progressbar_upgrade_path_1[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
             saveUpgradeStateOnTower();
         }
+        else {
+            upgradeDeniedSound.Play();
+        }
     }
 
     // ---- Upgrade path 2 ------------------------------------------------------
@@ -547,6 +562,7 @@ public class TowerMenu : MonoBehaviour
         if (level_upgrade_2 == 0 && (level_upgrade_1 == 0 || level_upgrade_3 == 0) && allowUpdate_2_moneycheck && upgrade_2_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_2_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
             // upgrade level variable and progressbar, upgrade costs for next level
@@ -587,6 +603,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_2 == 1 && allowUpdate_2_moneycheck && upgrade_2_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_2_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
             // upgrade level variable and progressbar, upgrade costs for next level
@@ -609,6 +626,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_2 == 2 && level_upgrade_1 <= 2 && level_upgrade_3 <= 2 && allowUpdate_2_moneycheck && upgrade_2_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_2_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
             // upgrade level variable and progressbar, upgrade costs for next level
@@ -630,6 +648,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_2 == 3 && allowUpdate_2_moneycheck && upgrade_2_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_2_costs);
+            upgradeSound.Play();
             selectedTower.GetComponent<TowerController>().setTowerDamage(selectedTower.GetComponent<TowerController>().getTowerDamage() * 1.05f);
             // upgrade level variable and progressbar, show max level
             upgrade_2_costs_label.text = "max level";
@@ -638,6 +657,10 @@ public class TowerMenu : MonoBehaviour
             upgrade_2_costs = -1;
             progressbar_upgrade_path_2[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
             saveUpgradeStateOnTower();
+        }
+        else
+        {
+            upgradeDeniedSound.Play();
         }
     }
 
@@ -649,6 +672,7 @@ public class TowerMenu : MonoBehaviour
         if (level_upgrade_3 == 0 && (level_upgrade_2 == 0 || level_upgrade_3 == 0) && allowUpdate_3_moneycheck && upgrade_3_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             if (selectedTower.name == "Tower_Fire(Clone)")
             {
@@ -705,6 +729,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_3 == 1 && allowUpdate_3_moneycheck && upgrade_3_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             if (selectedTower.name == "Tower_Fire(Clone)")
             {
@@ -743,6 +768,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_3 == 2 && level_upgrade_1 <= 2 && level_upgrade_2 <= 2 && allowUpdate_3_moneycheck && upgrade_3_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             if (selectedTower.name == "Tower_Fire(Clone)")
             {
@@ -780,6 +806,7 @@ public class TowerMenu : MonoBehaviour
         else if (level_upgrade_3 == 3 && allowUpdate_3_moneycheck && upgrade_3_costs != -1)
         {
             PlayerStats.Instance.SpendCoins(upgrade_3_costs);
+            upgradeSound.Play();
             // do upgrade for selected tower
             if (selectedTower.name == "Tower_Fire(Clone)")
             {
@@ -806,6 +833,10 @@ public class TowerMenu : MonoBehaviour
             progressbar_upgrade_path_3[3].GetComponent<RawImage>().color = new Color(255, 0, 0, 0.5f);
             saveUpgradeStateOnTower();
         }
+        else
+        {
+            upgradeDeniedSound.Play();
+        }
     }
 
     // ----------------------------------------------
@@ -828,6 +859,8 @@ public class TowerMenu : MonoBehaviour
         towerMainMenu.SetActive(false);
 
         constructionMenu.SetActive(true);
+        destroyTowerSound.transform.position = selectedTower.transform.position;
+        destroyTowerSound.Play();
         Destroy(selectedTower);
         selectedTower = null;
     }
@@ -844,6 +877,7 @@ public class TowerMenu : MonoBehaviour
         selectedTower = null;
 
     }
+
 
 
 }

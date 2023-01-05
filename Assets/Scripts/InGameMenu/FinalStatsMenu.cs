@@ -36,11 +36,19 @@ public class FinalStatsMenu : MonoBehaviour
     public GameObject pauseMenu;
     [SerializeField] AudioClip buttonClickAudioSource;
     [SerializeField] AudioSource playerHasLostAudioSource;
-    public void Show(bool won) {
+
+    public static void Show(bool won) { 
+        Instance.show(won);
+    }
+    private void show(bool won) {
         gameStatsMenu.SetActive(true);
         constructionMenu.SetActive(false);
         InGameStatsMenu.SetActive(false);
         GamePausedMenu.SetActive(false);
+        Enemy.Clickable = false;
+        TowerController.Clickable = false;
+        ConstructButton.Clickable = false;
+        Draggable.Enable = false;
         Time.timeScale = 0;
         titleTextMesh.text = won ? "Victory" : "Game over";
         if (!won) {
@@ -56,6 +64,10 @@ public class FinalStatsMenu : MonoBehaviour
         AudioSource.PlayClipAtPoint(buttonClickAudioSource, Camera.main.transform.position);
         SceneManager.LoadScene("MenuScene");
         gameStatsMenu.SetActive(false);
+        TowerController.Clickable = true;
+        ConstructButton.Clickable = true;
+        Enemy.Clickable = true;
+        Draggable.Enable = true;
     }
 
 

@@ -1,7 +1,3 @@
-using Mono.Reflection;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerController : MonoBehaviour
@@ -14,6 +10,7 @@ public class TowerController : MonoBehaviour
     public float fireRate;
     [SerializeField]
     private int constructionCosts;
+
     
 
     // effects for projectiles (fire)
@@ -57,7 +54,6 @@ public class TowerController : MonoBehaviour
     LineRenderer towerLineIndicator;
 
     public int ConstructionCosts { get { return constructionCosts; } }
-    public bool AllowInformationDisplay { get; set; } = false;
     public bool EnableLineRender
     {
         get { return towerLineIndicator.enabled; }
@@ -69,6 +65,8 @@ public class TowerController : MonoBehaviour
 
     private float lastShotCooldown;
     private AudioSource shotSound;
+
+    public static bool Clickable { get; set; } = false;
 
     // Start is called before the first frame update
     void Start()
@@ -307,7 +305,7 @@ public class TowerController : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (AllowInformationDisplay)
+        if (Clickable)
         {
             TowerMenu.Instance.ShowTowerInformation(gameObject);
         }

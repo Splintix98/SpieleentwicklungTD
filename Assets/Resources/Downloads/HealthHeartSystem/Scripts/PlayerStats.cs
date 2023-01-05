@@ -67,7 +67,7 @@ public class PlayerStats : MonoBehaviour
         ClampHealth();
         if (health <= 0)
         {
-            FinalStatsMenu.Instance.Show(false);
+            FinalStatsMenu.Show(false);
         }
     }
 

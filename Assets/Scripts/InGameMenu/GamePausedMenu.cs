@@ -22,6 +22,10 @@ public class GamePausedMenu : MonoBehaviour
         {
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
+            Enemy.Clickable = false;
+            TowerController.Clickable = false;
+            ConstructButton.Clickable = false;
+            Draggable.Enable = false;
         }
     }
 
@@ -31,6 +35,10 @@ public class GamePausedMenu : MonoBehaviour
         AudioSource.PlayClipAtPoint(buttonClickAudioSource, Camera.main.transform.position);
         SceneManager.LoadScene("MenuScene");
         pauseMenu.SetActive(false);
+        TowerController.Clickable = true;
+        ConstructButton.Clickable = true;
+        Enemy.Clickable = true;
+        Draggable.Enable = true;
     }
 
     public void RestartLevel()
@@ -39,12 +47,20 @@ public class GamePausedMenu : MonoBehaviour
         SceneManager.LoadScene("GameScene");
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
+        TowerController.Clickable = true;
+        ConstructButton.Clickable = true;
+        Enemy.Clickable = true;
+        Draggable.Enable = true;
     }
 
     public void ContinueLevel()
     {
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
+        Enemy.Clickable = true;
+        TowerController.Clickable = ConstructionMenu.AllowNewTowerConstruction;
+        ConstructButton.Clickable = true;
+        Draggable.Enable = true;
     }
 
 

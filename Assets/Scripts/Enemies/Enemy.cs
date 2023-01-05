@@ -38,6 +38,8 @@ public class Enemy : PoolableObject
 
     public GameObject healthBar;
 
+    public static bool Clickable { get; set; } = true;
+
     public void Start()
     {
         Health = 100;
@@ -109,7 +111,10 @@ public class Enemy : PoolableObject
 
     void OnMouseDown()
     {
-        EnemyMenu.Instance.ShowEnemyInformation(gameObject, healthBar);
+        if (Clickable)
+        {
+            EnemyMenu.Instance.ShowEnemyInformation(gameObject, healthBar);
+        }
     }
 
     public override void OnDisable()

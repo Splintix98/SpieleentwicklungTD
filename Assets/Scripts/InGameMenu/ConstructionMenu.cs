@@ -4,6 +4,7 @@ using UnityEngine;
 public class ConstructionMenu : MonoBehaviour
 {
 
+    public static bool test = true;
 
     [SerializeField]
     private GameObject constructionMenu;
@@ -25,7 +26,7 @@ public class ConstructionMenu : MonoBehaviour
     [SerializeField]
     private AudioSource buildTowerAudioSource;
 
-    public bool AllowNewTowerConstruction { get; set; } = true;
+    public static bool AllowNewTowerConstruction { get; set; } = true;
     public Transform BuildArea { get { return buildArea; } }
     public Transform BuildAreaHalf { get { return buildAreaHalf; } }
 
@@ -56,7 +57,6 @@ public class ConstructionMenu : MonoBehaviour
     {
         towerAttributesContainer.SetActive(false);
     }
-
 
 
 

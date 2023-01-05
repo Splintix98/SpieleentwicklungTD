@@ -16,8 +16,12 @@ public class ConstructButton : MonoBehaviour
 
     [SerializeField]
     private AudioSource createTowerAudioSource;
+    [SerializeField]
+    private AudioSource createTowerDeniedAudioSource;
 
     private int costs;
+
+    public static bool Clickable { get; set; } = true;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +41,8 @@ public class ConstructButton : MonoBehaviour
 
     public void CreateTower()
     {
-        if (constructionMenu.AllowNewTowerConstruction && PlayerStats.Instance.Coins >= costs)
+        if (!Clickable) return;
+        if (ConstructionMenu.AllowNewTowerConstruction && PlayerStats.Instance.Coins >= costs)
         {
             GameObject newTower = Instantiate(tower, new Vector3(0, 0, 0), Quaternion.identity);
             newTower.SetActive(true);
@@ -46,7 +51,7 @@ public class ConstructButton : MonoBehaviour
             draggable.buildAreaHalf = constructionMenu.BuildAreaHalf;
             draggable.constructionMenu = constructionMenu;
             draggable.createTowerAudioSource = createTowerAudioSource;
-            constructionMenu.AllowNewTowerConstruction = false;
+            ConstructionMenu.AllowNewTowerConstruction = false;
             TowerController towercontroller = newTower.GetComponent<TowerController>();
 
             // set projectile prefab based on towertype
@@ -67,6 +72,9 @@ public class ConstructButton : MonoBehaviour
                 towercontroller.setProjectilePreset(Resources.Load("Prefabs/waterProjectile/waterProjectile") as GameObject);
             }
 
+        }
+        else {
+            createTowerDeniedAudioSource.Play();
         }
     }
 

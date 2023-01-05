@@ -36,6 +36,7 @@ public class EnemySpawner : MonoBehaviour
     public float CurrentWave { get { return currentWave; } }
     public float MaxWaves { get { return maxWaves; } }
     [SerializeField] TextMeshProUGUI textMeshProWaveTimer;
+    [SerializeField] GameObject WaveTimerBackgroundImage;
     [SerializeField] AudioSource nextWaveAudioSource;
 
     // enemies are pregenerated on gamestart so that the performance in game is better
@@ -116,11 +117,16 @@ public class EnemySpawner : MonoBehaviour
             // if the last wave was the last wave --> end game
             if (currentWave == maxWaves)
             {
+                if (PlayerStats.Instance.Health > 0)
+                {
+                    FinalStatsMenu.Show(true);
+                }
                 break;
             }
 
             // after all enemies are destroyed, wait an additional few seconds and start the counter
             textMeshProWaveTimer.gameObject.SetActive(true);
+            WaveTimerBackgroundImage.gameObject.SetActive(true);
             nextWaveAudioSource.Play();
             for (int i = WaveTimer; i > 0; i--)
             {
@@ -129,6 +135,7 @@ public class EnemySpawner : MonoBehaviour
                 yield return Wait;
             }
             textMeshProWaveTimer.gameObject.SetActive(false);
+            WaveTimerBackgroundImage.gameObject.SetActive(false);
         }
     }
 
