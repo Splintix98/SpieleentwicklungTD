@@ -168,6 +168,7 @@ public class ProjectileController : MonoBehaviour
                 else if (projectileType == "Tower_Earth(Clone)")
                 {
                     GameObject exp = Instantiate(explosion, this.transform.position, Quaternion.identity) as GameObject;
+                    Object.Destroy(exp, 1.0f);
                     exp.transform.localScale = new Vector3(scalefactorEcplosion, scalefactorEcplosion, scalefactorEcplosion);
                     // scan for all enemys
                     Enemy[] allAktiveEnemys = FindObjectsOfType(typeof(Enemy)) as Enemy[];

@@ -81,7 +81,6 @@ public class EnemySpawner : MonoBehaviour
             throw new System.Exception("waves is null.");
         }
 
-        
         foreach (var wave in waves)
         {
             currentWave += 1;
@@ -147,7 +146,9 @@ public class EnemySpawner : MonoBehaviour
         if (poolableObject != null)
         {
             Enemy enemy = poolableObject.GetComponent<Enemy>();
-
+            enemy.GetComponent<NavMeshAgent>().speed = enemy.GetComponent<NavMeshAgent>().speed * (1.0f + ((currentWave-1) * 0.1f));
+            float newHealth = enemy.GetComponent<Enemy>().getCurrentHealth() * (1.0f + ((currentWave - 1) * 0.1f));
+            enemy.GetComponent<Enemy>().initializeHealth(newHealth, newHealth);
             enemy.setEnemyID(enemyID);
             enemyID = enemyID + 1;
 

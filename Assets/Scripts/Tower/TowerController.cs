@@ -235,7 +235,7 @@ public class TowerController : MonoBehaviour
                 // focus strongest Enemy in Towerrange
 
                 case 99:
-                    if (enemy.getHealth() > focusedEnemy.getHealth())
+                    if (enemy.getCurrentHealth() > focusedEnemy.getCurrentHealth())
                     {
                         focusedEnemy = enemy;
                     }

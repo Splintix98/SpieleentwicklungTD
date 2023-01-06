@@ -10,7 +10,8 @@ public class Enemy : PoolableObject
     public Transform DestroyBlock;
 
     public String Name;
-    public float Health;
+    public float currentHealth;
+    public float startHealth;
     public int enemyID;
 
     // effects on Enemy
@@ -40,10 +41,14 @@ public class Enemy : PoolableObject
 
     public static bool Clickable { get; set; } = true;
 
+    public void Awake()
+    {
+        currentHealth = 100;
+        startHealth= 100;
+    }
+
     public void Start()
     {
-        Health = 100;
-
         // inizilize enemy effects
         enemyIsBurning = false;
         enemyIsSlowed = false;
@@ -139,11 +144,23 @@ public class Enemy : PoolableObject
         return this.enemyID;
     }
 
-    public float getHealth()
+    public float getStartHealth()
     {
-        return Health;
+        return startHealth;
     }
 
+    public float getCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public void initializeHealth(float startHealth, float currentHealth)
+    {
+        this.startHealth= startHealth;
+        this.currentHealth= currentHealth;
+    }
+
+    
     // effects on Enemy (burn) ------------------------
     public void setEnemyIsBurning(bool enemyIsBurning)
     {
@@ -245,8 +262,8 @@ public class Enemy : PoolableObject
     // decrease health from enemy
     public void Hit(float damage)
     {
-        Health -= damage;
-        if (Health <= 0 && gameObject.activeSelf)
+        currentHealth -= (float) Math.Round(damage, 2);
+        if (currentHealth <= 0 && gameObject.activeSelf)
         {
             if (gameObject == EnemyMenu.Instance.SelectedEnemy)
             {
@@ -260,7 +277,7 @@ public class Enemy : PoolableObject
         else
         {
             EnemyHealthBar enemyHealthBar = healthBar.GetComponent<EnemyHealthBar>();
-            enemyHealthBar.updateEnemyHealthBar(Health);
+            enemyHealthBar.updateEnemyHealthBar(currentHealth, startHealth);
         }
     }
 

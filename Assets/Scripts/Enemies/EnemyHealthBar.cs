@@ -30,10 +30,10 @@ public class EnemyHealthBar : MonoBehaviour
 
 
 
-    public void updateEnemyHealthBar(float health) {
+    public void updateEnemyHealthBar(float health, float startHealth) {
         canvas.SetActive(true);
         RectTransform rectTransform = healthImag.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2((health / 100) * maxHealthSize, rectTransform.sizeDelta.y);
+        rectTransform.sizeDelta = new Vector2((health / startHealth) * maxHealthSize, rectTransform.sizeDelta.y);
     }
 
 

@@ -53,7 +53,7 @@ public class EnemyMenu : MonoBehaviour
         string name = selectedEnemy.name;
         name = name.Replace("(Clone)", "");
         enemyNameText.text = "Name: " + name;
-        enemyHealthText.text = "Health: " + enemy.Health + " / 100";
+        enemyHealthText.text = "Health: " + enemy.getCurrentHealth() + " / " + enemy.getStartHealth();
         enemySpeedText.text = "Speed: " + enemy.Agent.speed;
         enemyVulnerablText.text = "Vulnerable to: " + "Todo";
 
