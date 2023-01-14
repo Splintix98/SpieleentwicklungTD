@@ -21,6 +21,8 @@ public class Waves
     private void initializeWaves()
     {
         // wave 1
+        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 1, spawnDelay: 1000));
+        wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
         wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 3, spawnDelay: 1000));
         wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
         wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 3, spawnDelay: 1000));
