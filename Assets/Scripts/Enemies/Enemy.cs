@@ -27,6 +27,9 @@ public class Enemy : PoolableObject
     public float slowTimer;
     public float goToSpawnTimer;
 
+    // element that does less damage
+    public string immunityElement;
+
     // time per burn dmg (0.2s)
     float burningTickTimer;
     // burn damage per tick
@@ -43,8 +46,7 @@ public class Enemy : PoolableObject
 
     public void Awake()
     {
-        currentHealth = 100;
-        startHealth= 100;
+        currentHealth = startHealth;
     }
 
     public void Start()

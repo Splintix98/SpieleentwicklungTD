@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028337, g: 0.22571321, b: 0.30692178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028335, g: 0.22571331, b: 0.30692235, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1970,7 +1970,7 @@ GameObject:
   - component: {fileID: 170141884}
   - component: {fileID: 170141883}
   m_Layer: 5
-  m_Name: Vulnerable
+  m_Name: Resistance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2016,7 +2016,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Vulnerable:'
+  m_text: 'Resistance:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14591,7 +14591,7 @@ GameObject:
   - component: {fileID: 1203074783}
   - component: {fileID: 1203074782}
   m_Layer: 5
-  m_Name: Health
+  m_Name: fireRate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14637,7 +14637,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Health:    '
+  m_text: 'Fire Rate:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17131,7 +17131,7 @@ MonoBehaviour:
   SpawnPosition: {fileID: 1632541162}
   DestroyBlock: {fileID: 1247021717}
   NumberOfEnemiesToSpawn: 200
-  WaveTimer: 15
+  WaveTimer: 1
   EnemyPrefabs:
   - {fileID: 5026040436331729747, guid: 02b1ea06de44fad4cb4b8a4ef9b84469, type: 3}
   - {fileID: -5592487209953239843, guid: 9f4313a771e05c64d8da7ae6bd19a19f, type: 3}
@@ -22028,7 +22028,7 @@ MonoBehaviour:
   health: 10
   maxHealth: 10
   maxTotalHealth: 50
-  coins: 14
+  coins: 20
   killedEnemies: 0
   playerDamageAudioSource: {fileID: 1490779726}
 --- !u!114 &1819303491

@@ -1147,11 +1147,12 @@ MonoBehaviour:
   DestroyBlock: {fileID: 0}
   Name: OrcWolfrider
   currentHealth: 0
-  startHealth: 0
+  startHealth: 200
   enemyID: 2
   burnTimer: 0
   slowTimer: 0
   goToSpawnTimer: 0
+  immunityElement: Earth
   lootForPlayer: 3
   healthBar: {fileID: 1341281726167394578}
 --- !u!1 &153408

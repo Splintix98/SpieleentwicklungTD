@@ -72,11 +72,11 @@ public class TowerController : MonoBehaviour
     void Start()
     {
         // init variables
-        towerRange = 4;
-        towerDamage = 20.0f;
-        fireRate = 1f;
-        towerHealth = 100;
-        projectileSpeed = 5.0f;
+        //towerRange = 4;
+        //towerDamage = 20.0f;
+        //fireRate = 1f;
+        //towerHealth = 100;
+        //projectileSpeed = 5.0f;
         lastShotCooldown = 0;
         towerModi = 1;
 
@@ -185,6 +185,7 @@ public class TowerController : MonoBehaviour
         foreach (Enemy enemy in allAktiveEnemys)
         {
             // get distance of each
+            if (gameObject.name.Contains(enemy.immunityElement)) continue;
             float diffX = enemy.transform.position.x - towerRotationPoint.transform.position.x;
             float diffZ = enemy.transform.position.z - towerRotationPoint.transform.position.z;
             float hypothenuse = Mathf.Sqrt((Mathf.Pow(diffZ, 2) + Mathf.Pow(diffX, 2)));

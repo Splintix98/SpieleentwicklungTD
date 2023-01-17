@@ -199,9 +199,9 @@ public class TowerMenu : MonoBehaviour
         name = name.Replace("Clone", " ");
 
         towerName.text = "Name: " + name;
-        towerHealth.text = "Health: " + towerController.towerHealth;
+        towerHealth.text = "Fire Rate: " + towerController.fireRate + " shots/sec";
         towerDamage.text = "Damage: " + towerController.towerDamage.ToString();
-        towerRange.text = "Range: " + towerController.towerRange;
+        towerRange.text = "Range: " + towerController.towerRange + " fields";
     }
 
     // -------------------------------------------------

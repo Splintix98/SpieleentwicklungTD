@@ -107,6 +107,16 @@ public class ProjectileController : MonoBehaviour
                     //Destroy(gameObject);
                     //Destroy(this);
                 }
+
+                if (projectileType.Contains(enemyHealthController.immunityElement))
+                {
+                    enemyHealthController.Hit(projectileDamage * 0.05f);
+                    projectileCollidated = true;
+                    Destroy(gameObject);
+                    Destroy(this);
+                    return;
+                }
+
                 enemyHealthController.Hit(projectileDamage);
 
                 // set effect from fire projectile
@@ -185,7 +195,13 @@ public class ProjectileController : MonoBehaviour
                         if (hypothenuse < rangeClusterDamage && this.enemy.getEnemyID() != enemy.getEnemyID())
                         {
                             // hit enemys in range with damage * factor
-                            enemy.Hit(projectileDamage * clusterDamagePercent);
+                            if (enemy.name.Contains("Skeleton")) { 
+                                enemy.Hit(projectileDamage * 2); 
+                            } else {
+                                enemy.Hit(projectileDamage * clusterDamagePercent);
+                            }
+                            
+
                         }
                     }
                     Destroy(this.gameObject);
