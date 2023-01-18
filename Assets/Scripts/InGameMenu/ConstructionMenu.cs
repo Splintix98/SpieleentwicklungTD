@@ -4,8 +4,6 @@ using UnityEngine;
 public class ConstructionMenu : MonoBehaviour
 {
 
-    public static bool test = true;
-
     [SerializeField]
     private GameObject constructionMenu;
     [SerializeField]

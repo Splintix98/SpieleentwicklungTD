@@ -1105,7 +1105,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 1479372276
   m_Radius: 0.1
-  m_Speed: 3.5
+  m_Speed: 2.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1147,12 +1147,13 @@ MonoBehaviour:
   DestroyBlock: {fileID: 0}
   Name: OrcWolfrider
   currentHealth: 0
-  startHealth: 200
+  startHealth: 150
   enemyID: 2
   burnTimer: 0
   slowTimer: 0
   goToSpawnTimer: 0
   immunityElement: Earth
+  dangerousElement: Water
   lootForPlayer: 3
   healthBar: {fileID: 1341281726167394578}
 --- !u!1 &153408

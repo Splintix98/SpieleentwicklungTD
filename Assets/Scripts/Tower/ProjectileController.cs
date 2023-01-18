@@ -131,7 +131,7 @@ public class ProjectileController : MonoBehaviour
                     // game mechanic: removes slow if burn
                     if (enemy.getEnemyIsSlowed())
                     {
-                        enemy.setEnemyIsSlowed(false);
+                        //enemy.setEnemyIsSlowed(false);
                     }
 
                     // set / reset burn timer
@@ -161,7 +161,14 @@ public class ProjectileController : MonoBehaviour
                     }
 
                     // set / reset burn timer
-                    enemy.setSlowTimer(2.0f);
+                    if (enemy.name.Contains("OrcWolfrider"))
+                    {
+                        enemy.setSlowTimer(10.0f);
+                    }
+                    else {
+                        enemy.setSlowTimer(2.0f);
+                    }
+                    
 
                     // destroy projectile, if enemy is already slowed (bugfix to prevent stacking from slowprojectiles at enemy)
                     if (enemy.getEnemyIsSlowed())

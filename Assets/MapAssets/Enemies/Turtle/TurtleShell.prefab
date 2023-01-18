@@ -148,6 +148,7 @@ MonoBehaviour:
   slowTimer: 0
   goToSpawnTimer: 0
   immunityElement: Air
+  dangerousElement: Fire
   lootForPlayer: 2
   healthBar: {fileID: 7979665911776541834}
 --- !u!114 &4457564502626213401

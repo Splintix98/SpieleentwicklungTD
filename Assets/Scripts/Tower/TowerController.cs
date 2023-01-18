@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TowerController : MonoBehaviour
 {
@@ -180,7 +181,6 @@ public class TowerController : MonoBehaviour
         // variable for final Enemy and alls Enemys in the Scene
         Enemy focusedEnemy = null;
         Enemy[] allAktiveEnemys = FindObjectsOfType(typeof(Enemy)) as Enemy[];
-
         // iterate over every enemy in the scene
         foreach (Enemy enemy in allAktiveEnemys)
         {
@@ -195,13 +195,39 @@ public class TowerController : MonoBehaviour
             {
                 continue;
             }
-
             //inizilize enemy
             if (focusedEnemy == null)
             {
                 focusedEnemy = enemy;
                 continue;
             }
+
+            //The water tower always shoots at the fastest OrcWolfrider, independent of the mode
+            if (gameObject.name.Contains("Water"))
+            {
+                if ((!focusedEnemy.name.Contains("OrcWolfrider")) && enemy.name.Contains("OrcWolfrider"))
+                {
+                    focusedEnemy = enemy;
+                    continue;
+                }
+
+                if (focusedEnemy.name.Contains("OrcWolfrider") && enemy.name.Contains("OrcWolfrider"))
+                {
+                    if (enemy.Agent.speed > focusedEnemy.Agent.speed)
+                    {
+                        focusedEnemy = enemy;
+                    }
+                    continue;
+                }
+
+                if ((!enemy.name.Contains("OrcWolfrider")) && focusedEnemy.name.Contains("OrcWolfrider")) {
+                    continue;
+                }
+            }
+
+
+
+
 
             // replace focused enemy by new one if one fits better
             switch (modi)
@@ -242,6 +268,8 @@ public class TowerController : MonoBehaviour
                     }
                     break;
             }
+
+
         }
         // return enemy to tower
         return focusedEnemy;

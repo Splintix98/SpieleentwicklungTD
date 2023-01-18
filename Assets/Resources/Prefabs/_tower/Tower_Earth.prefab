@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerHealth: 100
   towerRange: 4
-  projectileSpeed: 20
+  projectileSpeed: 15
   towerDamage: 5
   fireRate: 0.5
   constructionCosts: 10

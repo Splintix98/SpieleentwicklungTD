@@ -30,6 +30,8 @@ public class Enemy : PoolableObject
     // element that does less damage
     public string immunityElement;
 
+    public string dangerousElement;
+
     // time per burn dmg (0.2s)
     float burningTickTimer;
     // burn damage per tick
@@ -128,7 +130,7 @@ public class Enemy : PoolableObject
     {
         base.OnDisable();
         Agent.enabled = false;
-        if (gameObject == EnemyMenu.Instance.SelectedEnemy)
+        if (EnemyMenu.Instance.SelectedEnemy && gameObject == EnemyMenu.Instance.SelectedEnemy)
         {
             EnemyMenu.Instance.CloseMenu();
         }
