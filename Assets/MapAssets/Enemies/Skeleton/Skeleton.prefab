@@ -725,8 +725,14 @@ MonoBehaviour:
   Agent: {fileID: 4780261984417105620}
   DestroyBlock: {fileID: 0}
   Name: Skeleton
-  Health: 0
+  currentHealth: 0
+  startHealth: 20
   enemyID: 1
+  burnTimer: 0
+  slowTimer: 0
+  goToSpawnTimer: 0
+  immunityElement: Fire
+  dangerousElement: Earth
   lootForPlayer: 2
   healthBar: {fileID: 7294865197177911197}
 --- !u!114 &-8271678663000931743

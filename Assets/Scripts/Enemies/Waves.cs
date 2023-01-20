@@ -21,55 +21,75 @@ public class Waves
     private void initializeWaves()
     {
         // wave 1
-        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 1, spawnDelay: 1000));
-        wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 3, spawnDelay: 1000));
-        wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 3, spawnDelay: 1000));
-        wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 3, spawnDelay: 1000));
+        
+        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 1, spawnDelay: 2000));
+        wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 3000));
+        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 2, spawnDelay: 2000));
+        wave_1.Add(new WaveElement(WaveElementType.Delay, delay: 3000));
+        wave_1.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 3, spawnDelay: 2000));
 
         // wave 2
-        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 1, spawnDelay: 1000));
-        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 2, spawnDelay: 1000));
-        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 3, spawnDelay: 1000));
-        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 4, spawnDelay: 1000));
-        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 5, spawnDelay: 1000));
-        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
+        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 2, spawnDelay: 1500));
+        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2500));
+        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 3, spawnDelay: 1500));
+        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2500));
+        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 4, spawnDelay: 1500));
+        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2500));
+        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 5, spawnDelay: 1500));
+        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2500));
+        wave_2.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 10, spawnDelay: 1500));
+        wave_2.Add(new WaveElement(WaveElementType.Delay, delay: 2500));
 
         // wave 3
-        wave_3.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 5, spawnDelay: 1000));
-        wave_3.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_3.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 5, spawnDelay: 1000));
-        wave_3.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_3.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 2, spawnDelay: 500));
+        wave_3.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 12, spawnDelay: 1250));
+        wave_3.Add(new WaveElement(WaveElementType.Delay, delay: 3000));
+        wave_3.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 12, spawnDelay: 1250));
+        wave_3.Add(new WaveElement(WaveElementType.Delay, delay: 2500));
+        wave_3.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 4, spawnDelay: 500));
 
         // wave 4
-        wave_4.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 1, spawnDelay: 500));
-        wave_4.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_4.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 2, spawnDelay: 500));
-        wave_4.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
-        wave_4.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 3, spawnDelay: 500));
-        wave_4.Add(new WaveElement(WaveElementType.Delay, delay: 2000));
+        wave_4.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 12, spawnDelay: 250));
+        wave_4.Add(new WaveElement(WaveElementType.Delay, delay: 5000));
+        wave_4.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 12, spawnDelay: 250));
+        wave_4.Add(new WaveElement(WaveElementType.Delay, delay: 5000));
+        wave_4.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 16, spawnDelay: 250));
+
 
         // wave 5
-        wave_5.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 15, spawnDelay: 750));
+        for (int i = 0; i < 10; i++)
+        {
+            wave_5.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 2, spawnDelay: 800));
+            wave_5.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 2, spawnDelay: 800));
+        }
 
         // wave 6
-        // Enemy 3 - TODO
-        wave_6.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 1, spawnDelay: 1000));
+        wave_6.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 1, spawnDelay: 2000));
+        wave_6.Add(new WaveElement(WaveElementType.Delay, delay: 4000));
+        wave_6.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 2, spawnDelay: 3000));
+        wave_6.Add(new WaveElement(WaveElementType.Delay, delay: 4000));
+        wave_6.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 2, spawnDelay: 2500));
+        wave_6.Add(new WaveElement(WaveElementType.Delay, delay: 4000));
+        wave_6.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 2, spawnDelay: 2500));
 
         // wave 7
-        // Enemy 3 - TODO
-        wave_7.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 1, spawnDelay: 1000));
+        wave_7.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 10, spawnDelay: 250));
+        wave_7.Add(new WaveElement(WaveElementType.Delay, delay: 4000));
+        wave_7.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 2, spawnDelay: 500));
+        wave_7.Add(new WaveElement(WaveElementType.Delay, delay: 4000));
+        wave_7.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 10, spawnDelay: 250));
+        wave_7.Add(new WaveElement(WaveElementType.Delay, delay: 4000));
+        wave_7.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 2, spawnDelay: 500));
+
 
         // wave 8
-        // Enemy 3 - TODO
-        wave_8.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 1, spawnDelay: 1000));
+        for (int i = 0; i < 10; i++)
+        {
+            wave_8.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Turtle"), enemyCount: 2, spawnDelay: 500));
+            wave_8.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "Skeleton"), enemyCount: 2, spawnDelay: 500));
+            wave_8.Add(new WaveElement(WaveElementType.Delay, delay: 500));
+        }
+        wave_8.Add(new WaveElement(WaveElementType.Delay, delay: 7000));
+        wave_8.Add(new WaveElement(WaveElementType.EnemySpawn, enemyPrefabs.Find(e => e.Name == "OrcWolfrider"), enemyCount: 2, spawnDelay: 500));
     }
 
     public Waves(List<Enemy> enemyPrefabs)

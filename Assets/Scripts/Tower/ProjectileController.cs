@@ -107,6 +107,16 @@ public class ProjectileController : MonoBehaviour
                     //Destroy(gameObject);
                     //Destroy(this);
                 }
+
+                if (projectileType.Contains(enemyHealthController.immunityElement))
+                {
+                    enemyHealthController.Hit(projectileDamage * 0.05f);
+                    projectileCollidated = true;
+                    Destroy(gameObject);
+                    Destroy(this);
+                    return;
+                }
+
                 enemyHealthController.Hit(projectileDamage);
 
                 // set effect from fire projectile
@@ -121,7 +131,7 @@ public class ProjectileController : MonoBehaviour
                     // game mechanic: removes slow if burn
                     if (enemy.getEnemyIsSlowed())
                     {
-                        enemy.setEnemyIsSlowed(false);
+                        //enemy.setEnemyIsSlowed(false);
                     }
 
                     // set / reset burn timer
@@ -151,7 +161,14 @@ public class ProjectileController : MonoBehaviour
                     }
 
                     // set / reset burn timer
-                    enemy.setSlowTimer(2.0f);
+                    if (enemy.name.Contains("OrcWolfrider"))
+                    {
+                        enemy.setSlowTimer(10.0f);
+                    }
+                    else {
+                        enemy.setSlowTimer(2.0f);
+                    }
+                    
 
                     // destroy projectile, if enemy is already slowed (bugfix to prevent stacking from slowprojectiles at enemy)
                     if (enemy.getEnemyIsSlowed())
@@ -185,7 +202,13 @@ public class ProjectileController : MonoBehaviour
                         if (hypothenuse < rangeClusterDamage && this.enemy.getEnemyID() != enemy.getEnemyID())
                         {
                             // hit enemys in range with damage * factor
-                            enemy.Hit(projectileDamage * clusterDamagePercent);
+                            if (enemy.name.Contains("Skeleton")) { 
+                                enemy.Hit(projectileDamage * 2); 
+                            } else {
+                                enemy.Hit(projectileDamage * clusterDamagePercent);
+                            }
+                            
+
                         }
                     }
                     Destroy(this.gameObject);

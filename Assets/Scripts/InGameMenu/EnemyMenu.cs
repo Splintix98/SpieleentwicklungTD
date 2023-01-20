@@ -28,10 +28,12 @@ public class EnemyMenu : MonoBehaviour
     //private GameObject healthBarSelectedEnemy;
     public GameObject enemyMenu;
 
-    public TextMeshProUGUI enemyNameText;
-    public TextMeshProUGUI enemyHealthText;
-    public TextMeshProUGUI enemySpeedText;
-    public TextMeshProUGUI enemyVulnerablText;
+
+    [SerializeField] public TextMeshProUGUI enemyNameText;
+    [SerializeField] public TextMeshProUGUI enemyHealthText;
+    [SerializeField] public TextMeshProUGUI enemySpeedText;
+    [SerializeField] public TextMeshProUGUI enemyResistanceText;
+    [SerializeField] public TextMeshProUGUI enemyVulnerableText;
 
     // Start is called before the first frame update
     void Start()
@@ -53,9 +55,10 @@ public class EnemyMenu : MonoBehaviour
         string name = selectedEnemy.name;
         name = name.Replace("(Clone)", "");
         enemyNameText.text = "Name: " + name;
-        enemyHealthText.text = "Health: " + enemy.getCurrentHealth() + " / " + enemy.getStartHealth();
-        enemySpeedText.text = "Speed: " + enemy.Agent.speed;
-        enemyVulnerablText.text = "Vulnerable to: " + "Todo";
+        enemyHealthText.text = "Health: " + Math.Round(enemy.getCurrentHealth(), 2) + " / " + enemy.getStartHealth();
+        enemySpeedText.text = "Speed: " + Math.Round(enemy.Agent.speed, 2);
+        enemyResistanceText.text = "Resistant to: " + enemy.immunityElement;
+        enemyVulnerableText.text = "Vulnerable to: " + enemy.dangerousElement;
 
 
         if (Input.GetMouseButtonDown(1) && selectedEnemy)
@@ -93,10 +96,6 @@ public class EnemyMenu : MonoBehaviour
         //healthBarSelectedEnemy.SetActive(true);
 
     }
-
-
-
-
 
 
 

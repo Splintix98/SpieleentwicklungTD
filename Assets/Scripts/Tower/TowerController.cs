@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TowerController : MonoBehaviour
 {
@@ -72,11 +73,11 @@ public class TowerController : MonoBehaviour
     void Start()
     {
         // init variables
-        towerRange = 4;
-        towerDamage = 20.0f;
-        fireRate = 1f;
-        towerHealth = 100;
-        projectileSpeed = 5.0f;
+        //towerRange = 4;
+        //towerDamage = 20.0f;
+        //fireRate = 1f;
+        //towerHealth = 100;
+        //projectileSpeed = 5.0f;
         lastShotCooldown = 0;
         towerModi = 1;
 
@@ -180,11 +181,11 @@ public class TowerController : MonoBehaviour
         // variable for final Enemy and alls Enemys in the Scene
         Enemy focusedEnemy = null;
         Enemy[] allAktiveEnemys = FindObjectsOfType(typeof(Enemy)) as Enemy[];
-
         // iterate over every enemy in the scene
         foreach (Enemy enemy in allAktiveEnemys)
         {
             // get distance of each
+            if (gameObject.name.Contains(enemy.immunityElement)) continue;
             float diffX = enemy.transform.position.x - towerRotationPoint.transform.position.x;
             float diffZ = enemy.transform.position.z - towerRotationPoint.transform.position.z;
             float hypothenuse = Mathf.Sqrt((Mathf.Pow(diffZ, 2) + Mathf.Pow(diffX, 2)));
@@ -194,13 +195,39 @@ public class TowerController : MonoBehaviour
             {
                 continue;
             }
-
             //inizilize enemy
             if (focusedEnemy == null)
             {
                 focusedEnemy = enemy;
                 continue;
             }
+
+            //The water tower always shoots at the fastest OrcWolfrider, independent of the mode
+            if (gameObject.name.Contains("Water"))
+            {
+                if ((!focusedEnemy.name.Contains("OrcWolfrider")) && enemy.name.Contains("OrcWolfrider"))
+                {
+                    focusedEnemy = enemy;
+                    continue;
+                }
+
+                if (focusedEnemy.name.Contains("OrcWolfrider") && enemy.name.Contains("OrcWolfrider"))
+                {
+                    if (enemy.Agent.speed > focusedEnemy.Agent.speed)
+                    {
+                        focusedEnemy = enemy;
+                    }
+                    continue;
+                }
+
+                if ((!enemy.name.Contains("OrcWolfrider")) && focusedEnemy.name.Contains("OrcWolfrider")) {
+                    continue;
+                }
+            }
+
+
+
+
 
             // replace focused enemy by new one if one fits better
             switch (modi)
@@ -241,6 +268,8 @@ public class TowerController : MonoBehaviour
                     }
                     break;
             }
+
+
         }
         // return enemy to tower
         return focusedEnemy;

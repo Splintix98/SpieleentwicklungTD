@@ -49,6 +49,7 @@ public class FinalStatsMenu : MonoBehaviour
         TowerController.Clickable = false;
         ConstructButton.Clickable = false;
         Draggable.Enable = false;
+        ConstructionMenu.AllowNewTowerConstruction = true;
         Time.timeScale = 0;
         titleTextMesh.text = won ? "Victory" : "Game over";
         if (!won) {
@@ -68,6 +69,7 @@ public class FinalStatsMenu : MonoBehaviour
         ConstructButton.Clickable = true;
         Enemy.Clickable = true;
         Draggable.Enable = true;
+        ConstructionMenu.AllowNewTowerConstruction = true;
     }
 
 

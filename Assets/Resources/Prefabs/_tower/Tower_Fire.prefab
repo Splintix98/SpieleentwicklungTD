@@ -563,11 +563,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerHealth: 100
-  towerRange: 3
+  towerRange: 2
   projectileSpeed: 5
-  towerDamage: 0.1
-  fireRate: 1
-  constructionCosts: 2
+  towerDamage: 8
+  fireRate: 0.75
+  constructionCosts: 5
   towerModi: 0
   bulletPrefab: {fileID: 0}
 --- !u!82 &-1041486241200419284

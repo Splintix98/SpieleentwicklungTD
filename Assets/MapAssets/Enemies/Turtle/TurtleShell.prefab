@@ -141,12 +141,15 @@ MonoBehaviour:
   Agent: {fileID: 3253752557822913103}
   DestroyBlock: {fileID: 0}
   Name: Turtle
-  Health: 0
+  currentHealth: 0
+  startHealth: 100
   enemyID: 0
   burnTimer: 0
   slowTimer: 0
   goToSpawnTimer: 0
-  lootForPlayer: 1
+  immunityElement: Air
+  dangerousElement: Fire
+  lootForPlayer: 2
   healthBar: {fileID: 7979665911776541834}
 --- !u!114 &4457564502626213401
 MonoBehaviour:

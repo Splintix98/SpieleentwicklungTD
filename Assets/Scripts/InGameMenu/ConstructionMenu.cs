@@ -4,8 +4,6 @@ using UnityEngine;
 public class ConstructionMenu : MonoBehaviour
 {
 
-    public static bool test = true;
-
     [SerializeField]
     private GameObject constructionMenu;
     [SerializeField]
@@ -47,8 +45,8 @@ public class ConstructionMenu : MonoBehaviour
     {
         TowerController towerController = tower.GetComponent<TowerController>();
         towerDamage.text = "Damage: " + towerController.towerDamage;
-        towerFireRate.text = "Fire rate: " + towerController.fireRate ;
-        towerRange.text = "Range: " + towerController.towerRange;
+        towerFireRate.text = "Fire rate: " + towerController.fireRate + " shots/sec"; ;
+        towerRange.text = "Range: " + towerController.towerRange + " fields";
         towerAttributesContainer.SetActive(true);
         EnemyMenu.Instance.CloseMenu();
     }

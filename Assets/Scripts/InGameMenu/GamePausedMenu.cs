@@ -39,6 +39,7 @@ public class GamePausedMenu : MonoBehaviour
         ConstructButton.Clickable = true;
         Enemy.Clickable = true;
         Draggable.Enable = true;
+        ConstructionMenu.AllowNewTowerConstruction = true;
     }
 
     public void RestartLevel()
@@ -51,6 +52,7 @@ public class GamePausedMenu : MonoBehaviour
         ConstructButton.Clickable = true;
         Enemy.Clickable = true;
         Draggable.Enable = true;
+        ConstructionMenu.AllowNewTowerConstruction = true;
     }
 
     public void ContinueLevel()
