@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028335, g: 0.22571331, b: 0.30692235, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028337, g: 0.22571321, b: 0.30692178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1368,18 +1368,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 31e91474d696aac42a8e41c3cba06388, type: 3}
---- !u!114 &105168002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105167997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7ec7ffeec2e52d4497b7ba85aed0abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &105168005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 31e91474d696aac42a8e41c3cba06388, type: 3}
@@ -2513,6 +2501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 772112552}
+  sceneNumber: 1
   buttonClickAudioSource: {fileID: 8300000, guid: 311ec0e3ddc71474eb5f91f03161f401, type: 3}
 --- !u!114 &211498638
 MonoBehaviour:

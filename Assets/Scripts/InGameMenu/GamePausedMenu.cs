@@ -6,6 +6,7 @@ public class GamePausedMenu : MonoBehaviour
 
 
     public GameObject pauseMenu;
+    public int sceneNumber;
     [SerializeField] AudioClip buttonClickAudioSource;
 
 
@@ -45,7 +46,7 @@ public class GamePausedMenu : MonoBehaviour
     public void RestartLevel()
     {
         AudioSource.PlayClipAtPoint(buttonClickAudioSource, Camera.main.transform.position);
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene(sceneNumber);
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
         TowerController.Clickable = true;
