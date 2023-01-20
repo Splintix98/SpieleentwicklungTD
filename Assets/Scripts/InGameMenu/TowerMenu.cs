@@ -689,7 +689,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.5f);
+                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.05f);
             }
             // upgrade level variable and progressbar, upgrade costs for next level
             level_upgrade_3 += 1;
@@ -746,7 +746,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.5f);
+                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.05f);
             }
             // upgrade level variable and progressbar, upgrade costs for next level
             level_upgrade_3 += 1;
@@ -785,7 +785,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.5f);
+                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.1f);
             }
             // upgrade level variable and progressbar, upgrade costs for next level
             level_upgrade_3 += 1;
@@ -823,7 +823,7 @@ public class TowerMenu : MonoBehaviour
             }
             if (selectedTower.name == "Tower_Air(Clone)")
             {
-                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.5f);
+                selectedTower.GetComponent<TowerController>().setEnemyReturnDuration(selectedTower.GetComponent<TowerController>().getEnemyReturnDuration() + 0.1f);
             }
             // upgrade level variable and progressbar, show max level
             upgrade_3_costs_label.text = "max level";
