@@ -27,7 +27,7 @@ public class ProjectileController : MonoBehaviour
     private float clusterDamagePercent;
     private float rangeClusterDamage;
     // effects for projectiles (air)
-    private float EnemyReturnDuration;
+    private float EnemyFlyDuration;
     public Transform TargetPosition;
     public Transform SpawnPosition;
 
@@ -218,7 +218,7 @@ public class ProjectileController : MonoBehaviour
                 {
                     this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
-                    enemy.setEnemyFlyTimer(EnemyReturnDuration);
+                    enemy.setEnemyFlyTimer(EnemyFlyDuration);
                     if (enemy.getEnemyFly())
                     {
                         Destroy(this.gameObject);
@@ -277,9 +277,9 @@ public class ProjectileController : MonoBehaviour
         this.clusterDamagePercent = clusterDamagePercent;
     }
 
-    public void setReturnDuration(float EnemyReturnDuration)
+    public void setEnemyFlyDuration(float EnemyFlyDuration)
     {
-        this.EnemyReturnDuration = EnemyReturnDuration;
+        this.EnemyFlyDuration = EnemyFlyDuration;
     }
 
     public void setScalefactorEcplosion(float scalefactorEcplosion)

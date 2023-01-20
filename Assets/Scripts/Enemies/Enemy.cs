@@ -19,6 +19,9 @@ public class Enemy : PoolableObject
     Boolean enemyIsSlowed;
     Boolean enemyFly;
 
+    public float speedBackup;
+    public float positionZBackup;
+
     // blocker that slowness only trigger one times 
     Boolean inifnitySlowBlocker;
 
@@ -59,6 +62,9 @@ public class Enemy : PoolableObject
         inifnitySlowBlocker = false;
         enemyFly = false;
         burningTickTimer = 0.2f;
+
+        speedBackup = 0.0f;
+        positionZBackup = 0.0f;
     }
 
     private void Update()
@@ -252,10 +258,13 @@ public class Enemy : PoolableObject
     {
         if (enemyFly)
         {
-            //this.GetComponent<EnemyMovement>().setTarget(GameObject.Find("EnemyManager").GetComponent<EnemySpawner>().getSpawn());
+            speedBackup = this.GetComponent<NavMeshAgent>().speed;
+            this.GetComponent<NavMeshAgent>().speed = 0;
+
         } else
         {
-            //this.GetComponent<EnemyMovement>().setTarget(GameObject.Find("EnemyManager").GetComponent<EnemySpawner>().getTarget());
+            this.GetComponent<NavMeshAgent>().speed = speedBackup;
+
         }
         this.enemyFly = enemyFly;
     }

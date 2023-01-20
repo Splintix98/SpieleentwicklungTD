@@ -11,7 +11,6 @@ public class TowerController : MonoBehaviour
     public float fireRate;
     [SerializeField]
     private int constructionCosts;
-
     
 
     // effects for projectiles (fire)
@@ -90,7 +89,7 @@ public class TowerController : MonoBehaviour
         rangeCluster = 0.5f;
         clusterDamagePercent = 0.1f;
         // effects for projectiles (air)
-        enemyReturnDuration = 0.5f;
+        enemyReturnDuration = 0.2f;
 
         // disable linerenderer on start
         towerLineIndicator = this.gameObject.GetComponent<LineRenderer>();
@@ -154,7 +153,7 @@ public class TowerController : MonoBehaviour
                 projectileController.setSlownessStrength(slownessStrength);
                 projectileController.setRangeClusterDamage(rangeCluster);
                 projectileController.setClusterDamagePercent(clusterDamagePercent);
-                projectileController.setReturnDuration(enemyReturnDuration);
+                projectileController.setEnemyFlyDuration(enemyReturnDuration);
                 projectileController.setScalefactorEcplosion(scalefactorEcplosion);
                 b.transform.position = towerRotationPoint.transform.GetChild(2).transform.position;
                 if (shotSound && SoundManager.AllowNextShotSound())
