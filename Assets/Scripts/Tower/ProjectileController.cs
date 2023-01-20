@@ -73,11 +73,11 @@ public class ProjectileController : MonoBehaviour
             }
 
             // timer return to spawn
-            if (enemy.getGoToSpawnTimer() >= 0.0f && enemy.getEnemyGoToSpawn())
+            if (enemy.getEnemyFlyTimer() >= 0.0f && enemy.getEnemyFly())
             {
-                enemy.setGoToSpawnTimer(enemy.getGoToSpawnTimer() - Time.deltaTime);
+                enemy.setEnemyFlyTimer(enemy.getEnemyFlyTimer() - Time.deltaTime);
             }
-            else if (enemy.getGoToSpawnTimer() < 0.0f && projectileCollidated)
+            else if (enemy.getEnemyFlyTimer() < 0.0f && projectileCollidated)
             {
                 Destroy(gameObject);
                 Destroy(this);
@@ -194,12 +194,13 @@ public class ProjectileController : MonoBehaviour
                 else if (projectileType == "Tower_Air(Clone)")
                 {
                     this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    enemy.setGoToSpawnTimer(EnemyReturnDuration);
-                    if (enemy.getEnemyGoToSpawn())
+
+                    enemy.setEnemyFlyTimer(EnemyReturnDuration);
+                    if (enemy.getEnemyFly())
                     {
                         Destroy(this.gameObject);
                     }
-                    enemy.GetComponent<Enemy>().setEnemyGoToSpawn(true);
+                    enemy.GetComponent<Enemy>().setEnemyFly(true);
                 }
 
                 projectileCollidated = true;

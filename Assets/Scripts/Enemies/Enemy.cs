@@ -17,7 +17,7 @@ public class Enemy : PoolableObject
     // effects on Enemy
     Boolean enemyIsBurning;
     Boolean enemyIsSlowed;
-    Boolean enemyGoToSpawn;
+    Boolean enemyFly;
 
     // blocker that slowness only trigger one times 
     Boolean inifnitySlowBlocker;
@@ -25,7 +25,7 @@ public class Enemy : PoolableObject
     // duration of slow / burn. Set from ProjectileController
     public float burnTimer;
     public float slowTimer;
-    public float goToSpawnTimer;
+    public float enemyFlyTimer;
 
     // time per burn dmg (0.2s)
     float burningTickTimer;
@@ -53,7 +53,7 @@ public class Enemy : PoolableObject
         enemyIsBurning = false;
         enemyIsSlowed = false;
         inifnitySlowBlocker = false;
-        enemyGoToSpawn = false;
+        enemyFly = false;
         burningTickTimer = 0.2f;
     }
 
@@ -72,9 +72,9 @@ public class Enemy : PoolableObject
             this.setEnemyIsSlowed(false);
         }
 
-        if (this.getGoToSpawnTimer() < 0.0f)
+        if (this.getEnemyFlyTimer() < 0.0f)
         {
-            this.setEnemyGoToSpawn(false);
+            this.setEnemyFly(false);
         }
 
         // trigger burn dmg after each tick
@@ -229,31 +229,31 @@ public class Enemy : PoolableObject
 
     // effects on Enemy (air) -------------------------
 
-    public float getGoToSpawnTimer()
+    public float getEnemyFlyTimer()
     {
-        return this.goToSpawnTimer;
+        return this.enemyFlyTimer;
     }
 
-    public void setGoToSpawnTimer(float goToSpawnTimer)
+    public void setEnemyFlyTimer(float enemyFlyTimer)
     {
-        this.goToSpawnTimer = goToSpawnTimer;
+        this.enemyFlyTimer = enemyFlyTimer;
     }
 
-    public Boolean getEnemyGoToSpawn()
+    public Boolean getEnemyFly()
     {
-        return this.enemyGoToSpawn;
+        return this.enemyFly;
     }
 
-    public void setEnemyGoToSpawn(Boolean enemyGoToSpawn)
+    public void setEnemyFly(Boolean enemyFly)
     {
-        if (enemyGoToSpawn)
+        if (enemyFly)
         {
             //this.GetComponent<EnemyMovement>().setTarget(GameObject.Find("EnemyManager").GetComponent<EnemySpawner>().getSpawn());
         } else
         {
             //this.GetComponent<EnemyMovement>().setTarget(GameObject.Find("EnemyManager").GetComponent<EnemySpawner>().getTarget());
         }
-        this.enemyGoToSpawn = enemyGoToSpawn;
+        this.enemyFly = enemyFly;
     }
 
     // -------------------------------------------------------------
